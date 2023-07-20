@@ -15,6 +15,8 @@ COPY . .
 
 # Build the Vitepress project (optional, if you want to build in the Docker image)
 # RUN npm run docs:build
+# Build the Vitepress project (optional, if you want to build in the Docker image)
+# RUN npm run docs:build
 
 # Expose the port that will be used to access the application
 EXPOSE 5173
