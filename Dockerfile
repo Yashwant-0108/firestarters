@@ -23,20 +23,11 @@ COPY . .
 
  
 
-# Build the Vitepress static files
-RUN npm run build
-
- 
-
-# Install serve to serve the static files
-RUN npm install -g serve
-
  
 
 # Expose the port that will be used to access the application
 EXPOSE 5000
 
+        
  
-
-# Command to serve the static files
-CMD ["serve", "-s", "dist", "-l", "5000"]
+RUN npm run docs:dev
