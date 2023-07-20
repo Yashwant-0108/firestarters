@@ -10,13 +10,14 @@ COPY package*.json ./
 # Install project dependencies
 RUN npm install
 
+# Change the ownership of the node_modules directory to the 'node' user
+RUN chown -R node:node node_modules
+
+# Switch to the 'node' user for subsequent commands
+USER node
+
 # Copy the entire project directory to the working directory
 COPY . .
-
-# Build the Vitepress project (optional, if you want to build in the Docker image)
-# RUN npm run docs:build
-# Build the Vitepress project (optional, if you want to build in the Docker image)
-# RUN npm run docs:build
 
 # Expose the port that will be used to access the application
 EXPOSE 5173
