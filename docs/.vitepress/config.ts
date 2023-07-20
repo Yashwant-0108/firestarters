@@ -3,10 +3,11 @@ import { defineConfig } from 'vitepress'
 import { containerPreview, componentPreview } from '../utils/index'
 
 // https://vitepress.dev/reference/site-config
-export default defineConfig({
+module.exports = ({
 
   title: "Fire Starters",
   description: "Fire Starters",
+  port: 5173,
   
   themeConfig: {
     siteTitle: "Fire Starters",

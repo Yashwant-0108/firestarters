@@ -1,4 +1,9 @@
 import {
+  createPopper,
+  init_lib,
+  lib_exports
+} from "./chunk-H6UF333E.js";
+import {
   Fragment,
   createBaseVNode,
   createBlock,
@@ -459,9 +464,9 @@ var require_lodash = __commonJS({
         return result;
       }
       function arrayPush(array, values) {
-        var index = -1, length = values.length, offset3 = array.length;
+        var index = -1, length = values.length, offset2 = array.length;
         while (++index < length) {
-          array[offset3 + index] = values[index];
+          array[offset2 + index] = values[index];
         }
         return array;
       }
@@ -874,7 +879,7 @@ var require_lodash = __commonJS({
           return result2;
         }
         function lazyValue() {
-          var array = this.__wrapped__.value(), dir = this.__dir__, isArr = isArray2(array), isRight = dir < 0, arrLength = isArr ? array.length : 0, view = getView(0, arrLength, this.__views__), start2 = view.start, end2 = view.end, length = end2 - start2, index = isRight ? end2 : start2 - 1, iteratees = this.__iteratees__, iterLength = iteratees.length, resIndex = 0, takeCount = nativeMin(length, this.__takeCount__);
+          var array = this.__wrapped__.value(), dir = this.__dir__, isArr = isArray2(array), isRight = dir < 0, arrLength = isArr ? array.length : 0, view = getView(0, arrLength, this.__views__), start = view.start, end = view.end, length = end - start, index = isRight ? end : start - 1, iteratees = this.__iteratees__, iterLength = iteratees.length, resIndex = 0, takeCount = nativeMin(length, this.__takeCount__);
           if (!isArr || !isRight && arrLength == length && takeCount == length) {
             return baseWrapperValue(array, this.__actions__);
           }
@@ -1309,19 +1314,19 @@ var require_lodash = __commonJS({
           }
           return result2;
         }
-        function baseFill(array, value2, start2, end2) {
+        function baseFill(array, value2, start, end) {
           var length = array.length;
-          start2 = toInteger(start2);
-          if (start2 < 0) {
-            start2 = -start2 > length ? 0 : length + start2;
+          start = toInteger(start);
+          if (start < 0) {
+            start = -start > length ? 0 : length + start;
           }
-          end2 = end2 === undefined2 || end2 > length ? length : toInteger(end2);
-          if (end2 < 0) {
-            end2 += length;
+          end = end === undefined2 || end > length ? length : toInteger(end);
+          if (end < 0) {
+            end += length;
           }
-          end2 = start2 > end2 ? 0 : toLength(end2);
-          while (start2 < end2) {
-            array[start2++] = value2;
+          end = start > end ? 0 : toLength(end);
+          while (start < end) {
+            array[start++] = value2;
           }
           return array;
         }
@@ -1392,8 +1397,8 @@ var require_lodash = __commonJS({
         function baseHasIn(object, key) {
           return object != null && key in Object2(object);
         }
-        function baseInRange(number, start2, end2) {
-          return number >= nativeMin(start2, end2) && number < nativeMax(start2, end2);
+        function baseInRange(number, start, end) {
+          return number >= nativeMin(start, end) && number < nativeMax(start, end);
         }
         function baseIntersection(arrays, iteratee2, comparator) {
           var includes2 = comparator ? arrayIncludesWith : arrayIncludes, length = arrays[0].length, othLength = arrays.length, othIndex = othLength, caches = Array2(othLength), maxLength = Infinity, result2 = [];
@@ -1751,11 +1756,11 @@ var require_lodash = __commonJS({
         function baseRandom(lower, upper) {
           return lower + nativeFloor(nativeRandom() * (upper - lower + 1));
         }
-        function baseRange(start2, end2, step, fromRight) {
-          var index = -1, length = nativeMax(nativeCeil((end2 - start2) / (step || 1)), 0), result2 = Array2(length);
+        function baseRange(start, end, step, fromRight) {
+          var index = -1, length = nativeMax(nativeCeil((end - start) / (step || 1)), 0), result2 = Array2(length);
           while (length--) {
-            result2[fromRight ? length : ++index] = start2;
-            start2 += step;
+            result2[fromRight ? length : ++index] = start;
+            start += step;
           }
           return result2;
         }
@@ -1775,8 +1780,8 @@ var require_lodash = __commonJS({
           } while (n2);
           return result2;
         }
-        function baseRest(func, start2) {
-          return setToString(overRest(func, start2, identity), func + "");
+        function baseRest(func, start) {
+          return setToString(overRest(func, start, identity), func + "");
         }
         function baseSample(collection) {
           return arraySample(values(collection));
@@ -1823,20 +1828,20 @@ var require_lodash = __commonJS({
         function baseShuffle(collection) {
           return shuffleSelf(values(collection));
         }
-        function baseSlice(array, start2, end2) {
+        function baseSlice(array, start, end) {
           var index = -1, length = array.length;
-          if (start2 < 0) {
-            start2 = -start2 > length ? 0 : length + start2;
+          if (start < 0) {
+            start = -start > length ? 0 : length + start;
           }
-          end2 = end2 > length ? length : end2;
-          if (end2 < 0) {
-            end2 += length;
+          end = end > length ? length : end;
+          if (end < 0) {
+            end += length;
           }
-          length = start2 > end2 ? 0 : end2 - start2 >>> 0;
-          start2 >>>= 0;
+          length = start > end ? 0 : end - start >>> 0;
+          start >>>= 0;
           var result2 = Array2(length);
           while (++index < length) {
-            result2[index] = array[index + start2];
+            result2[index] = array[index + start];
           }
           return result2;
         }
@@ -2026,10 +2031,10 @@ var require_lodash = __commonJS({
           return isKey(value2, object) ? [value2] : stringToPath(toString2(value2));
         }
         var castRest = baseRest;
-        function castSlice(array, start2, end2) {
+        function castSlice(array, start, end) {
           var length = array.length;
-          end2 = end2 === undefined2 ? length : end2;
-          return !start2 && end2 >= length ? array : baseSlice(array, start2, end2);
+          end = end === undefined2 ? length : end;
+          return !start && end >= length ? array : baseSlice(array, start, end);
         }
         var clearTimeout2 = ctxClearTimeout || function(id) {
           return root.clearTimeout(id);
@@ -2084,8 +2089,8 @@ var require_lodash = __commonJS({
               if (index >= ordersLength) {
                 return result2;
               }
-              var order2 = orders[index];
-              return result2 * (order2 == "desc" ? -1 : 1);
+              var order = orders[index];
+              return result2 * (order == "desc" ? -1 : 1);
             }
           }
           return object.index - other.index;
@@ -2110,13 +2115,13 @@ var require_lodash = __commonJS({
           while (++argsIndex < rangeLength) {
             result2[argsIndex] = args[argsIndex];
           }
-          var offset3 = argsIndex;
+          var offset2 = argsIndex;
           while (++rightIndex < rightLength) {
-            result2[offset3 + rightIndex] = partials[rightIndex];
+            result2[offset2 + rightIndex] = partials[rightIndex];
           }
           while (++holdersIndex < holdersLength) {
             if (isUncurried || argsIndex < argsLength) {
-              result2[offset3 + holders[holdersIndex]] = args[argsIndex++];
+              result2[offset2 + holders[holdersIndex]] = args[argsIndex++];
             }
           }
           return result2;
@@ -2209,8 +2214,8 @@ var require_lodash = __commonJS({
         function createBind(func, bitmask, thisArg) {
           var isBind = bitmask & WRAP_BIND_FLAG, Ctor = createCtor(func);
           function wrapper() {
-            var fn2 = this && this !== root && this instanceof wrapper ? Ctor : func;
-            return fn2.apply(isBind ? thisArg : this, arguments);
+            var fn = this && this !== root && this instanceof wrapper ? Ctor : func;
+            return fn.apply(isBind ? thisArg : this, arguments);
           }
           return wrapper;
         }
@@ -2276,8 +2281,8 @@ var require_lodash = __commonJS({
                 arity - length
               );
             }
-            var fn2 = this && this !== root && this instanceof wrapper ? Ctor : func;
-            return apply(fn2, this, args);
+            var fn = this && this !== root && this instanceof wrapper ? Ctor : func;
+            return apply(fn, this, args);
           }
           return wrapper;
         }
@@ -2365,7 +2370,7 @@ var require_lodash = __commonJS({
                 arity - length
               );
             }
-            var thisBinding = isBind ? thisArg : this, fn2 = isBindKey ? thisBinding[func] : func;
+            var thisBinding = isBind ? thisArg : this, fn = isBindKey ? thisBinding[func] : func;
             length = args.length;
             if (argPos) {
               args = reorder(args, argPos);
@@ -2376,9 +2381,9 @@ var require_lodash = __commonJS({
               args.length = ary2;
             }
             if (this && this !== root && this instanceof wrapper) {
-              fn2 = Ctor || createCtor(fn2);
+              fn = Ctor || createCtor(fn);
             }
-            return fn2.apply(thisBinding, args);
+            return fn.apply(thisBinding, args);
           }
           return wrapper;
         }
@@ -2435,31 +2440,31 @@ var require_lodash = __commonJS({
         function createPartial(func, bitmask, thisArg, partials) {
           var isBind = bitmask & WRAP_BIND_FLAG, Ctor = createCtor(func);
           function wrapper() {
-            var argsIndex = -1, argsLength = arguments.length, leftIndex = -1, leftLength = partials.length, args = Array2(leftLength + argsLength), fn2 = this && this !== root && this instanceof wrapper ? Ctor : func;
+            var argsIndex = -1, argsLength = arguments.length, leftIndex = -1, leftLength = partials.length, args = Array2(leftLength + argsLength), fn = this && this !== root && this instanceof wrapper ? Ctor : func;
             while (++leftIndex < leftLength) {
               args[leftIndex] = partials[leftIndex];
             }
             while (argsLength--) {
               args[leftIndex++] = arguments[++argsIndex];
             }
-            return apply(fn2, isBind ? thisArg : this, args);
+            return apply(fn, isBind ? thisArg : this, args);
           }
           return wrapper;
         }
         function createRange(fromRight) {
-          return function(start2, end2, step) {
-            if (step && typeof step != "number" && isIterateeCall(start2, end2, step)) {
-              end2 = step = undefined2;
+          return function(start, end, step) {
+            if (step && typeof step != "number" && isIterateeCall(start, end, step)) {
+              end = step = undefined2;
             }
-            start2 = toFinite(start2);
-            if (end2 === undefined2) {
-              end2 = start2;
-              start2 = 0;
+            start = toFinite(start);
+            if (end === undefined2) {
+              end = start;
+              start = 0;
             } else {
-              end2 = toFinite(end2);
+              end = toFinite(end);
             }
-            step = step === undefined2 ? start2 < end2 ? 1 : -1 : toFinite(step);
-            return baseRange(start2, end2, step, fromRight);
+            step = step === undefined2 ? start < end ? 1 : -1 : toFinite(step);
+            return baseRange(start, end, step, fromRight);
           };
         }
         function createRelationalOperation(operator) {
@@ -2830,26 +2835,26 @@ var require_lodash = __commonJS({
             return result2;
           };
         }
-        function getView(start2, end2, transforms) {
+        function getView(start, end, transforms) {
           var index = -1, length = transforms.length;
           while (++index < length) {
             var data = transforms[index], size2 = data.size;
             switch (data.type) {
               case "drop":
-                start2 += size2;
+                start += size2;
                 break;
               case "dropRight":
-                end2 -= size2;
+                end -= size2;
                 break;
               case "take":
-                end2 = nativeMin(end2, start2 + size2);
+                end = nativeMin(end, start + size2);
                 break;
               case "takeRight":
-                start2 = nativeMax(start2, end2 - size2);
+                start = nativeMax(start, end - size2);
                 break;
             }
           }
-          return { "start": start2, "end": end2 };
+          return { "start": start, "end": end };
         }
         function getWrapDetails(source) {
           var match = source.match(reWrapDetails);
@@ -3045,19 +3050,19 @@ var require_lodash = __commonJS({
         function objectToString(value2) {
           return nativeObjectToString.call(value2);
         }
-        function overRest(func, start2, transform2) {
-          start2 = nativeMax(start2 === undefined2 ? func.length - 1 : start2, 0);
+        function overRest(func, start, transform2) {
+          start = nativeMax(start === undefined2 ? func.length - 1 : start, 0);
           return function() {
-            var args = arguments, index = -1, length = nativeMax(args.length - start2, 0), array = Array2(length);
+            var args = arguments, index = -1, length = nativeMax(args.length - start, 0), array = Array2(length);
             while (++index < length) {
-              array[index] = args[start2 + index];
+              array[index] = args[start + index];
             }
             index = -1;
-            var otherArgs = Array2(start2 + 1);
-            while (++index < start2) {
+            var otherArgs = Array2(start + 1);
+            while (++index < start) {
               otherArgs[index] = args[index];
             }
-            otherArgs[start2] = transform2(array);
+            otherArgs[start] = transform2(array);
             return apply(func, this, otherArgs);
           };
         }
@@ -3086,8 +3091,8 @@ var require_lodash = __commonJS({
           return root.setTimeout(func, wait);
         };
         var setToString = shortOut(baseSetToString);
-        function setWrapToString(wrapper, reference2, bitmask) {
-          var source = reference2 + "";
+        function setWrapToString(wrapper, reference, bitmask) {
+          var source = reference + "";
           return setToString(wrapper, insertWrapDetails(source, updateWrapDetails(getWrapDetails(source), bitmask)));
         }
         function shortOut(func) {
@@ -3242,16 +3247,16 @@ var require_lodash = __commonJS({
         function dropWhile(array, predicate) {
           return array && array.length ? baseWhile(array, getIteratee(predicate, 3), true) : [];
         }
-        function fill(array, value2, start2, end2) {
+        function fill(array, value2, start, end) {
           var length = array == null ? 0 : array.length;
           if (!length) {
             return [];
           }
-          if (start2 && typeof start2 != "number" && isIterateeCall(array, value2, start2)) {
-            start2 = 0;
-            end2 = length;
+          if (start && typeof start != "number" && isIterateeCall(array, value2, start)) {
+            start = 0;
+            end = length;
           }
-          return baseFill(array, value2, start2, end2);
+          return baseFill(array, value2, start, end);
         }
         function findIndex(array, predicate, fromIndex) {
           var length = array == null ? 0 : array.length;
@@ -3398,19 +3403,19 @@ var require_lodash = __commonJS({
         function reverse(array) {
           return array == null ? array : nativeReverse.call(array);
         }
-        function slice(array, start2, end2) {
+        function slice(array, start, end) {
           var length = array == null ? 0 : array.length;
           if (!length) {
             return [];
           }
-          if (end2 && typeof end2 != "number" && isIterateeCall(array, start2, end2)) {
-            start2 = 0;
-            end2 = length;
+          if (end && typeof end != "number" && isIterateeCall(array, start, end)) {
+            start = 0;
+            end = length;
           } else {
-            start2 = start2 == null ? 0 : toInteger(start2);
-            end2 = end2 === undefined2 ? length : toInteger(end2);
+            start = start == null ? 0 : toInteger(start);
+            end = end === undefined2 ? length : toInteger(end);
           }
-          return baseSlice(array, start2, end2);
+          return baseSlice(array, start, end);
         }
         function sortedIndex(array, value2) {
           return baseSortedIndex(array, value2);
@@ -3571,13 +3576,13 @@ var require_lodash = __commonJS({
           return interceptor(value2);
         }
         var wrapperAt = flatRest(function(paths) {
-          var length = paths.length, start2 = length ? paths[0] : 0, value2 = this.__wrapped__, interceptor = function(object) {
+          var length = paths.length, start = length ? paths[0] : 0, value2 = this.__wrapped__, interceptor = function(object) {
             return baseAt(object, paths);
           };
-          if (length > 1 || this.__actions__.length || !(value2 instanceof LazyWrapper) || !isIndex(start2)) {
+          if (length > 1 || this.__actions__.length || !(value2 instanceof LazyWrapper) || !isIndex(start)) {
             return this.thru(interceptor);
           }
-          value2 = value2.slice(start2, +start2 + (length ? 1 : 0));
+          value2 = value2.slice(start, +start + (length ? 1 : 0));
           value2.__actions__.push({
             "func": thru,
             "args": [interceptor],
@@ -3853,7 +3858,7 @@ var require_lodash = __commonJS({
           result2.placeholder = curryRight.placeholder;
           return result2;
         }
-        function debounce2(func, wait, options) {
+        function debounce(func, wait, options) {
           var lastArgs, lastThis, maxWait, result2, timerId, lastCallTime, lastInvokeTime = 0, leading = false, maxing = false, trailing = true;
           if (typeof func != "function") {
             throw new TypeError2(FUNC_ERROR_TEXT);
@@ -3940,7 +3945,7 @@ var require_lodash = __commonJS({
         var delay = baseRest(function(func, wait, args) {
           return baseDelay(func, toNumber(wait) || 0, args);
         });
-        function flip2(func) {
+        function flip(func) {
           return createWrap(func, WRAP_FLIP_FLAG);
         }
         function memoize(func, resolver) {
@@ -4004,20 +4009,20 @@ var require_lodash = __commonJS({
         var rearg = flatRest(function(func, indexes) {
           return createWrap(func, WRAP_REARG_FLAG, undefined2, undefined2, undefined2, indexes);
         });
-        function rest(func, start2) {
+        function rest(func, start) {
           if (typeof func != "function") {
             throw new TypeError2(FUNC_ERROR_TEXT);
           }
-          start2 = start2 === undefined2 ? start2 : toInteger(start2);
-          return baseRest(func, start2);
+          start = start === undefined2 ? start : toInteger(start);
+          return baseRest(func, start);
         }
-        function spread(func, start2) {
+        function spread(func, start) {
           if (typeof func != "function") {
             throw new TypeError2(FUNC_ERROR_TEXT);
           }
-          start2 = start2 == null ? 0 : nativeMax(toInteger(start2), 0);
+          start = start == null ? 0 : nativeMax(toInteger(start), 0);
           return baseRest(function(args) {
-            var array = args[start2], otherArgs = castSlice(args, 0, start2);
+            var array = args[start], otherArgs = castSlice(args, 0, start);
             if (array) {
               arrayPush(otherArgs, array);
             }
@@ -4033,7 +4038,7 @@ var require_lodash = __commonJS({
             leading = "leading" in options ? !!options.leading : leading;
             trailing = "trailing" in options ? !!options.trailing : trailing;
           }
-          return debounce2(func, wait, {
+          return debounce(func, wait, {
             "leading": leading,
             "maxWait": wait,
             "trailing": trailing
@@ -4094,7 +4099,7 @@ var require_lodash = __commonJS({
         }
         var isBuffer = nativeIsBuffer || stubFalse;
         var isDate2 = nodeIsDate ? baseUnary(nodeIsDate) : baseIsDate;
-        function isElement3(value2) {
+        function isElement2(value2) {
           return isObjectLike(value2) && value2.nodeType === 1 && !isPlainObject(value2);
         }
         function isEmpty(value2) {
@@ -4521,16 +4526,16 @@ var require_lodash = __commonJS({
           }
           return baseClamp(toNumber(number), lower, upper);
         }
-        function inRange(number, start2, end2) {
-          start2 = toFinite(start2);
-          if (end2 === undefined2) {
-            end2 = start2;
-            start2 = 0;
+        function inRange(number, start, end) {
+          start = toFinite(start);
+          if (end === undefined2) {
+            end = start;
+            start = 0;
           } else {
-            end2 = toFinite(end2);
+            end = toFinite(end);
           }
           number = toNumber(number);
-          return baseInRange(number, start2, end2);
+          return baseInRange(number, start, end);
         }
         function random(lower, upper, floating) {
           if (floating && typeof floating != "boolean" && isIterateeCall(lower, upper, floating)) {
@@ -4584,9 +4589,9 @@ var require_lodash = __commonJS({
           target = baseToString(target);
           var length = string.length;
           position = position === undefined2 ? length : baseClamp(toInteger(position), 0, length);
-          var end2 = position;
+          var end = position;
           position -= target.length;
-          return position >= 0 && string.slice(position, end2) == target;
+          return position >= 0 && string.slice(position, end) == target;
         }
         function escape(string) {
           string = toString2(string);
@@ -4688,9 +4693,9 @@ var require_lodash = __commonJS({
             "g"
           );
           var sourceURL = "//# sourceURL=" + (hasOwnProperty.call(options, "sourceURL") ? (options.sourceURL + "").replace(/\s/g, " ") : "lodash.templateSources[" + ++templateCounter + "]") + "\n";
-          string.replace(reDelimiters, function(match, escapeValue, interpolateValue, esTemplateValue, evaluateValue, offset3) {
+          string.replace(reDelimiters, function(match, escapeValue, interpolateValue, esTemplateValue, evaluateValue, offset2) {
             interpolateValue || (interpolateValue = esTemplateValue);
-            source += string.slice(index, offset3).replace(reUnescapedString, escapeStringChar);
+            source += string.slice(index, offset2).replace(reUnescapedString, escapeStringChar);
             if (escapeValue) {
               isEscaping = true;
               source += "' +\n__e(" + escapeValue + ") +\n'";
@@ -4702,7 +4707,7 @@ var require_lodash = __commonJS({
             if (interpolateValue) {
               source += "' +\n((__t = (" + interpolateValue + ")) == null ? '' : __t) +\n'";
             }
-            index = offset3 + match.length;
+            index = offset2 + match.length;
             return match;
           });
           source += "';\n";
@@ -4737,8 +4742,8 @@ var require_lodash = __commonJS({
           if (!string || !(chars = baseToString(chars))) {
             return string;
           }
-          var strSymbols = stringToArray(string), chrSymbols = stringToArray(chars), start2 = charsStartIndex(strSymbols, chrSymbols), end2 = charsEndIndex(strSymbols, chrSymbols) + 1;
-          return castSlice(strSymbols, start2, end2).join("");
+          var strSymbols = stringToArray(string), chrSymbols = stringToArray(chars), start = charsStartIndex(strSymbols, chrSymbols), end = charsEndIndex(strSymbols, chrSymbols) + 1;
+          return castSlice(strSymbols, start, end).join("");
         }
         function trimEnd(string, chars, guard) {
           string = toString2(string);
@@ -4748,8 +4753,8 @@ var require_lodash = __commonJS({
           if (!string || !(chars = baseToString(chars))) {
             return string;
           }
-          var strSymbols = stringToArray(string), end2 = charsEndIndex(strSymbols, stringToArray(chars)) + 1;
-          return castSlice(strSymbols, 0, end2).join("");
+          var strSymbols = stringToArray(string), end = charsEndIndex(strSymbols, stringToArray(chars)) + 1;
+          return castSlice(strSymbols, 0, end).join("");
         }
         function trimStart(string, chars, guard) {
           string = toString2(string);
@@ -4759,8 +4764,8 @@ var require_lodash = __commonJS({
           if (!string || !(chars = baseToString(chars))) {
             return string;
           }
-          var strSymbols = stringToArray(string), start2 = charsStartIndex(strSymbols, stringToArray(chars));
-          return castSlice(strSymbols, start2).join("");
+          var strSymbols = stringToArray(string), start = charsStartIndex(strSymbols, stringToArray(chars));
+          return castSlice(strSymbols, start).join("");
         }
         function truncate(string, options) {
           var length = DEFAULT_TRUNC_LENGTH, omission = DEFAULT_TRUNC_OMISSION;
@@ -4778,19 +4783,19 @@ var require_lodash = __commonJS({
           if (length >= strLength) {
             return string;
           }
-          var end2 = length - stringSize(omission);
-          if (end2 < 1) {
+          var end = length - stringSize(omission);
+          if (end < 1) {
             return omission;
           }
-          var result2 = strSymbols ? castSlice(strSymbols, 0, end2).join("") : string.slice(0, end2);
+          var result2 = strSymbols ? castSlice(strSymbols, 0, end).join("") : string.slice(0, end);
           if (separator === undefined2) {
             return result2 + omission;
           }
           if (strSymbols) {
-            end2 += result2.length - end2;
+            end += result2.length - end;
           }
           if (isRegExp(separator)) {
-            if (string.slice(end2).search(separator)) {
+            if (string.slice(end).search(separator)) {
               var match, substring = result2;
               if (!separator.global) {
                 separator = RegExp2(separator.source, toString2(reFlags.exec(separator)) + "g");
@@ -4799,9 +4804,9 @@ var require_lodash = __commonJS({
               while (match = separator.exec(substring)) {
                 var newEnd = match.index;
               }
-              result2 = result2.slice(0, newEnd === undefined2 ? end2 : newEnd);
+              result2 = result2.slice(0, newEnd === undefined2 ? end : newEnd);
             }
-          } else if (string.indexOf(baseToString(separator), end2) != end2) {
+          } else if (string.indexOf(baseToString(separator), end) != end) {
             var index = result2.lastIndexOf(separator);
             if (index > -1) {
               result2 = result2.slice(0, index);
@@ -4993,7 +4998,7 @@ var require_lodash = __commonJS({
           return dividend / divisor;
         }, 1);
         var floor = createRound("floor");
-        function max4(array) {
+        function max3(array) {
           return array && array.length ? baseExtremum(array, identity, baseGt) : undefined2;
         }
         function maxBy(array, iteratee2) {
@@ -5005,7 +5010,7 @@ var require_lodash = __commonJS({
         function meanBy(array, iteratee2) {
           return baseMean(array, getIteratee(iteratee2, 2));
         }
-        function min3(array) {
+        function min2(array) {
           return array && array.length ? baseExtremum(array, identity, baseLt) : undefined2;
         }
         function minBy(array, iteratee2) {
@@ -5014,7 +5019,7 @@ var require_lodash = __commonJS({
         var multiply = createMathOperation(function(multiplier, multiplicand) {
           return multiplier * multiplicand;
         }, 1);
-        var round3 = createRound("round");
+        var round2 = createRound("round");
         var subtract2 = createMathOperation(function(minuend, subtrahend) {
           return minuend - subtrahend;
         }, 0);
@@ -5047,7 +5052,7 @@ var require_lodash = __commonJS({
         lodash.create = create;
         lodash.curry = curry;
         lodash.curryRight = curryRight;
-        lodash.debounce = debounce2;
+        lodash.debounce = debounce;
         lodash.defaults = defaults2;
         lodash.defaultsDeep = defaultsDeep;
         lodash.defer = defer;
@@ -5067,7 +5072,7 @@ var require_lodash = __commonJS({
         lodash.flatten = flatten;
         lodash.flattenDeep = flattenDeep;
         lodash.flattenDepth = flattenDepth;
-        lodash.flip = flip2;
+        lodash.flip = flip;
         lodash.flow = flow;
         lodash.flowRight = flowRight;
         lodash.fromPairs = fromPairs;
@@ -5229,7 +5234,7 @@ var require_lodash = __commonJS({
         lodash.isBoolean = isBoolean;
         lodash.isBuffer = isBuffer;
         lodash.isDate = isDate2;
-        lodash.isElement = isElement3;
+        lodash.isElement = isElement2;
         lodash.isEmpty = isEmpty;
         lodash.isEqual = isEqual;
         lodash.isEqualWith = isEqualWith;
@@ -5266,11 +5271,11 @@ var require_lodash = __commonJS({
         lodash.lowerFirst = lowerFirst;
         lodash.lt = lt2;
         lodash.lte = lte;
-        lodash.max = max4;
+        lodash.max = max3;
         lodash.maxBy = maxBy;
         lodash.mean = mean;
         lodash.meanBy = meanBy;
-        lodash.min = min3;
+        lodash.min = min2;
         lodash.minBy = minBy;
         lodash.stubArray = stubArray;
         lodash.stubFalse = stubFalse;
@@ -5292,7 +5297,7 @@ var require_lodash = __commonJS({
         lodash.repeat = repeat;
         lodash.replace = replace;
         lodash.result = result;
-        lodash.round = round3;
+        lodash.round = round2;
         lodash.runInContext = runInContext2;
         lodash.sample = sample;
         lodash.size = size;
@@ -5405,20 +5410,20 @@ var require_lodash = __commonJS({
         LazyWrapper.prototype.reject = function(predicate) {
           return this.filter(negate(getIteratee(predicate)));
         };
-        LazyWrapper.prototype.slice = function(start2, end2) {
-          start2 = toInteger(start2);
+        LazyWrapper.prototype.slice = function(start, end) {
+          start = toInteger(start);
           var result2 = this;
-          if (result2.__filtered__ && (start2 > 0 || end2 < 0)) {
+          if (result2.__filtered__ && (start > 0 || end < 0)) {
             return new LazyWrapper(result2);
           }
-          if (start2 < 0) {
-            result2 = result2.takeRight(-start2);
-          } else if (start2) {
-            result2 = result2.drop(start2);
+          if (start < 0) {
+            result2 = result2.takeRight(-start);
+          } else if (start) {
+            result2 = result2.drop(start);
           }
-          if (end2 !== undefined2) {
-            end2 = toInteger(end2);
-            result2 = end2 < 0 ? result2.dropRight(-end2) : result2.take(end2 - start2);
+          if (end !== undefined2) {
+            end = toInteger(end);
+            result2 = end < 0 ? result2.dropRight(-end) : result2.take(end - start);
           }
           return result2;
         };
@@ -5543,7 +5548,7 @@ function zlibSync(data, opts) {
 function unzlibSync(data, out) {
   return inflt((zlv(data), data.subarray(2, -4)), out);
 }
-var ch2, wk, u8, u16, u32, fleb, fdeb, clim, freb, _a, fl, revfl, _b, fd, revfd, rev, x2, i2, hMap, flt, i2, i2, i2, i2, fdt, i2, flm, flrm, fdm, fdrm, max3, bits, bits16, shft, slc, inflt, wbits, wbits16, hTree, ln, lc, clen, wfblk, wblk, deo, et, dflt, crct, crc, adler, dopt, mrg, wcln, ch, cbfs, wrkr, bInflt, bDflt, gze, guze, zle, zule, pbf, gu8, astrm, astrmify, wbytes, gzh, gzs, gzl, gzhl, zlh, zlv, Deflate, AsyncDeflate, Inflate, AsyncInflate, Gzip, AsyncGzip, Gunzip, AsyncGunzip, Zlib, AsyncZlib, Unzlib, AsyncUnzlib, Decompress, AsyncDecompress;
+var ch2, wk, u8, u16, u32, fleb, fdeb, clim, freb, _a, fl, revfl, _b, fd, revfd, rev, x2, i2, hMap, flt, i2, i2, i2, i2, fdt, i2, flm, flrm, fdm, fdrm, max2, bits, bits16, shft, slc, inflt, wbits, wbits16, hTree, ln, lc, clen, wfblk, wblk, deo, et, dflt, crct, crc, adler, dopt, mrg, wcln, ch, cbfs, wrkr, bInflt, bDflt, gze, guze, zle, zule, pbf, gu8, astrm, astrmify, wbytes, gzh, gzs, gzl, gzhl, zlh, zlv, Deflate, AsyncDeflate, Inflate, AsyncInflate, Gzip, AsyncGzip, Gunzip, AsyncGunzip, Zlib, AsyncZlib, Unzlib, AsyncUnzlib, Decompress, AsyncDecompress;
 var init_browser = __esm({
   "node_modules/fflate/esm/browser.js"() {
     ch2 = {};
@@ -5634,10 +5639,10 @@ var init_browser = __esm({
       0
     ]);
     clim = new u8([16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15]);
-    freb = function(eb, start2) {
+    freb = function(eb, start) {
       var b2 = new u16(31);
       for (var i2 = 0; i2 < 31; ++i2) {
-        b2[i2] = start2 += 1 << eb[i2 - 1];
+        b2[i2] = start += 1 << eb[i2 - 1];
       }
       var r = new u32(b2[30]);
       for (var i2 = 1; i2 < 30; ++i2) {
@@ -5708,7 +5713,7 @@ var init_browser = __esm({
     flrm = hMap(flt, 9, 1);
     fdm = hMap(fdt, 5, 0);
     fdrm = hMap(fdt, 5, 1);
-    max3 = function(a2) {
+    max2 = function(a2) {
       var m2 = a2[0];
       for (var i2 = 1; i2 < a2.length; ++i2) {
         if (a2[i2] > m2)
@@ -5783,7 +5788,7 @@ var init_browser = __esm({
               clt[clim[i2]] = bits(dat, pos + i2 * 3, 7);
             }
             pos += hcLen * 3;
-            var clb = max3(clt), clbmsk = (1 << clb) - 1;
+            var clb = max2(clt), clbmsk = (1 << clb) - 1;
             if (!noSt && pos + tl * (clb + 7) > tbts)
               break;
             var clm = hMap(clt, clb, 1);
@@ -5806,8 +5811,8 @@ var init_browser = __esm({
               }
             }
             var lt2 = ldt.subarray(0, hLit), dt2 = ldt.subarray(hLit);
-            lbt = max3(lt2);
-            dbt = max3(dt2);
+            lbt = max2(lt2);
+            dbt = max2(dt2);
             lm = hMap(lt2, lbt, 1);
             dm = hMap(dt2, dbt, 1);
           } else
@@ -5851,14 +5856,14 @@ var init_browser = __esm({
               throw "unexpected EOF";
             if (noBuf)
               cbuf(bt2 + 131072);
-            var end2 = bt2 + add2;
-            for (; bt2 < end2; bt2 += 4) {
+            var end = bt2 + add2;
+            for (; bt2 < end; bt2 += 4) {
               buf[bt2] = buf[bt2 - dt2];
               buf[bt2 + 1] = buf[bt2 + 1 - dt2];
               buf[bt2 + 2] = buf[bt2 + 2 - dt2];
               buf[bt2 + 3] = buf[bt2 + 3 - dt2];
             }
-            bt2 = end2;
+            bt2 = end;
           }
         }
         st2.l = lm, st2.p = pos, st2.b = bt2;
@@ -6212,9 +6217,9 @@ var init_browser = __esm({
         o2[k2] = b2[k2];
       return o2;
     };
-    wcln = function(fn2, fnStr, td) {
-      var dt2 = fn2();
-      var st2 = fn2.toString();
+    wcln = function(fn, fnStr, td) {
+      var dt2 = fn();
+      var st2 = fn.toString();
       var ks = st2.slice(st2.indexOf("[") + 1, st2.lastIndexOf("]")).replace(/ /g, "").split(",");
       for (var i2 = 0; i2 < dt2.length; ++i2) {
         var v2 = dt2[i2], k2 = ks[i2];
@@ -6258,7 +6263,7 @@ var init_browser = __esm({
       return wk(ch[id][0] + ";onmessage=function(e){for(var k in e.data)self[k]=e.data[k];onmessage=" + init.toString() + "}", id, td, cbfs(td), cb);
     };
     bInflt = function() {
-      return [u8, u16, u32, fleb, fdeb, clim, fl, fd, flrm, fdrm, rev, hMap, max3, bits, bits16, shft, slc, inflt, inflateSync, pbf, gu8];
+      return [u8, u16, u32, fleb, fdeb, clim, fl, fd, flrm, fdrm, rev, hMap, max2, bits, bits16, shft, slc, inflt, inflateSync, pbf, gu8];
     };
     bDflt = function() {
       return [u8, u16, u32, fleb, fdeb, clim, revfl, revfd, flm, flt, fdm, fdt, rev, deo, et, hMap, wbits, wbits16, hTree, ln, lc, clen, wfblk, wblk, shft, slc, dflt, dopt, deflateSync, pbf];
@@ -6317,14 +6322,14 @@ var init_browser = __esm({
         d2[b2] = v2, v2 >>>= 8;
     };
     gzh = function(c2, o2) {
-      var fn2 = o2.filename;
+      var fn = o2.filename;
       c2[0] = 31, c2[1] = 139, c2[2] = 8, c2[8] = o2.level < 2 ? 4 : o2.level == 9 ? 2 : 0, c2[9] = 3;
       if (o2.mtime != 0)
         wbytes(c2, 4, Math.floor(new Date(o2.mtime || Date.now()) / 1e3));
-      if (fn2) {
+      if (fn) {
         c2[3] = 8;
-        for (var i2 = 0; i2 <= fn2.length; ++i2)
-          c2[i2 + 10] = fn2.charCodeAt(i2);
+        for (var i2 = 0; i2 <= fn.length; ++i2)
+          c2[i2 + 10] = fn.charCodeAt(i2);
       }
     };
     gzs = function(d2) {
@@ -9576,7 +9581,7 @@ function ee(t2) {
                 Fn[255 + s3] = 0 > s3 ? 0 : 255 < s3 ? 255 : s3;
               Cn = 1;
             }
-            an = ue2, on = ae2, cn = oe2, un = se2, hn = ce2, sn = ie2, ln2 = Je, fn2 = Xe, dn = $e, pn = Qe, gn = Ke, mn = Ze, vn = tr, bn = er, yn = ze, wn = He, Nn = We, Ln = Ve, fi[0] = xe, fi[1] = le2, fi[2] = Le2, fi[3] = Ae, fi[4] = Se, fi[5] = Pe, fi[6] = _e, fi[7] = ke, fi[8] = Fe, fi[9] = Ie, li[0] = ve2, li[1] = de2, li[2] = pe2, li[3] = ge2, li[4] = be2, li[5] = ye2, li[6] = we2, di[0] = Be, di[1] = fe2, di[2] = Ce, di[3] = je, di[4] = Ee, di[5] = Me, di[6] = qe, s3 = 1;
+            an = ue2, on = ae2, cn = oe2, un = se2, hn = ce2, sn = ie2, ln2 = Je, fn = Xe, dn = $e, pn = Qe, gn = Ke, mn = Ze, vn = tr, bn = er, yn = ze, wn = He, Nn = We, Ln = Ve, fi[0] = xe, fi[1] = le2, fi[2] = Le2, fi[3] = Ae, fi[4] = Se, fi[5] = Pe, fi[6] = _e, fi[7] = ke, fi[8] = Fe, fi[9] = Ie, li[0] = ve2, li[1] = de2, li[2] = pe2, li[3] = ge2, li[4] = be2, li[5] = ye2, li[6] = we2, di[0] = Be, di[1] = fe2, di[2] = Ce, di[3] = je, di[4] = Ee, di[5] = Me, di[6] = qe, s3 = 1;
           } else
             s3 = 0;
         }
@@ -9657,7 +9662,7 @@ function ee(t2) {
                       else {
                         var q3 = U3.B, D3 = U3.qa, R3 = U3.ra + 8 * C3 * q3 + 8 * A4, T3 = U3.Ha, U3 = U3.Ia + 8 * C3 * q3 + 8 * A4;
                         C3 = j3.ld;
-                        0 < A4 && (fn2(O3, B3, N4, E3 + 4, M3, C3), pn(D3, R3, T3, U3, q3, E3 + 4, M3, C3)), j3.La && (mn(O3, B3, N4, E3, M3, C3), bn(D3, R3, T3, U3, q3, E3, M3, C3)), 0 < x3 && (ln2(O3, B3, N4, E3 + 4, M3, C3), dn(D3, R3, T3, U3, q3, E3 + 4, M3, C3)), j3.La && (gn(O3, B3, N4, E3, M3, C3), vn(D3, R3, T3, U3, q3, E3, M3, C3));
+                        0 < A4 && (fn(O3, B3, N4, E3 + 4, M3, C3), pn(D3, R3, T3, U3, q3, E3 + 4, M3, C3)), j3.La && (mn(O3, B3, N4, E3, M3, C3), bn(D3, R3, T3, U3, q3, E3, M3, C3)), 0 < x3 && (ln2(O3, B3, N4, E3 + 4, M3, C3), dn(D3, R3, T3, U3, q3, E3 + 4, M3, C3)), j3.La && (gn(O3, B3, N4, E3, M3, C3), vn(D3, R3, T3, U3, q3, E3, M3, C3));
                       }
                   }
                 if (s4.ia && alert("todo:DitherRow"), null != c5.put) {
@@ -10491,7 +10496,7 @@ function ee(t2) {
     });
     var Gr, Yr = t3.ColorIndexInverseTransform, Jr = t3.MapARGB, Xr = t3.VP8LColorIndexInverseTransformAlpha, Kr = t3.MapAlpha, Zr = t3.VP8LPredictorsAdd = [];
     Zr.length = 16, (t3.VP8LPredictors = []).length = 16, (t3.VP8LPredictorsAdd_C = []).length = 16, (t3.VP8LPredictors_C = []).length = 16;
-    var $r, Qr, tn, en, rn, nn, an, on, sn, cn, un, hn, ln2, fn2, dn, pn, gn, mn, vn, bn, yn, wn, Nn, Ln, An, xn, Sn, _n, Pn = a2(511), kn = a2(2041), In = a2(225), Fn = a2(767), Cn = 0, jn = kn, On = In, Bn = Fn, Mn = Pn, En = 0, qn = 1, Dn = 2, Rn = 3, Tn = 4, Un = 5, zn = 6, Hn = 7, Wn = 8, Vn = 9, Gn = 10, Yn = [2, 3, 7], Jn = [3, 3, 11], Xn = [280, 256, 256, 256, 40], Kn = [0, 1, 1, 1, 0], Zn = [17, 18, 0, 1, 2, 3, 4, 5, 16, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], $n = [24, 7, 23, 25, 40, 6, 39, 41, 22, 26, 38, 42, 56, 5, 55, 57, 21, 27, 54, 58, 37, 43, 72, 4, 71, 73, 20, 28, 53, 59, 70, 74, 36, 44, 88, 69, 75, 52, 60, 3, 87, 89, 19, 29, 86, 90, 35, 45, 68, 76, 85, 91, 51, 61, 104, 2, 103, 105, 18, 30, 102, 106, 34, 46, 84, 92, 67, 77, 101, 107, 50, 62, 120, 1, 119, 121, 83, 93, 17, 31, 100, 108, 66, 78, 118, 122, 33, 47, 117, 123, 49, 63, 99, 109, 82, 94, 0, 116, 124, 65, 79, 16, 32, 98, 110, 48, 115, 125, 81, 95, 64, 114, 126, 97, 111, 80, 113, 127, 96, 112], Qn = [2954, 2956, 2958, 2962, 2970, 2986, 3018, 3082, 3212, 3468, 3980, 5004], ti = 8, ei = [4, 5, 6, 7, 8, 9, 10, 10, 11, 12, 13, 14, 15, 16, 17, 17, 18, 19, 20, 20, 21, 21, 22, 22, 23, 23, 24, 25, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 91, 93, 95, 96, 98, 100, 101, 102, 104, 106, 108, 110, 112, 114, 116, 118, 122, 124, 126, 128, 130, 132, 134, 136, 138, 140, 143, 145, 148, 151, 154, 157], ri = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100, 102, 104, 106, 108, 110, 112, 114, 116, 119, 122, 125, 128, 131, 134, 137, 140, 143, 146, 149, 152, 155, 158, 161, 164, 167, 170, 173, 177, 181, 185, 189, 193, 197, 201, 205, 209, 213, 217, 221, 225, 229, 234, 239, 245, 249, 254, 259, 264, 269, 274, 279, 284], ni = null, ii = [[173, 148, 140, 0], [176, 155, 140, 135, 0], [180, 157, 141, 134, 130, 0], [254, 254, 243, 230, 196, 177, 153, 140, 133, 130, 129, 0]], ai = [0, 1, 4, 8, 5, 2, 3, 6, 9, 12, 13, 10, 7, 11, 14, 15], oi = [-0, 1, -1, 2, -2, 3, 4, 6, -3, 5, -4, -5, -6, 7, -7, 8, -8, -9], si = [[[[128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128], [128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128], [128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128]], [[253, 136, 254, 255, 228, 219, 128, 128, 128, 128, 128], [189, 129, 242, 255, 227, 213, 255, 219, 128, 128, 128], [106, 126, 227, 252, 214, 209, 255, 255, 128, 128, 128]], [[1, 98, 248, 255, 236, 226, 255, 255, 128, 128, 128], [181, 133, 238, 254, 221, 234, 255, 154, 128, 128, 128], [78, 134, 202, 247, 198, 180, 255, 219, 128, 128, 128]], [[1, 185, 249, 255, 243, 255, 128, 128, 128, 128, 128], [184, 150, 247, 255, 236, 224, 128, 128, 128, 128, 128], [77, 110, 216, 255, 236, 230, 128, 128, 128, 128, 128]], [[1, 101, 251, 255, 241, 255, 128, 128, 128, 128, 128], [170, 139, 241, 252, 236, 209, 255, 255, 128, 128, 128], [37, 116, 196, 243, 228, 255, 255, 255, 128, 128, 128]], [[1, 204, 254, 255, 245, 255, 128, 128, 128, 128, 128], [207, 160, 250, 255, 238, 128, 128, 128, 128, 128, 128], [102, 103, 231, 255, 211, 171, 128, 128, 128, 128, 128]], [[1, 152, 252, 255, 240, 255, 128, 128, 128, 128, 128], [177, 135, 243, 255, 234, 225, 128, 128, 128, 128, 128], [80, 129, 211, 255, 194, 224, 128, 128, 128, 128, 128]], [[1, 1, 255, 128, 128, 128, 128, 128, 128, 128, 128], [246, 1, 255, 128, 128, 128, 128, 128, 128, 128, 128], [255, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128]]], [[[198, 35, 237, 223, 193, 187, 162, 160, 145, 155, 62], [131, 45, 198, 221, 172, 176, 220, 157, 252, 221, 1], [68, 47, 146, 208, 149, 167, 221, 162, 255, 223, 128]], [[1, 149, 241, 255, 221, 224, 255, 255, 128, 128, 128], [184, 141, 234, 253, 222, 220, 255, 199, 128, 128, 128], [81, 99, 181, 242, 176, 190, 249, 202, 255, 255, 128]], [[1, 129, 232, 253, 214, 197, 242, 196, 255, 255, 128], [99, 121, 210, 250, 201, 198, 255, 202, 128, 128, 128], [23, 91, 163, 242, 170, 187, 247, 210, 255, 255, 128]], [[1, 200, 246, 255, 234, 255, 128, 128, 128, 128, 128], [109, 178, 241, 255, 231, 245, 255, 255, 128, 128, 128], [44, 130, 201, 253, 205, 192, 255, 255, 128, 128, 128]], [[1, 132, 239, 251, 219, 209, 255, 165, 128, 128, 128], [94, 136, 225, 251, 218, 190, 255, 255, 128, 128, 128], [22, 100, 174, 245, 186, 161, 255, 199, 128, 128, 128]], [[1, 182, 249, 255, 232, 235, 128, 128, 128, 128, 128], [124, 143, 241, 255, 227, 234, 128, 128, 128, 128, 128], [35, 77, 181, 251, 193, 211, 255, 205, 128, 128, 128]], [[1, 157, 247, 255, 236, 231, 255, 255, 128, 128, 128], [121, 141, 235, 255, 225, 227, 255, 255, 128, 128, 128], [45, 99, 188, 251, 195, 217, 255, 224, 128, 128, 128]], [[1, 1, 251, 255, 213, 255, 128, 128, 128, 128, 128], [203, 1, 248, 255, 255, 128, 128, 128, 128, 128, 128], [137, 1, 177, 255, 224, 255, 128, 128, 128, 128, 128]]], [[[253, 9, 248, 251, 207, 208, 255, 192, 128, 128, 128], [175, 13, 224, 243, 193, 185, 249, 198, 255, 255, 128], [73, 17, 171, 221, 161, 179, 236, 167, 255, 234, 128]], [[1, 95, 247, 253, 212, 183, 255, 255, 128, 128, 128], [239, 90, 244, 250, 211, 209, 255, 255, 128, 128, 128], [155, 77, 195, 248, 188, 195, 255, 255, 128, 128, 128]], [[1, 24, 239, 251, 218, 219, 255, 205, 128, 128, 128], [201, 51, 219, 255, 196, 186, 128, 128, 128, 128, 128], [69, 46, 190, 239, 201, 218, 255, 228, 128, 128, 128]], [[1, 191, 251, 255, 255, 128, 128, 128, 128, 128, 128], [223, 165, 249, 255, 213, 255, 128, 128, 128, 128, 128], [141, 124, 248, 255, 255, 128, 128, 128, 128, 128, 128]], [[1, 16, 248, 255, 255, 128, 128, 128, 128, 128, 128], [190, 36, 230, 255, 236, 255, 128, 128, 128, 128, 128], [149, 1, 255, 128, 128, 128, 128, 128, 128, 128, 128]], [[1, 226, 255, 128, 128, 128, 128, 128, 128, 128, 128], [247, 192, 255, 128, 128, 128, 128, 128, 128, 128, 128], [240, 128, 255, 128, 128, 128, 128, 128, 128, 128, 128]], [[1, 134, 252, 255, 255, 128, 128, 128, 128, 128, 128], [213, 62, 250, 255, 255, 128, 128, 128, 128, 128, 128], [55, 93, 255, 128, 128, 128, 128, 128, 128, 128, 128]], [[128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128], [128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128], [128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128]]], [[[202, 24, 213, 235, 186, 191, 220, 160, 240, 175, 255], [126, 38, 182, 232, 169, 184, 228, 174, 255, 187, 128], [61, 46, 138, 219, 151, 178, 240, 170, 255, 216, 128]], [[1, 112, 230, 250, 199, 191, 247, 159, 255, 255, 128], [166, 109, 228, 252, 211, 215, 255, 174, 128, 128, 128], [39, 77, 162, 232, 172, 180, 245, 178, 255, 255, 128]], [[1, 52, 220, 246, 198, 199, 249, 220, 255, 255, 128], [124, 74, 191, 243, 183, 193, 250, 221, 255, 255, 128], [24, 71, 130, 219, 154, 170, 243, 182, 255, 255, 128]], [[1, 182, 225, 249, 219, 240, 255, 224, 128, 128, 128], [149, 150, 226, 252, 216, 205, 255, 171, 128, 128, 128], [28, 108, 170, 242, 183, 194, 254, 223, 255, 255, 128]], [[1, 81, 230, 252, 204, 203, 255, 192, 128, 128, 128], [123, 102, 209, 247, 188, 196, 255, 233, 128, 128, 128], [20, 95, 153, 243, 164, 173, 255, 203, 128, 128, 128]], [[1, 222, 248, 255, 216, 213, 128, 128, 128, 128, 128], [168, 175, 246, 252, 235, 205, 255, 255, 128, 128, 128], [47, 116, 215, 255, 211, 212, 255, 255, 128, 128, 128]], [[1, 121, 236, 253, 212, 214, 255, 255, 128, 128, 128], [141, 84, 213, 252, 201, 202, 255, 219, 128, 128, 128], [42, 80, 160, 240, 162, 185, 255, 205, 128, 128, 128]], [[1, 1, 255, 128, 128, 128, 128, 128, 128, 128, 128], [244, 1, 255, 128, 128, 128, 128, 128, 128, 128, 128], [238, 1, 255, 128, 128, 128, 128, 128, 128, 128, 128]]]], ci = [[[231, 120, 48, 89, 115, 113, 120, 152, 112], [152, 179, 64, 126, 170, 118, 46, 70, 95], [175, 69, 143, 80, 85, 82, 72, 155, 103], [56, 58, 10, 171, 218, 189, 17, 13, 152], [114, 26, 17, 163, 44, 195, 21, 10, 173], [121, 24, 80, 195, 26, 62, 44, 64, 85], [144, 71, 10, 38, 171, 213, 144, 34, 26], [170, 46, 55, 19, 136, 160, 33, 206, 71], [63, 20, 8, 114, 114, 208, 12, 9, 226], [81, 40, 11, 96, 182, 84, 29, 16, 36]], [[134, 183, 89, 137, 98, 101, 106, 165, 148], [72, 187, 100, 130, 157, 111, 32, 75, 80], [66, 102, 167, 99, 74, 62, 40, 234, 128], [41, 53, 9, 178, 241, 141, 26, 8, 107], [74, 43, 26, 146, 73, 166, 49, 23, 157], [65, 38, 105, 160, 51, 52, 31, 115, 128], [104, 79, 12, 27, 217, 255, 87, 17, 7], [87, 68, 71, 44, 114, 51, 15, 186, 23], [47, 41, 14, 110, 182, 183, 21, 17, 194], [66, 45, 25, 102, 197, 189, 23, 18, 22]], [[88, 88, 147, 150, 42, 46, 45, 196, 205], [43, 97, 183, 117, 85, 38, 35, 179, 61], [39, 53, 200, 87, 26, 21, 43, 232, 171], [56, 34, 51, 104, 114, 102, 29, 93, 77], [39, 28, 85, 171, 58, 165, 90, 98, 64], [34, 22, 116, 206, 23, 34, 43, 166, 73], [107, 54, 32, 26, 51, 1, 81, 43, 31], [68, 25, 106, 22, 64, 171, 36, 225, 114], [34, 19, 21, 102, 132, 188, 16, 76, 124], [62, 18, 78, 95, 85, 57, 50, 48, 51]], [[193, 101, 35, 159, 215, 111, 89, 46, 111], [60, 148, 31, 172, 219, 228, 21, 18, 111], [112, 113, 77, 85, 179, 255, 38, 120, 114], [40, 42, 1, 196, 245, 209, 10, 25, 109], [88, 43, 29, 140, 166, 213, 37, 43, 154], [61, 63, 30, 155, 67, 45, 68, 1, 209], [100, 80, 8, 43, 154, 1, 51, 26, 71], [142, 78, 78, 16, 255, 128, 34, 197, 171], [41, 40, 5, 102, 211, 183, 4, 1, 221], [51, 50, 17, 168, 209, 192, 23, 25, 82]], [[138, 31, 36, 171, 27, 166, 38, 44, 229], [67, 87, 58, 169, 82, 115, 26, 59, 179], [63, 59, 90, 180, 59, 166, 93, 73, 154], [40, 40, 21, 116, 143, 209, 34, 39, 175], [47, 15, 16, 183, 34, 223, 49, 45, 183], [46, 17, 33, 183, 6, 98, 15, 32, 183], [57, 46, 22, 24, 128, 1, 54, 17, 37], [65, 32, 73, 115, 28, 128, 23, 128, 205], [40, 3, 9, 115, 51, 192, 18, 6, 223], [87, 37, 9, 115, 59, 77, 64, 21, 47]], [[104, 55, 44, 218, 9, 54, 53, 130, 226], [64, 90, 70, 205, 40, 41, 23, 26, 57], [54, 57, 112, 184, 5, 41, 38, 166, 213], [30, 34, 26, 133, 152, 116, 10, 32, 134], [39, 19, 53, 221, 26, 114, 32, 73, 255], [31, 9, 65, 234, 2, 15, 1, 118, 73], [75, 32, 12, 51, 192, 255, 160, 43, 51], [88, 31, 35, 67, 102, 85, 55, 186, 85], [56, 21, 23, 111, 59, 205, 45, 37, 192], [55, 38, 70, 124, 73, 102, 1, 34, 98]], [[125, 98, 42, 88, 104, 85, 117, 175, 82], [95, 84, 53, 89, 128, 100, 113, 101, 45], [75, 79, 123, 47, 51, 128, 81, 171, 1], [57, 17, 5, 71, 102, 57, 53, 41, 49], [38, 33, 13, 121, 57, 73, 26, 1, 85], [41, 10, 67, 138, 77, 110, 90, 47, 114], [115, 21, 2, 10, 102, 255, 166, 23, 6], [101, 29, 16, 10, 85, 128, 101, 196, 26], [57, 18, 10, 102, 102, 213, 34, 20, 43], [117, 20, 15, 36, 163, 128, 68, 1, 26]], [[102, 61, 71, 37, 34, 53, 31, 243, 192], [69, 60, 71, 38, 73, 119, 28, 222, 37], [68, 45, 128, 34, 1, 47, 11, 245, 171], [62, 17, 19, 70, 146, 85, 55, 62, 70], [37, 43, 37, 154, 100, 163, 85, 160, 1], [63, 9, 92, 136, 28, 64, 32, 201, 85], [75, 15, 9, 9, 64, 255, 184, 119, 16], [86, 6, 28, 5, 64, 255, 25, 248, 1], [56, 8, 17, 132, 137, 255, 55, 116, 128], [58, 15, 20, 82, 135, 57, 26, 121, 40]], [[164, 50, 31, 137, 154, 133, 25, 35, 218], [51, 103, 44, 131, 131, 123, 31, 6, 158], [86, 40, 64, 135, 148, 224, 45, 183, 128], [22, 26, 17, 131, 240, 154, 14, 1, 209], [45, 16, 21, 91, 64, 222, 7, 1, 197], [56, 21, 39, 155, 60, 138, 23, 102, 213], [83, 12, 13, 54, 192, 255, 68, 47, 28], [85, 26, 85, 85, 128, 128, 32, 146, 171], [18, 11, 7, 63, 144, 171, 4, 4, 246], [35, 27, 10, 146, 174, 171, 12, 26, 128]], [[190, 80, 35, 99, 180, 80, 126, 54, 45], [85, 126, 47, 87, 176, 51, 41, 20, 32], [101, 75, 128, 139, 118, 146, 116, 128, 85], [56, 41, 15, 176, 236, 85, 37, 9, 62], [71, 30, 17, 119, 118, 255, 17, 18, 138], [101, 38, 60, 138, 55, 70, 43, 26, 142], [146, 36, 19, 30, 171, 255, 97, 27, 20], [138, 45, 61, 62, 219, 1, 81, 188, 64], [32, 41, 20, 117, 151, 142, 20, 21, 163], [112, 19, 12, 61, 195, 128, 48, 4, 24]]], ui = [[[[255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[176, 246, 255, 255, 255, 255, 255, 255, 255, 255, 255], [223, 241, 252, 255, 255, 255, 255, 255, 255, 255, 255], [249, 253, 253, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 244, 252, 255, 255, 255, 255, 255, 255, 255, 255], [234, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255], [253, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 246, 254, 255, 255, 255, 255, 255, 255, 255, 255], [239, 253, 254, 255, 255, 255, 255, 255, 255, 255, 255], [254, 255, 254, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 248, 254, 255, 255, 255, 255, 255, 255, 255, 255], [251, 255, 254, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 253, 254, 255, 255, 255, 255, 255, 255, 255, 255], [251, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255], [254, 255, 254, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 254, 253, 255, 254, 255, 255, 255, 255, 255, 255], [250, 255, 254, 255, 254, 255, 255, 255, 255, 255, 255], [254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]]], [[[217, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [225, 252, 241, 253, 255, 255, 254, 255, 255, 255, 255], [234, 250, 241, 250, 253, 255, 253, 254, 255, 255, 255]], [[255, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255], [223, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255], [238, 253, 254, 254, 255, 255, 255, 255, 255, 255, 255]], [[255, 248, 254, 255, 255, 255, 255, 255, 255, 255, 255], [249, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 253, 255, 255, 255, 255, 255, 255, 255, 255, 255], [247, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 253, 254, 255, 255, 255, 255, 255, 255, 255, 255], [252, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255], [253, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 254, 253, 255, 255, 255, 255, 255, 255, 255, 255], [250, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]]], [[[186, 251, 250, 255, 255, 255, 255, 255, 255, 255, 255], [234, 251, 244, 254, 255, 255, 255, 255, 255, 255, 255], [251, 251, 243, 253, 254, 255, 254, 255, 255, 255, 255]], [[255, 253, 254, 255, 255, 255, 255, 255, 255, 255, 255], [236, 253, 254, 255, 255, 255, 255, 255, 255, 255, 255], [251, 253, 253, 254, 254, 255, 255, 255, 255, 255, 255]], [[255, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255], [254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255], [254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255], [254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]]], [[[248, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [250, 254, 252, 254, 255, 255, 255, 255, 255, 255, 255], [248, 254, 249, 253, 255, 255, 255, 255, 255, 255, 255]], [[255, 253, 253, 255, 255, 255, 255, 255, 255, 255, 255], [246, 253, 253, 255, 255, 255, 255, 255, 255, 255, 255], [252, 254, 251, 254, 254, 255, 255, 255, 255, 255, 255]], [[255, 254, 252, 255, 255, 255, 255, 255, 255, 255, 255], [248, 254, 253, 255, 255, 255, 255, 255, 255, 255, 255], [253, 255, 254, 254, 255, 255, 255, 255, 255, 255, 255]], [[255, 251, 254, 255, 255, 255, 255, 255, 255, 255, 255], [245, 251, 254, 255, 255, 255, 255, 255, 255, 255, 255], [253, 253, 254, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 251, 253, 255, 255, 255, 255, 255, 255, 255, 255], [252, 253, 254, 255, 255, 255, 255, 255, 255, 255, 255], [255, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 252, 255, 255, 255, 255, 255, 255, 255, 255, 255], [249, 255, 254, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 254, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 255, 253, 255, 255, 255, 255, 255, 255, 255, 255], [250, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]]]], hi = [0, 1, 2, 3, 6, 4, 5, 6, 6, 6, 6, 6, 6, 6, 6, 7, 0], li = [], fi = [], di = [], pi = 1, gi = 2, mi = [], vi = [];
+    var $r, Qr, tn, en, rn, nn, an, on, sn, cn, un, hn, ln2, fn, dn, pn, gn, mn, vn, bn, yn, wn, Nn, Ln, An, xn, Sn, _n, Pn = a2(511), kn = a2(2041), In = a2(225), Fn = a2(767), Cn = 0, jn = kn, On = In, Bn = Fn, Mn = Pn, En = 0, qn = 1, Dn = 2, Rn = 3, Tn = 4, Un = 5, zn = 6, Hn = 7, Wn = 8, Vn = 9, Gn = 10, Yn = [2, 3, 7], Jn = [3, 3, 11], Xn = [280, 256, 256, 256, 40], Kn = [0, 1, 1, 1, 0], Zn = [17, 18, 0, 1, 2, 3, 4, 5, 16, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], $n = [24, 7, 23, 25, 40, 6, 39, 41, 22, 26, 38, 42, 56, 5, 55, 57, 21, 27, 54, 58, 37, 43, 72, 4, 71, 73, 20, 28, 53, 59, 70, 74, 36, 44, 88, 69, 75, 52, 60, 3, 87, 89, 19, 29, 86, 90, 35, 45, 68, 76, 85, 91, 51, 61, 104, 2, 103, 105, 18, 30, 102, 106, 34, 46, 84, 92, 67, 77, 101, 107, 50, 62, 120, 1, 119, 121, 83, 93, 17, 31, 100, 108, 66, 78, 118, 122, 33, 47, 117, 123, 49, 63, 99, 109, 82, 94, 0, 116, 124, 65, 79, 16, 32, 98, 110, 48, 115, 125, 81, 95, 64, 114, 126, 97, 111, 80, 113, 127, 96, 112], Qn = [2954, 2956, 2958, 2962, 2970, 2986, 3018, 3082, 3212, 3468, 3980, 5004], ti = 8, ei = [4, 5, 6, 7, 8, 9, 10, 10, 11, 12, 13, 14, 15, 16, 17, 17, 18, 19, 20, 20, 21, 21, 22, 22, 23, 23, 24, 25, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 91, 93, 95, 96, 98, 100, 101, 102, 104, 106, 108, 110, 112, 114, 116, 118, 122, 124, 126, 128, 130, 132, 134, 136, 138, 140, 143, 145, 148, 151, 154, 157], ri = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100, 102, 104, 106, 108, 110, 112, 114, 116, 119, 122, 125, 128, 131, 134, 137, 140, 143, 146, 149, 152, 155, 158, 161, 164, 167, 170, 173, 177, 181, 185, 189, 193, 197, 201, 205, 209, 213, 217, 221, 225, 229, 234, 239, 245, 249, 254, 259, 264, 269, 274, 279, 284], ni = null, ii = [[173, 148, 140, 0], [176, 155, 140, 135, 0], [180, 157, 141, 134, 130, 0], [254, 254, 243, 230, 196, 177, 153, 140, 133, 130, 129, 0]], ai = [0, 1, 4, 8, 5, 2, 3, 6, 9, 12, 13, 10, 7, 11, 14, 15], oi = [-0, 1, -1, 2, -2, 3, 4, 6, -3, 5, -4, -5, -6, 7, -7, 8, -8, -9], si = [[[[128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128], [128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128], [128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128]], [[253, 136, 254, 255, 228, 219, 128, 128, 128, 128, 128], [189, 129, 242, 255, 227, 213, 255, 219, 128, 128, 128], [106, 126, 227, 252, 214, 209, 255, 255, 128, 128, 128]], [[1, 98, 248, 255, 236, 226, 255, 255, 128, 128, 128], [181, 133, 238, 254, 221, 234, 255, 154, 128, 128, 128], [78, 134, 202, 247, 198, 180, 255, 219, 128, 128, 128]], [[1, 185, 249, 255, 243, 255, 128, 128, 128, 128, 128], [184, 150, 247, 255, 236, 224, 128, 128, 128, 128, 128], [77, 110, 216, 255, 236, 230, 128, 128, 128, 128, 128]], [[1, 101, 251, 255, 241, 255, 128, 128, 128, 128, 128], [170, 139, 241, 252, 236, 209, 255, 255, 128, 128, 128], [37, 116, 196, 243, 228, 255, 255, 255, 128, 128, 128]], [[1, 204, 254, 255, 245, 255, 128, 128, 128, 128, 128], [207, 160, 250, 255, 238, 128, 128, 128, 128, 128, 128], [102, 103, 231, 255, 211, 171, 128, 128, 128, 128, 128]], [[1, 152, 252, 255, 240, 255, 128, 128, 128, 128, 128], [177, 135, 243, 255, 234, 225, 128, 128, 128, 128, 128], [80, 129, 211, 255, 194, 224, 128, 128, 128, 128, 128]], [[1, 1, 255, 128, 128, 128, 128, 128, 128, 128, 128], [246, 1, 255, 128, 128, 128, 128, 128, 128, 128, 128], [255, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128]]], [[[198, 35, 237, 223, 193, 187, 162, 160, 145, 155, 62], [131, 45, 198, 221, 172, 176, 220, 157, 252, 221, 1], [68, 47, 146, 208, 149, 167, 221, 162, 255, 223, 128]], [[1, 149, 241, 255, 221, 224, 255, 255, 128, 128, 128], [184, 141, 234, 253, 222, 220, 255, 199, 128, 128, 128], [81, 99, 181, 242, 176, 190, 249, 202, 255, 255, 128]], [[1, 129, 232, 253, 214, 197, 242, 196, 255, 255, 128], [99, 121, 210, 250, 201, 198, 255, 202, 128, 128, 128], [23, 91, 163, 242, 170, 187, 247, 210, 255, 255, 128]], [[1, 200, 246, 255, 234, 255, 128, 128, 128, 128, 128], [109, 178, 241, 255, 231, 245, 255, 255, 128, 128, 128], [44, 130, 201, 253, 205, 192, 255, 255, 128, 128, 128]], [[1, 132, 239, 251, 219, 209, 255, 165, 128, 128, 128], [94, 136, 225, 251, 218, 190, 255, 255, 128, 128, 128], [22, 100, 174, 245, 186, 161, 255, 199, 128, 128, 128]], [[1, 182, 249, 255, 232, 235, 128, 128, 128, 128, 128], [124, 143, 241, 255, 227, 234, 128, 128, 128, 128, 128], [35, 77, 181, 251, 193, 211, 255, 205, 128, 128, 128]], [[1, 157, 247, 255, 236, 231, 255, 255, 128, 128, 128], [121, 141, 235, 255, 225, 227, 255, 255, 128, 128, 128], [45, 99, 188, 251, 195, 217, 255, 224, 128, 128, 128]], [[1, 1, 251, 255, 213, 255, 128, 128, 128, 128, 128], [203, 1, 248, 255, 255, 128, 128, 128, 128, 128, 128], [137, 1, 177, 255, 224, 255, 128, 128, 128, 128, 128]]], [[[253, 9, 248, 251, 207, 208, 255, 192, 128, 128, 128], [175, 13, 224, 243, 193, 185, 249, 198, 255, 255, 128], [73, 17, 171, 221, 161, 179, 236, 167, 255, 234, 128]], [[1, 95, 247, 253, 212, 183, 255, 255, 128, 128, 128], [239, 90, 244, 250, 211, 209, 255, 255, 128, 128, 128], [155, 77, 195, 248, 188, 195, 255, 255, 128, 128, 128]], [[1, 24, 239, 251, 218, 219, 255, 205, 128, 128, 128], [201, 51, 219, 255, 196, 186, 128, 128, 128, 128, 128], [69, 46, 190, 239, 201, 218, 255, 228, 128, 128, 128]], [[1, 191, 251, 255, 255, 128, 128, 128, 128, 128, 128], [223, 165, 249, 255, 213, 255, 128, 128, 128, 128, 128], [141, 124, 248, 255, 255, 128, 128, 128, 128, 128, 128]], [[1, 16, 248, 255, 255, 128, 128, 128, 128, 128, 128], [190, 36, 230, 255, 236, 255, 128, 128, 128, 128, 128], [149, 1, 255, 128, 128, 128, 128, 128, 128, 128, 128]], [[1, 226, 255, 128, 128, 128, 128, 128, 128, 128, 128], [247, 192, 255, 128, 128, 128, 128, 128, 128, 128, 128], [240, 128, 255, 128, 128, 128, 128, 128, 128, 128, 128]], [[1, 134, 252, 255, 255, 128, 128, 128, 128, 128, 128], [213, 62, 250, 255, 255, 128, 128, 128, 128, 128, 128], [55, 93, 255, 128, 128, 128, 128, 128, 128, 128, 128]], [[128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128], [128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128], [128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128]]], [[[202, 24, 213, 235, 186, 191, 220, 160, 240, 175, 255], [126, 38, 182, 232, 169, 184, 228, 174, 255, 187, 128], [61, 46, 138, 219, 151, 178, 240, 170, 255, 216, 128]], [[1, 112, 230, 250, 199, 191, 247, 159, 255, 255, 128], [166, 109, 228, 252, 211, 215, 255, 174, 128, 128, 128], [39, 77, 162, 232, 172, 180, 245, 178, 255, 255, 128]], [[1, 52, 220, 246, 198, 199, 249, 220, 255, 255, 128], [124, 74, 191, 243, 183, 193, 250, 221, 255, 255, 128], [24, 71, 130, 219, 154, 170, 243, 182, 255, 255, 128]], [[1, 182, 225, 249, 219, 240, 255, 224, 128, 128, 128], [149, 150, 226, 252, 216, 205, 255, 171, 128, 128, 128], [28, 108, 170, 242, 183, 194, 254, 223, 255, 255, 128]], [[1, 81, 230, 252, 204, 203, 255, 192, 128, 128, 128], [123, 102, 209, 247, 188, 196, 255, 233, 128, 128, 128], [20, 95, 153, 243, 164, 173, 255, 203, 128, 128, 128]], [[1, 222, 248, 255, 216, 213, 128, 128, 128, 128, 128], [168, 175, 246, 252, 235, 205, 255, 255, 128, 128, 128], [47, 116, 215, 255, 211, 212, 255, 255, 128, 128, 128]], [[1, 121, 236, 253, 212, 214, 255, 255, 128, 128, 128], [141, 84, 213, 252, 201, 202, 255, 219, 128, 128, 128], [42, 80, 160, 240, 162, 185, 255, 205, 128, 128, 128]], [[1, 1, 255, 128, 128, 128, 128, 128, 128, 128, 128], [244, 1, 255, 128, 128, 128, 128, 128, 128, 128, 128], [238, 1, 255, 128, 128, 128, 128, 128, 128, 128, 128]]]], ci = [[[231, 120, 48, 89, 115, 113, 120, 152, 112], [152, 179, 64, 126, 170, 118, 46, 70, 95], [175, 69, 143, 80, 85, 82, 72, 155, 103], [56, 58, 10, 171, 218, 189, 17, 13, 152], [114, 26, 17, 163, 44, 195, 21, 10, 173], [121, 24, 80, 195, 26, 62, 44, 64, 85], [144, 71, 10, 38, 171, 213, 144, 34, 26], [170, 46, 55, 19, 136, 160, 33, 206, 71], [63, 20, 8, 114, 114, 208, 12, 9, 226], [81, 40, 11, 96, 182, 84, 29, 16, 36]], [[134, 183, 89, 137, 98, 101, 106, 165, 148], [72, 187, 100, 130, 157, 111, 32, 75, 80], [66, 102, 167, 99, 74, 62, 40, 234, 128], [41, 53, 9, 178, 241, 141, 26, 8, 107], [74, 43, 26, 146, 73, 166, 49, 23, 157], [65, 38, 105, 160, 51, 52, 31, 115, 128], [104, 79, 12, 27, 217, 255, 87, 17, 7], [87, 68, 71, 44, 114, 51, 15, 186, 23], [47, 41, 14, 110, 182, 183, 21, 17, 194], [66, 45, 25, 102, 197, 189, 23, 18, 22]], [[88, 88, 147, 150, 42, 46, 45, 196, 205], [43, 97, 183, 117, 85, 38, 35, 179, 61], [39, 53, 200, 87, 26, 21, 43, 232, 171], [56, 34, 51, 104, 114, 102, 29, 93, 77], [39, 28, 85, 171, 58, 165, 90, 98, 64], [34, 22, 116, 206, 23, 34, 43, 166, 73], [107, 54, 32, 26, 51, 1, 81, 43, 31], [68, 25, 106, 22, 64, 171, 36, 225, 114], [34, 19, 21, 102, 132, 188, 16, 76, 124], [62, 18, 78, 95, 85, 57, 50, 48, 51]], [[193, 101, 35, 159, 215, 111, 89, 46, 111], [60, 148, 31, 172, 219, 228, 21, 18, 111], [112, 113, 77, 85, 179, 255, 38, 120, 114], [40, 42, 1, 196, 245, 209, 10, 25, 109], [88, 43, 29, 140, 166, 213, 37, 43, 154], [61, 63, 30, 155, 67, 45, 68, 1, 209], [100, 80, 8, 43, 154, 1, 51, 26, 71], [142, 78, 78, 16, 255, 128, 34, 197, 171], [41, 40, 5, 102, 211, 183, 4, 1, 221], [51, 50, 17, 168, 209, 192, 23, 25, 82]], [[138, 31, 36, 171, 27, 166, 38, 44, 229], [67, 87, 58, 169, 82, 115, 26, 59, 179], [63, 59, 90, 180, 59, 166, 93, 73, 154], [40, 40, 21, 116, 143, 209, 34, 39, 175], [47, 15, 16, 183, 34, 223, 49, 45, 183], [46, 17, 33, 183, 6, 98, 15, 32, 183], [57, 46, 22, 24, 128, 1, 54, 17, 37], [65, 32, 73, 115, 28, 128, 23, 128, 205], [40, 3, 9, 115, 51, 192, 18, 6, 223], [87, 37, 9, 115, 59, 77, 64, 21, 47]], [[104, 55, 44, 218, 9, 54, 53, 130, 226], [64, 90, 70, 205, 40, 41, 23, 26, 57], [54, 57, 112, 184, 5, 41, 38, 166, 213], [30, 34, 26, 133, 152, 116, 10, 32, 134], [39, 19, 53, 221, 26, 114, 32, 73, 255], [31, 9, 65, 234, 2, 15, 1, 118, 73], [75, 32, 12, 51, 192, 255, 160, 43, 51], [88, 31, 35, 67, 102, 85, 55, 186, 85], [56, 21, 23, 111, 59, 205, 45, 37, 192], [55, 38, 70, 124, 73, 102, 1, 34, 98]], [[125, 98, 42, 88, 104, 85, 117, 175, 82], [95, 84, 53, 89, 128, 100, 113, 101, 45], [75, 79, 123, 47, 51, 128, 81, 171, 1], [57, 17, 5, 71, 102, 57, 53, 41, 49], [38, 33, 13, 121, 57, 73, 26, 1, 85], [41, 10, 67, 138, 77, 110, 90, 47, 114], [115, 21, 2, 10, 102, 255, 166, 23, 6], [101, 29, 16, 10, 85, 128, 101, 196, 26], [57, 18, 10, 102, 102, 213, 34, 20, 43], [117, 20, 15, 36, 163, 128, 68, 1, 26]], [[102, 61, 71, 37, 34, 53, 31, 243, 192], [69, 60, 71, 38, 73, 119, 28, 222, 37], [68, 45, 128, 34, 1, 47, 11, 245, 171], [62, 17, 19, 70, 146, 85, 55, 62, 70], [37, 43, 37, 154, 100, 163, 85, 160, 1], [63, 9, 92, 136, 28, 64, 32, 201, 85], [75, 15, 9, 9, 64, 255, 184, 119, 16], [86, 6, 28, 5, 64, 255, 25, 248, 1], [56, 8, 17, 132, 137, 255, 55, 116, 128], [58, 15, 20, 82, 135, 57, 26, 121, 40]], [[164, 50, 31, 137, 154, 133, 25, 35, 218], [51, 103, 44, 131, 131, 123, 31, 6, 158], [86, 40, 64, 135, 148, 224, 45, 183, 128], [22, 26, 17, 131, 240, 154, 14, 1, 209], [45, 16, 21, 91, 64, 222, 7, 1, 197], [56, 21, 39, 155, 60, 138, 23, 102, 213], [83, 12, 13, 54, 192, 255, 68, 47, 28], [85, 26, 85, 85, 128, 128, 32, 146, 171], [18, 11, 7, 63, 144, 171, 4, 4, 246], [35, 27, 10, 146, 174, 171, 12, 26, 128]], [[190, 80, 35, 99, 180, 80, 126, 54, 45], [85, 126, 47, 87, 176, 51, 41, 20, 32], [101, 75, 128, 139, 118, 146, 116, 128, 85], [56, 41, 15, 176, 236, 85, 37, 9, 62], [71, 30, 17, 119, 118, 255, 17, 18, 138], [101, 38, 60, 138, 55, 70, 43, 26, 142], [146, 36, 19, 30, 171, 255, 97, 27, 20], [138, 45, 61, 62, 219, 1, 81, 188, 64], [32, 41, 20, 117, 151, 142, 20, 21, 163], [112, 19, 12, 61, 195, 128, 48, 4, 24]]], ui = [[[[255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[176, 246, 255, 255, 255, 255, 255, 255, 255, 255, 255], [223, 241, 252, 255, 255, 255, 255, 255, 255, 255, 255], [249, 253, 253, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 244, 252, 255, 255, 255, 255, 255, 255, 255, 255], [234, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255], [253, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 246, 254, 255, 255, 255, 255, 255, 255, 255, 255], [239, 253, 254, 255, 255, 255, 255, 255, 255, 255, 255], [254, 255, 254, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 248, 254, 255, 255, 255, 255, 255, 255, 255, 255], [251, 255, 254, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 253, 254, 255, 255, 255, 255, 255, 255, 255, 255], [251, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255], [254, 255, 254, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 254, 253, 255, 254, 255, 255, 255, 255, 255, 255], [250, 255, 254, 255, 254, 255, 255, 255, 255, 255, 255], [254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]]], [[[217, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [225, 252, 241, 253, 255, 255, 254, 255, 255, 255, 255], [234, 250, 241, 250, 253, 255, 253, 254, 255, 255, 255]], [[255, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255], [223, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255], [238, 253, 254, 254, 255, 255, 255, 255, 255, 255, 255]], [[255, 248, 254, 255, 255, 255, 255, 255, 255, 255, 255], [249, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 253, 255, 255, 255, 255, 255, 255, 255, 255, 255], [247, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 253, 254, 255, 255, 255, 255, 255, 255, 255, 255], [252, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255], [253, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 254, 253, 255, 255, 255, 255, 255, 255, 255, 255], [250, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]]], [[[186, 251, 250, 255, 255, 255, 255, 255, 255, 255, 255], [234, 251, 244, 254, 255, 255, 255, 255, 255, 255, 255], [251, 251, 243, 253, 254, 255, 254, 255, 255, 255, 255]], [[255, 253, 254, 255, 255, 255, 255, 255, 255, 255, 255], [236, 253, 254, 255, 255, 255, 255, 255, 255, 255, 255], [251, 253, 253, 254, 254, 255, 255, 255, 255, 255, 255]], [[255, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255], [254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255], [254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255], [254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]]], [[[248, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [250, 254, 252, 254, 255, 255, 255, 255, 255, 255, 255], [248, 254, 249, 253, 255, 255, 255, 255, 255, 255, 255]], [[255, 253, 253, 255, 255, 255, 255, 255, 255, 255, 255], [246, 253, 253, 255, 255, 255, 255, 255, 255, 255, 255], [252, 254, 251, 254, 254, 255, 255, 255, 255, 255, 255]], [[255, 254, 252, 255, 255, 255, 255, 255, 255, 255, 255], [248, 254, 253, 255, 255, 255, 255, 255, 255, 255, 255], [253, 255, 254, 254, 255, 255, 255, 255, 255, 255, 255]], [[255, 251, 254, 255, 255, 255, 255, 255, 255, 255, 255], [245, 251, 254, 255, 255, 255, 255, 255, 255, 255, 255], [253, 253, 254, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 251, 253, 255, 255, 255, 255, 255, 255, 255, 255], [252, 253, 254, 255, 255, 255, 255, 255, 255, 255, 255], [255, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 252, 255, 255, 255, 255, 255, 255, 255, 255, 255], [249, 255, 254, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 254, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 255, 253, 255, 255, 255, 255, 255, 255, 255, 255], [250, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]], [[255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]]]], hi = [0, 1, 2, 3, 6, 4, 5, 6, 6, 6, 6, 6, 6, 6, 6, 7, 0], li = [], fi = [], di = [], pi = 1, gi = 2, mi = [], vi = [];
     vr("UpsampleRgbLinePair", Ar, 3), vr("UpsampleBgrLinePair", xr, 3), vr("UpsampleRgbaLinePair", Ir, 4), vr("UpsampleBgraLinePair", kr, 4), vr("UpsampleArgbLinePair", Pr, 4), vr("UpsampleRgba4444LinePair", _r, 2), vr("UpsampleRgb565LinePair", Sr, 2);
     var bi = t3.UpsampleRgbLinePair, yi = t3.UpsampleBgrLinePair, wi = t3.UpsampleRgbaLinePair, Ni = t3.UpsampleBgraLinePair, Li = t3.UpsampleArgbLinePair, Ai = t3.UpsampleRgba4444LinePair, xi = t3.UpsampleRgb565LinePair, Si = 16, _i = 1 << Si - 1, Pi = -227, ki = 482, Ii = 6, Fi = (256 << Ii) - 1, Ci = 0, ji = a2(256), Oi = a2(256), Bi = a2(256), Mi = a2(256), Ei = a2(ki - Pi), qi = a2(ki - Pi);
     Fr("YuvToRgbRow", Ar, 3), Fr("YuvToBgrRow", xr, 3), Fr("YuvToRgbaRow", Ir, 4), Fr("YuvToBgraRow", kr, 4), Fr("YuvToArgbRow", Pr, 4), Fr("YuvToRgba4444Row", _r, 2), Fr("YuvToRgb565Row", Sr, 2);
@@ -15055,9 +15060,9 @@ var require_html2canvas = __commonJS({
       var Bounds = (
         /** @class */
         function() {
-          function Bounds2(left2, top2, width, height) {
-            this.left = left2;
-            this.top = top2;
+          function Bounds2(left, top, width, height) {
+            this.left = left;
+            this.top = top;
             this.width = width;
             this.height = height;
           }
@@ -15202,17 +15207,17 @@ var require_html2canvas = __commonJS({
       var UTRIE2_OMITTED_BMP_INDEX_1_LENGTH$1 = 65536 >> UTRIE2_SHIFT_1$1;
       var UTRIE2_INDEX_2_BLOCK_LENGTH$1 = 1 << UTRIE2_SHIFT_1_2$1;
       var UTRIE2_INDEX_2_MASK$1 = UTRIE2_INDEX_2_BLOCK_LENGTH$1 - 1;
-      var slice16$1 = function(view, start2, end2) {
+      var slice16$1 = function(view, start, end) {
         if (view.slice) {
-          return view.slice(start2, end2);
+          return view.slice(start, end);
         }
-        return new Uint16Array(Array.prototype.slice.call(view, start2, end2));
+        return new Uint16Array(Array.prototype.slice.call(view, start, end));
       };
-      var slice32$1 = function(view, start2, end2) {
+      var slice32$1 = function(view, start, end) {
         if (view.slice) {
-          return view.slice(start2, end2);
+          return view.slice(start, end);
         }
-        return new Uint32Array(Array.prototype.slice.call(view, start2, end2));
+        return new Uint32Array(Array.prototype.slice.call(view, start, end));
       };
       var createTrieFromBase64$1 = function(base642, _byteLength) {
         var buffer = decode$1(base642);
@@ -15607,11 +15612,11 @@ var require_html2canvas = __commonJS({
       var Break = (
         /** @class */
         function() {
-          function Break2(codePoints, lineBreak2, start2, end2) {
+          function Break2(codePoints, lineBreak2, start, end) {
             this.codePoints = codePoints;
             this.required = lineBreak2 === BREAK_MANDATORY;
-            this.start = start2;
-            this.end = end2;
+            this.start = start;
+            this.end = end;
           }
           Break2.prototype.slice = function() {
             return fromCodePoint$1.apply(void 0, this.codePoints.slice(this.start, this.end));
@@ -16097,12 +16102,12 @@ var require_html2canvas = __commonJS({
               var start_1 = parseInt(fromCodePoint$1.apply(void 0, digits.map(function(digit) {
                 return digit === QUESTION_MARK ? ZERO : digit;
               })), 16);
-              var end2 = parseInt(fromCodePoint$1.apply(void 0, digits.map(function(digit) {
+              var end = parseInt(fromCodePoint$1.apply(void 0, digits.map(function(digit) {
                 return digit === QUESTION_MARK ? F2 : digit;
               })), 16);
-              return { type: 30, start: start_1, end: end2 };
+              return { type: 30, start: start_1, end };
             }
-            var start2 = parseInt(fromCodePoint$1.apply(void 0, digits), 16);
+            var start = parseInt(fromCodePoint$1.apply(void 0, digits), 16);
             if (this.peekCodePoint(0) === HYPHEN_MINUS && isHex(this.peekCodePoint(1))) {
               this.consumeCodePoint();
               codePoint = this.consumeCodePoint();
@@ -16111,10 +16116,10 @@ var require_html2canvas = __commonJS({
                 endDigits.push(codePoint);
                 codePoint = this.consumeCodePoint();
               }
-              var end2 = parseInt(fromCodePoint$1.apply(void 0, endDigits), 16);
-              return { type: 30, start: start2, end: end2 };
+              var end = parseInt(fromCodePoint$1.apply(void 0, endDigits), 16);
+              return { type: 30, start, end };
             } else {
-              return { type: 30, start: start2, end: start2 };
+              return { type: 30, start, end: start };
             }
           };
           Tokenizer2.prototype.consumeIdentLikeToken = function() {
@@ -16644,8 +16649,8 @@ var require_html2canvas = __commonJS({
           return token2.number;
         }
         if (token2.type === 16) {
-          var max4 = i3 === 3 ? 1 : 255;
-          return i3 === 3 ? token2.number / 100 * max4 : Math.round(token2.number / 100 * max4);
+          var max3 = i3 === 3 ? 1 : 255;
+          return i3 === 3 ? token2.number / 100 * max3 : Math.round(token2.number / 100 * max3);
         }
         return 0;
       };
@@ -18239,7 +18244,7 @@ var require_html2canvas = __commonJS({
           }
         }
       };
-      var contains2 = function(bit, value2) {
+      var contains = function(bit, value2) {
         return (bit & value2) !== 0;
       };
       var content = {
@@ -18549,27 +18554,27 @@ var require_html2canvas = __commonJS({
             return this.float !== 0;
           };
           CSSParsedDeclaration2.prototype.isInlineLevel = function() {
-            return contains2(
+            return contains(
               this.display,
               4
               /* INLINE */
-            ) || contains2(
+            ) || contains(
               this.display,
               33554432
               /* INLINE_BLOCK */
-            ) || contains2(
+            ) || contains(
               this.display,
               268435456
               /* INLINE_FLEX */
-            ) || contains2(
+            ) || contains(
               this.display,
               536870912
               /* INLINE_GRID */
-            ) || contains2(
+            ) || contains(
               this.display,
               67108864
               /* INLINE_LIST_ITEM */
-            ) || contains2(
+            ) || contains(
               this.display,
               134217728
               /* INLINE_TABLE */
@@ -18749,17 +18754,17 @@ var require_html2canvas = __commonJS({
       var UTRIE2_OMITTED_BMP_INDEX_1_LENGTH = 65536 >> UTRIE2_SHIFT_1;
       var UTRIE2_INDEX_2_BLOCK_LENGTH = 1 << UTRIE2_SHIFT_1_2;
       var UTRIE2_INDEX_2_MASK = UTRIE2_INDEX_2_BLOCK_LENGTH - 1;
-      var slice16 = function(view, start2, end2) {
+      var slice16 = function(view, start, end) {
         if (view.slice) {
-          return view.slice(start2, end2);
+          return view.slice(start, end);
         }
-        return new Uint16Array(Array.prototype.slice.call(view, start2, end2));
+        return new Uint16Array(Array.prototype.slice.call(view, start, end));
       };
-      var slice32 = function(view, start2, end2) {
+      var slice32 = function(view, start, end) {
         if (view.slice) {
-          return view.slice(start2, end2);
+          return view.slice(start, end);
         }
-        return new Uint32Array(Array.prototype.slice.call(view, start2, end2));
+        return new Uint32Array(Array.prototype.slice.call(view, start, end));
       };
       var createTrieFromBase64 = function(base642, _byteLength) {
         var buffer = decode(base642);
@@ -19006,13 +19011,13 @@ var require_html2canvas = __commonJS({
         var textList = toCodePoints$1(node.data).map(function(i3) {
           return fromCodePoint$1(i3);
         });
-        var offset3 = 0;
+        var offset2 = 0;
         var prev = {};
         var supports = textList.every(function(text, i3) {
-          range.setStart(node, offset3);
-          range.setEnd(node, offset3 + text.length);
+          range.setStart(node, offset2);
+          range.setEnd(node, offset2 + text.length);
           var rect = range.getBoundingClientRect();
-          offset3 += text.length;
+          offset2 += text.length;
           var boundAhead = rect.x > prev.x || rect.y > prev.y;
           prev = rect;
           if (i3 === 0) {
@@ -19161,16 +19166,16 @@ var require_html2canvas = __commonJS({
       var parseTextBounds = function(context, value2, styles, node) {
         var textList = breakText(value2, styles);
         var textBounds = [];
-        var offset3 = 0;
+        var offset2 = 0;
         textList.forEach(function(text) {
           if (styles.textDecorationLine.length || text.trim().length > 0) {
             if (FEATURES.SUPPORT_RANGE_BOUNDS) {
-              var clientRects = createRange(node, offset3, text.length).getClientRects();
+              var clientRects = createRange(node, offset2, text.length).getClientRects();
               if (clientRects.length > 1) {
                 var subSegments = segmentGraphemes(text);
                 var subOffset_1 = 0;
                 subSegments.forEach(function(subSegment) {
-                  textBounds.push(new TextBounds(subSegment, Bounds.fromDOMRectList(context, createRange(node, subOffset_1 + offset3, subSegment.length).getClientRects())));
+                  textBounds.push(new TextBounds(subSegment, Bounds.fromDOMRectList(context, createRange(node, subOffset_1 + offset2, subSegment.length).getClientRects())));
                   subOffset_1 += subSegment.length;
                 });
               } else {
@@ -19184,7 +19189,7 @@ var require_html2canvas = __commonJS({
           } else if (!FEATURES.SUPPORT_RANGE_BOUNDS) {
             node = node.splitText(text.length);
           }
-          offset3 += text.length;
+          offset2 += text.length;
         });
         return textBounds;
       };
@@ -19205,14 +19210,14 @@ var require_html2canvas = __commonJS({
         }
         return Bounds.EMPTY;
       };
-      var createRange = function(node, offset3, length) {
+      var createRange = function(node, offset2, length) {
         var ownerDocument = node.ownerDocument;
         if (!ownerDocument) {
           throw new Error("Node has no owner document");
         }
         var range = ownerDocument.createRange();
-        range.setStart(node, offset3);
-        range.setEnd(node, offset3 + length);
+        range.setStart(node, offset2);
+        range.setEnd(node, offset2 + length);
         return range;
       };
       var segmentGraphemes = function(value2) {
@@ -19588,7 +19593,7 @@ var require_html2canvas = __commonJS({
       var isInputElement = function(node) {
         return node.tagName === "INPUT";
       };
-      var isHTMLElement2 = function(node) {
+      var isHTMLElement = function(node) {
         return node.tagName === "HTML";
       };
       var isSVGElement = function(node) {
@@ -19925,8 +19930,8 @@ var require_html2canvas = __commonJS({
           "ა"
         ]
       };
-      var createAdditiveCounter = function(value2, min3, max4, symbols, fallback, suffix) {
-        if (value2 < min3 || value2 > max4) {
+      var createAdditiveCounter = function(value2, min2, max3, symbols, fallback, suffix) {
+        if (value2 < min2 || value2 > max3) {
           return createCounterText(value2, fallback, suffix.length > 0);
         }
         return symbols.integers.reduce(function(string, integer, index) {
@@ -19978,9 +19983,9 @@ var require_html2canvas = __commonJS({
         }
         for (var digit = 0; tmp > 0 && digit <= 4; digit++) {
           var coefficient = tmp % 10;
-          if (coefficient === 0 && contains2(flags, CJK_ZEROS) && string !== "") {
+          if (coefficient === 0 && contains(flags, CJK_ZEROS) && string !== "") {
             string = numbers[coefficient] + string;
-          } else if (coefficient > 1 || coefficient === 1 && digit === 0 || coefficient === 1 && digit === 1 && contains2(flags, CJK_TEN_COEFFICIENTS) || coefficient === 1 && digit === 1 && contains2(flags, CJK_TEN_HIGH_COEFFICIENTS) && value2 > 100 || coefficient === 1 && digit > 1 && contains2(flags, CJK_HUNDRED_COEFFICIENTS)) {
+          } else if (coefficient > 1 || coefficient === 1 && digit === 0 || coefficient === 1 && digit === 1 && contains(flags, CJK_TEN_COEFFICIENTS) || coefficient === 1 && digit === 1 && contains(flags, CJK_TEN_HIGH_COEFFICIENTS) && value2 > 100 || coefficient === 1 && digit > 1 && contains(flags, CJK_HUNDRED_COEFFICIENTS)) {
             string = numbers[coefficient] + (digit > 0 ? multipliers[digit - 1] : "") + string;
           } else if (coefficient === 1 && digit > 0) {
             string = multipliers[digit - 1] + string;
@@ -20751,12 +20756,12 @@ var require_html2canvas = __commonJS({
       var BezierCurve = (
         /** @class */
         function() {
-          function BezierCurve2(start2, startControl, endControl, end2) {
+          function BezierCurve2(start, startControl, endControl, end) {
             this.type = 1;
-            this.start = start2;
+            this.start = start;
             this.startControl = startControl;
             this.endControl = endControl;
-            this.end = end2;
+            this.end = end;
           }
           BezierCurve2.prototype.subdivide = function(t2, firstHalf) {
             var ab = lerp(this.start, this.startControl, t2);
@@ -20924,14 +20929,14 @@ var require_html2canvas = __commonJS({
           return OpacityEffect2;
         }()
       );
-      var isTransformEffect = function(effect4) {
-        return effect4.type === 0;
+      var isTransformEffect = function(effect) {
+        return effect.type === 0;
       };
-      var isClipEffect = function(effect4) {
-        return effect4.type === 1;
+      var isClipEffect = function(effect) {
+        return effect.type === 1;
       };
-      var isOpacityEffect = function(effect4) {
-        return effect4.type === 2;
+      var isOpacityEffect = function(effect) {
+        return effect.type === 2;
       };
       var equalPath = function(a3, b2) {
         if (a3.length === b2.length) {
@@ -21021,8 +21026,8 @@ var require_html2canvas = __commonJS({
             var parent = this.parent;
             var effects = this.effects.slice(0);
             while (parent) {
-              var croplessEffects = parent.effects.filter(function(effect4) {
-                return !isClipEffect(effect4);
+              var croplessEffects = parent.effects.filter(function(effect) {
+                return !isClipEffect(effect);
               });
               if (inFlow || parent.container.styles.position !== 0 || !parent.parent) {
                 effects.unshift.apply(effects, croplessEffects);
@@ -21047,8 +21052,8 @@ var require_html2canvas = __commonJS({
               }
               parent = parent.parent;
             }
-            return effects.filter(function(effect4) {
-              return contains2(effect4.target, target);
+            return effects.filter(function(effect) {
+              return contains(effect.target, target);
             });
           };
           return ElementPaint2;
@@ -21056,25 +21061,25 @@ var require_html2canvas = __commonJS({
       );
       var parseStackTree = function(parent, stackingContext, realStackingContext, listItems) {
         parent.container.elements.forEach(function(child) {
-          var treatAsRealStackingContext = contains2(
+          var treatAsRealStackingContext = contains(
             child.flags,
             4
             /* CREATES_REAL_STACKING_CONTEXT */
           );
-          var createsStackingContext2 = contains2(
+          var createsStackingContext2 = contains(
             child.flags,
             2
             /* CREATES_STACKING_CONTEXT */
           );
           var paintContainer = new ElementPaint(child, parent);
-          if (contains2(
+          if (contains(
             child.styles.display,
             2048
             /* LIST_ITEM */
           )) {
             listItems.push(paintContainer);
           }
-          var listOwnerItems = contains2(
+          var listOwnerItems = contains(
             child.flags,
             8
             /* IS_LIST_OWNER */
@@ -21127,7 +21132,7 @@ var require_html2canvas = __commonJS({
             }
             parseStackTree(paintContainer, stackingContext, realStackingContext, listOwnerItems);
           }
-          if (contains2(
+          if (contains(
             child.flags,
             8
             /* IS_LIST_OWNER */
@@ -21497,25 +21502,25 @@ var require_html2canvas = __commonJS({
             while (this._activeEffects.length) {
               this.popEffect();
             }
-            effects.forEach(function(effect4) {
-              return _this.applyEffect(effect4);
+            effects.forEach(function(effect) {
+              return _this.applyEffect(effect);
             });
           };
-          CanvasRenderer2.prototype.applyEffect = function(effect4) {
+          CanvasRenderer2.prototype.applyEffect = function(effect) {
             this.ctx.save();
-            if (isOpacityEffect(effect4)) {
-              this.ctx.globalAlpha = effect4.opacity;
+            if (isOpacityEffect(effect)) {
+              this.ctx.globalAlpha = effect.opacity;
             }
-            if (isTransformEffect(effect4)) {
-              this.ctx.translate(effect4.offsetX, effect4.offsetY);
-              this.ctx.transform(effect4.matrix[0], effect4.matrix[1], effect4.matrix[2], effect4.matrix[3], effect4.matrix[4], effect4.matrix[5]);
-              this.ctx.translate(-effect4.offsetX, -effect4.offsetY);
+            if (isTransformEffect(effect)) {
+              this.ctx.translate(effect.offsetX, effect.offsetY);
+              this.ctx.transform(effect.matrix[0], effect.matrix[1], effect.matrix[2], effect.matrix[3], effect.matrix[4], effect.matrix[5]);
+              this.ctx.translate(-effect.offsetX, -effect.offsetY);
             }
-            if (isClipEffect(effect4)) {
-              this.path(effect4.path);
+            if (isClipEffect(effect)) {
+              this.path(effect.path);
               this.ctx.clip();
             }
-            this._activeEffects.push(effect4);
+            this._activeEffects.push(effect);
           };
           CanvasRenderer2.prototype.popEffect = function() {
             this._activeEffects.pop();
@@ -21548,7 +21553,7 @@ var require_html2canvas = __commonJS({
               return __generator(this, function(_a2) {
                 switch (_a2.label) {
                   case 0:
-                    if (contains2(
+                    if (contains(
                       paint.container.flags,
                       16
                       /* DEBUG_RENDER */
@@ -21579,9 +21584,9 @@ var require_html2canvas = __commonJS({
               this.ctx.fillText(text.text, text.bounds.left, text.bounds.top + baseline);
             } else {
               var letters = segmentGraphemes(text.text);
-              letters.reduce(function(left2, letter) {
-                _this.ctx.fillText(letter, left2, text.bounds.top + baseline);
-                return left2 + _this.ctx.measureText(letter).width;
+              letters.reduce(function(left, letter) {
+                _this.ctx.fillText(letter, left, text.bounds.top + baseline);
+                return left + _this.ctx.measureText(letter).width;
               }, text.bounds.left);
             }
           };
@@ -21816,7 +21821,7 @@ var require_html2canvas = __commonJS({
                       this.ctx.textBaseline = "alphabetic";
                       this.ctx.textAlign = "left";
                     }
-                    if (!contains2(
+                    if (!contains(
                       container.styles.display,
                       2048
                       /* LIST_ITEM */
@@ -21871,7 +21876,7 @@ var require_html2canvas = __commonJS({
               return __generator(this, function(_p) {
                 switch (_p.label) {
                   case 0:
-                    if (contains2(
+                    if (contains(
                       stack.element.container.flags,
                       16
                       /* DEBUG_RENDER */
@@ -22008,11 +22013,11 @@ var require_html2canvas = __commonJS({
           CanvasRenderer2.prototype.formatPath = function(paths) {
             var _this = this;
             paths.forEach(function(point, index) {
-              var start2 = isBezierCurve(point) ? point.start : point;
+              var start = isBezierCurve(point) ? point.start : point;
               if (index === 0) {
-                _this.ctx.moveTo(start2.x, start2.y);
+                _this.ctx.moveTo(start.x, start.y);
               } else {
-                _this.ctx.lineTo(start2.x, start2.y);
+                _this.ctx.lineTo(start.x, start.y);
               }
               if (isBezierCurve(point)) {
                 _this.ctx.bezierCurveTo(point.startControl.x, point.startControl.y, point.endControl.x, point.endControl.y, point.end.x, point.end.y);
@@ -22047,7 +22052,7 @@ var require_html2canvas = __commonJS({
                   case 0:
                     index = container.styles.backgroundImage.length - 1;
                     _loop_1 = function(backgroundImage3) {
-                      var image2, url, _c, path, x2, y2, width, height, pattern, _d, path, x2, y2, width, height, _e, lineLength, x0, x1, y0, y1, canvas, ctx, gradient_1, pattern, _f, path, left2, top_1, width, height, position2, x2, y2, _g, rx, ry, radialGradient_1, midX, midY, f3, invF;
+                      var image2, url, _c, path, x2, y2, width, height, pattern, _d, path, x2, y2, width, height, _e, lineLength, x0, x1, y0, y1, canvas, ctx, gradient_1, pattern, _f, path, left, top_1, width, height, position2, x2, y2, _g, rx, ry, radialGradient_1, midX, midY, f3, invF;
                       return __generator(this, function(_h) {
                         switch (_h.label) {
                           case 0:
@@ -22100,13 +22105,13 @@ var require_html2canvas = __commonJS({
                                 null,
                                 null,
                                 null
-                              ]), path = _f[0], left2 = _f[1], top_1 = _f[2], width = _f[3], height = _f[4];
+                              ]), path = _f[0], left = _f[1], top_1 = _f[2], width = _f[3], height = _f[4];
                               position2 = backgroundImage3.position.length === 0 ? [FIFTY_PERCENT] : backgroundImage3.position;
                               x2 = getAbsoluteValue(position2[0], width);
                               y2 = getAbsoluteValue(position2[position2.length - 1], height);
                               _g = calculateRadius(backgroundImage3, x2, y2, width, height), rx = _g[0], ry = _g[1];
                               if (rx > 0 && ry > 0) {
-                                radialGradient_1 = this_1.ctx.createRadialGradient(left2 + x2, top_1 + y2, 0, left2 + x2, top_1 + y2, rx);
+                                radialGradient_1 = this_1.ctx.createRadialGradient(left + x2, top_1 + y2, 0, left + x2, top_1 + y2, rx);
                                 processColorStops(backgroundImage3.stops, rx * 2).forEach(function(colorStop) {
                                   return radialGradient_1.addColorStop(colorStop.stop, asString(colorStop.color));
                                 });
@@ -22121,7 +22126,7 @@ var require_html2canvas = __commonJS({
                                   this_1.ctx.translate(midX, midY);
                                   this_1.ctx.transform(1, 0, 0, f3, 0, 0);
                                   this_1.ctx.translate(-midX, -midY);
-                                  this_1.ctx.fillRect(left2, invF * (top_1 - midY) + midY, width, height * invF);
+                                  this_1.ctx.fillRect(left, invF * (top_1 - midY) + midY, width, height * invF);
                                   this_1.ctx.restore();
                                 } else {
                                   this_1.ctx.fill();
@@ -22623,7 +22628,7 @@ var require_html2canvas = __commonJS({
       }
       var renderElement = function(element, opts) {
         return __awaiter(void 0, void 0, void 0, function() {
-          var ownerDocument, defaultView, resourceOptions, contextOptions, windowOptions, windowBounds, context, foreignObjectRendering, cloneOptions, documentCloner, clonedElement, container, _a2, width, height, left2, top2, backgroundColor2, renderOptions, canvas, renderer, root, renderer;
+          var ownerDocument, defaultView, resourceOptions, contextOptions, windowOptions, windowBounds, context, foreignObjectRendering, cloneOptions, documentCloner, clonedElement, container, _a2, width, height, left, top, backgroundColor2, renderOptions, canvas, renderer, root, renderer;
           var _b2, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t2;
           return __generator(this, function(_u) {
             switch (_u.label) {
@@ -22671,14 +22676,14 @@ var require_html2canvas = __commonJS({
                 return [4, documentCloner.toIFrame(ownerDocument, windowBounds)];
               case 1:
                 container = _u.sent();
-                _a2 = isBodyElement(clonedElement) || isHTMLElement2(clonedElement) ? parseDocumentSize(clonedElement.ownerDocument) : parseBounds(context, clonedElement), width = _a2.width, height = _a2.height, left2 = _a2.left, top2 = _a2.top;
+                _a2 = isBodyElement(clonedElement) || isHTMLElement(clonedElement) ? parseDocumentSize(clonedElement.ownerDocument) : parseBounds(context, clonedElement), width = _a2.width, height = _a2.height, left = _a2.left, top = _a2.top;
                 backgroundColor2 = parseBackgroundColor(context, clonedElement, opts.backgroundColor);
                 renderOptions = {
                   canvas: opts.canvas,
                   backgroundColor: backgroundColor2,
                   scale: (_o = (_m = opts.scale) !== null && _m !== void 0 ? _m : defaultView.devicePixelRatio) !== null && _o !== void 0 ? _o : 1,
-                  x: ((_p = opts.x) !== null && _p !== void 0 ? _p : 0) + left2,
-                  y: ((_q = opts.y) !== null && _q !== void 0 ? _q : 0) + top2,
+                  x: ((_p = opts.x) !== null && _p !== void 0 ? _p : 0) + left,
+                  y: ((_q = opts.y) !== null && _q !== void 0 ? _q : 0) + top,
                   width: (_r = opts.width) !== null && _r !== void 0 ? _r : Math.ceil(width),
                   height: (_s = opts.height) !== null && _s !== void 0 ? _s : Math.ceil(height)
                 };
@@ -22691,7 +22696,7 @@ var require_html2canvas = __commonJS({
                 canvas = _u.sent();
                 return [3, 5];
               case 3:
-                context.logger.debug("Document cloned, element located at " + left2 + "," + top2 + " with size " + width + "x" + height + " using computed rendering");
+                context.logger.debug("Document cloned, element located at " + left + "," + top + " with size " + width + "x" + height + " using computed rendering");
                 context.logger.debug("Starting DOM parsing");
                 root = parseTree(context, clonedElement);
                 if (backgroundColor2 === root.styles.backgroundColor) {
@@ -22790,12 +22795,12 @@ var require_html2pdf = __commonJS({
                           clientRect.left -= containerRect.left;
                           clientRect.top -= containerRect.top;
                           var page = Math.floor(clientRect.top / this.prop.pageSize.inner.height) + 1;
-                          var top2 = this.opt.margin[0] + clientRect.top % this.prop.pageSize.inner.height;
-                          var left2 = this.opt.margin[1] + clientRect.left;
+                          var top = this.opt.margin[0] + clientRect.top % this.prop.pageSize.inner.height;
+                          var left = this.opt.margin[1] + clientRect.left;
                           linkInfo.push({
                             page,
-                            top: top2,
-                            left: left2,
+                            top,
+                            left,
                             clientRect,
                             link
                           });
@@ -23727,8 +23732,8 @@ var require_html2pdf = __commonJS({
                 };
                 Worker2.prototype.thenList = function thenList(fns) {
                   var self2 = this;
-                  fns.forEach(function thenList_forEach(fn2) {
-                    self2 = self2.thenCore(fn2);
+                  fns.forEach(function thenList_forEach(fn) {
+                    self2 = self2.thenCore(fn);
                   });
                   return self2;
                 };
@@ -24772,30 +24777,30 @@ var require_html2pdf = __commonJS({
                   /*! ../internals/a-function */
                   "./node_modules/core-js/internals/a-function.js"
                 );
-                module3.exports = function(fn2, that, length) {
-                  aFunction(fn2);
+                module3.exports = function(fn, that, length) {
+                  aFunction(fn);
                   if (that === void 0)
-                    return fn2;
+                    return fn;
                   switch (length) {
                     case 0:
                       return function() {
-                        return fn2.call(that);
+                        return fn.call(that);
                       };
                     case 1:
                       return function(a2) {
-                        return fn2.call(that, a2);
+                        return fn.call(that, a2);
                       };
                     case 2:
                       return function(a2, b2) {
-                        return fn2.call(that, a2, b2);
+                        return fn.call(that, a2, b2);
                       };
                     case 3:
                       return function(a2, b2, c2) {
-                        return fn2.call(that, a2, b2, c2);
+                        return fn.call(that, a2, b2, c2);
                       };
                   }
                   return function() {
-                    return fn2.apply(that, arguments);
+                    return fn.apply(that, arguments);
                   };
                 };
               }
@@ -25816,12 +25821,12 @@ var require_html2pdf = __commonJS({
                   "./node_modules/core-js/internals/is-object.js"
                 );
                 module3.exports = function(input, pref) {
-                  var fn2, val;
-                  if (pref === "string" && typeof (fn2 = input.toString) == "function" && !isObject2(val = fn2.call(input)))
+                  var fn, val;
+                  if (pref === "string" && typeof (fn = input.toString) == "function" && !isObject2(val = fn.call(input)))
                     return val;
-                  if (typeof (fn2 = input.valueOf) == "function" && !isObject2(val = fn2.call(input)))
+                  if (typeof (fn = input.valueOf) == "function" && !isObject2(val = fn.call(input)))
                     return val;
-                  if (pref !== "string" && typeof (fn2 = input.toString) == "function" && !isObject2(val = fn2.call(input)))
+                  if (pref !== "string" && typeof (fn = input.toString) == "function" && !isObject2(val = fn.call(input)))
                     return val;
                   throw TypeError("Can't convert object to primitive value");
                 };
@@ -26213,11 +26218,11 @@ var require_html2pdf = __commonJS({
                   /*! ../internals/to-integer */
                   "./node_modules/core-js/internals/to-integer.js"
                 );
-                var max4 = Math.max;
-                var min3 = Math.min;
+                var max3 = Math.max;
+                var min2 = Math.min;
                 module3.exports = function(index, length) {
                   var integer = toInteger(index);
-                  return integer < 0 ? max4(integer + length, 0) : min3(integer, length);
+                  return integer < 0 ? max3(integer + length, 0) : min2(integer, length);
                 };
               }
             ),
@@ -26266,9 +26271,9 @@ var require_html2pdf = __commonJS({
                   /*! ../internals/to-integer */
                   "./node_modules/core-js/internals/to-integer.js"
                 );
-                var min3 = Math.min;
+                var min2 = Math.min;
                 module3.exports = function(argument) {
-                  return argument > 0 ? min3(toInteger(argument), 9007199254740991) : 0;
+                  return argument > 0 ? min2(toInteger(argument), 9007199254740991) : 0;
                 };
               }
             ),
@@ -26752,13 +26757,13 @@ var require_html2pdf = __commonJS({
                 var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport("slice");
                 var SPECIES = wellKnownSymbol("species");
                 var nativeSlice = [].slice;
-                var max4 = Math.max;
+                var max3 = Math.max;
                 $2({ target: "Array", proto: true, forced: !HAS_SPECIES_SUPPORT }, {
-                  slice: function slice(start2, end2) {
+                  slice: function slice(start, end) {
                     var O2 = toIndexedObject(this);
                     var length = toLength(O2.length);
-                    var k2 = toAbsoluteIndex(start2, length);
-                    var fin = toAbsoluteIndex(end2 === void 0 ? length : end2, length);
+                    var k2 = toAbsoluteIndex(start, length);
+                    var fin = toAbsoluteIndex(end === void 0 ? length : end, length);
                     var Constructor, result, n2;
                     if (isArray2(O2)) {
                       Constructor = O2.constructor;
@@ -26773,7 +26778,7 @@ var require_html2pdf = __commonJS({
                         return nativeSlice.call(O2, k2, fin);
                       }
                     }
-                    result = new (Constructor === void 0 ? Array : Constructor)(max4(fin - k2, 0));
+                    result = new (Constructor === void 0 ? Array : Constructor)(max3(fin - k2, 0));
                     for (n2 = 0; k2 < fin; k2++, n2++)
                       if (k2 in O2)
                         createProperty(result, n2, O2[k2]);
@@ -28379,1515 +28384,8 @@ var require_html2pdf = __commonJS({
   }
 });
 
-// node_modules/@popperjs/core/lib/index.js
-var lib_exports = {};
-__export(lib_exports, {
-  afterMain: () => afterMain,
-  afterRead: () => afterRead,
-  afterWrite: () => afterWrite,
-  applyStyles: () => applyStyles_default,
-  arrow: () => arrow_default,
-  auto: () => auto,
-  basePlacements: () => basePlacements,
-  beforeMain: () => beforeMain,
-  beforeRead: () => beforeRead,
-  beforeWrite: () => beforeWrite,
-  bottom: () => bottom,
-  clippingParents: () => clippingParents,
-  computeStyles: () => computeStyles_default,
-  createPopper: () => createPopper3,
-  createPopperBase: () => createPopper,
-  createPopperLite: () => createPopper2,
-  detectOverflow: () => detectOverflow,
-  end: () => end,
-  eventListeners: () => eventListeners_default,
-  flip: () => flip_default,
-  hide: () => hide_default,
-  left: () => left,
-  main: () => main,
-  modifierPhases: () => modifierPhases,
-  offset: () => offset_default,
-  placements: () => placements,
-  popper: () => popper,
-  popperGenerator: () => popperGenerator,
-  popperOffsets: () => popperOffsets_default,
-  preventOverflow: () => preventOverflow_default,
-  read: () => read,
-  reference: () => reference,
-  right: () => right,
-  start: () => start,
-  top: () => top,
-  variationPlacements: () => variationPlacements,
-  viewport: () => viewport,
-  write: () => write
-});
-
-// node_modules/@popperjs/core/lib/enums.js
-var top = "top";
-var bottom = "bottom";
-var right = "right";
-var left = "left";
-var auto = "auto";
-var basePlacements = [top, bottom, right, left];
-var start = "start";
-var end = "end";
-var clippingParents = "clippingParents";
-var viewport = "viewport";
-var popper = "popper";
-var reference = "reference";
-var variationPlacements = basePlacements.reduce(function(acc, placement) {
-  return acc.concat([placement + "-" + start, placement + "-" + end]);
-}, []);
-var placements = [].concat(basePlacements, [auto]).reduce(function(acc, placement) {
-  return acc.concat([placement, placement + "-" + start, placement + "-" + end]);
-}, []);
-var beforeRead = "beforeRead";
-var read = "read";
-var afterRead = "afterRead";
-var beforeMain = "beforeMain";
-var main = "main";
-var afterMain = "afterMain";
-var beforeWrite = "beforeWrite";
-var write = "write";
-var afterWrite = "afterWrite";
-var modifierPhases = [beforeRead, read, afterRead, beforeMain, main, afterMain, beforeWrite, write, afterWrite];
-
-// node_modules/@popperjs/core/lib/dom-utils/getNodeName.js
-function getNodeName(element) {
-  return element ? (element.nodeName || "").toLowerCase() : null;
-}
-
-// node_modules/@popperjs/core/lib/dom-utils/getWindow.js
-function getWindow(node) {
-  if (node == null) {
-    return window;
-  }
-  if (node.toString() !== "[object Window]") {
-    var ownerDocument = node.ownerDocument;
-    return ownerDocument ? ownerDocument.defaultView || window : window;
-  }
-  return node;
-}
-
-// node_modules/@popperjs/core/lib/dom-utils/instanceOf.js
-function isElement(node) {
-  var OwnElement = getWindow(node).Element;
-  return node instanceof OwnElement || node instanceof Element;
-}
-function isHTMLElement(node) {
-  var OwnElement = getWindow(node).HTMLElement;
-  return node instanceof OwnElement || node instanceof HTMLElement;
-}
-function isShadowRoot(node) {
-  if (typeof ShadowRoot === "undefined") {
-    return false;
-  }
-  var OwnElement = getWindow(node).ShadowRoot;
-  return node instanceof OwnElement || node instanceof ShadowRoot;
-}
-
-// node_modules/@popperjs/core/lib/modifiers/applyStyles.js
-function applyStyles(_ref) {
-  var state = _ref.state;
-  Object.keys(state.elements).forEach(function(name) {
-    var style = state.styles[name] || {};
-    var attributes = state.attributes[name] || {};
-    var element = state.elements[name];
-    if (!isHTMLElement(element) || !getNodeName(element)) {
-      return;
-    }
-    Object.assign(element.style, style);
-    Object.keys(attributes).forEach(function(name2) {
-      var value2 = attributes[name2];
-      if (value2 === false) {
-        element.removeAttribute(name2);
-      } else {
-        element.setAttribute(name2, value2 === true ? "" : value2);
-      }
-    });
-  });
-}
-function effect(_ref2) {
-  var state = _ref2.state;
-  var initialStyles = {
-    popper: {
-      position: state.options.strategy,
-      left: "0",
-      top: "0",
-      margin: "0"
-    },
-    arrow: {
-      position: "absolute"
-    },
-    reference: {}
-  };
-  Object.assign(state.elements.popper.style, initialStyles.popper);
-  state.styles = initialStyles;
-  if (state.elements.arrow) {
-    Object.assign(state.elements.arrow.style, initialStyles.arrow);
-  }
-  return function() {
-    Object.keys(state.elements).forEach(function(name) {
-      var element = state.elements[name];
-      var attributes = state.attributes[name] || {};
-      var styleProperties = Object.keys(state.styles.hasOwnProperty(name) ? state.styles[name] : initialStyles[name]);
-      var style = styleProperties.reduce(function(style2, property) {
-        style2[property] = "";
-        return style2;
-      }, {});
-      if (!isHTMLElement(element) || !getNodeName(element)) {
-        return;
-      }
-      Object.assign(element.style, style);
-      Object.keys(attributes).forEach(function(attribute) {
-        element.removeAttribute(attribute);
-      });
-    });
-  };
-}
-var applyStyles_default = {
-  name: "applyStyles",
-  enabled: true,
-  phase: "write",
-  fn: applyStyles,
-  effect,
-  requires: ["computeStyles"]
-};
-
-// node_modules/@popperjs/core/lib/utils/getBasePlacement.js
-function getBasePlacement(placement) {
-  return placement.split("-")[0];
-}
-
-// node_modules/@popperjs/core/lib/utils/math.js
-var max = Math.max;
-var min = Math.min;
-var round = Math.round;
-
-// node_modules/@popperjs/core/lib/utils/userAgent.js
-function getUAString() {
-  var uaData = navigator.userAgentData;
-  if (uaData != null && uaData.brands && Array.isArray(uaData.brands)) {
-    return uaData.brands.map(function(item) {
-      return item.brand + "/" + item.version;
-    }).join(" ");
-  }
-  return navigator.userAgent;
-}
-
-// node_modules/@popperjs/core/lib/dom-utils/isLayoutViewport.js
-function isLayoutViewport() {
-  return !/^((?!chrome|android).)*safari/i.test(getUAString());
-}
-
-// node_modules/@popperjs/core/lib/dom-utils/getBoundingClientRect.js
-function getBoundingClientRect(element, includeScale, isFixedStrategy) {
-  if (includeScale === void 0) {
-    includeScale = false;
-  }
-  if (isFixedStrategy === void 0) {
-    isFixedStrategy = false;
-  }
-  var clientRect = element.getBoundingClientRect();
-  var scaleX = 1;
-  var scaleY = 1;
-  if (includeScale && isHTMLElement(element)) {
-    scaleX = element.offsetWidth > 0 ? round(clientRect.width) / element.offsetWidth || 1 : 1;
-    scaleY = element.offsetHeight > 0 ? round(clientRect.height) / element.offsetHeight || 1 : 1;
-  }
-  var _ref = isElement(element) ? getWindow(element) : window, visualViewport = _ref.visualViewport;
-  var addVisualOffsets = !isLayoutViewport() && isFixedStrategy;
-  var x2 = (clientRect.left + (addVisualOffsets && visualViewport ? visualViewport.offsetLeft : 0)) / scaleX;
-  var y2 = (clientRect.top + (addVisualOffsets && visualViewport ? visualViewport.offsetTop : 0)) / scaleY;
-  var width = clientRect.width / scaleX;
-  var height = clientRect.height / scaleY;
-  return {
-    width,
-    height,
-    top: y2,
-    right: x2 + width,
-    bottom: y2 + height,
-    left: x2,
-    x: x2,
-    y: y2
-  };
-}
-
-// node_modules/@popperjs/core/lib/dom-utils/getLayoutRect.js
-function getLayoutRect(element) {
-  var clientRect = getBoundingClientRect(element);
-  var width = element.offsetWidth;
-  var height = element.offsetHeight;
-  if (Math.abs(clientRect.width - width) <= 1) {
-    width = clientRect.width;
-  }
-  if (Math.abs(clientRect.height - height) <= 1) {
-    height = clientRect.height;
-  }
-  return {
-    x: element.offsetLeft,
-    y: element.offsetTop,
-    width,
-    height
-  };
-}
-
-// node_modules/@popperjs/core/lib/dom-utils/contains.js
-function contains(parent, child) {
-  var rootNode = child.getRootNode && child.getRootNode();
-  if (parent.contains(child)) {
-    return true;
-  } else if (rootNode && isShadowRoot(rootNode)) {
-    var next = child;
-    do {
-      if (next && parent.isSameNode(next)) {
-        return true;
-      }
-      next = next.parentNode || next.host;
-    } while (next);
-  }
-  return false;
-}
-
-// node_modules/@popperjs/core/lib/dom-utils/getComputedStyle.js
-function getComputedStyle2(element) {
-  return getWindow(element).getComputedStyle(element);
-}
-
-// node_modules/@popperjs/core/lib/dom-utils/isTableElement.js
-function isTableElement(element) {
-  return ["table", "td", "th"].indexOf(getNodeName(element)) >= 0;
-}
-
-// node_modules/@popperjs/core/lib/dom-utils/getDocumentElement.js
-function getDocumentElement(element) {
-  return ((isElement(element) ? element.ownerDocument : (
-    // $FlowFixMe[prop-missing]
-    element.document
-  )) || window.document).documentElement;
-}
-
-// node_modules/@popperjs/core/lib/dom-utils/getParentNode.js
-function getParentNode(element) {
-  if (getNodeName(element) === "html") {
-    return element;
-  }
-  return (
-    // this is a quicker (but less type safe) way to save quite some bytes from the bundle
-    // $FlowFixMe[incompatible-return]
-    // $FlowFixMe[prop-missing]
-    element.assignedSlot || // step into the shadow DOM of the parent of a slotted node
-    element.parentNode || // DOM Element detected
-    (isShadowRoot(element) ? element.host : null) || // ShadowRoot detected
-    // $FlowFixMe[incompatible-call]: HTMLElement is a Node
-    getDocumentElement(element)
-  );
-}
-
-// node_modules/@popperjs/core/lib/dom-utils/getOffsetParent.js
-function getTrueOffsetParent(element) {
-  if (!isHTMLElement(element) || // https://github.com/popperjs/popper-core/issues/837
-  getComputedStyle2(element).position === "fixed") {
-    return null;
-  }
-  return element.offsetParent;
-}
-function getContainingBlock(element) {
-  var isFirefox = /firefox/i.test(getUAString());
-  var isIE = /Trident/i.test(getUAString());
-  if (isIE && isHTMLElement(element)) {
-    var elementCss = getComputedStyle2(element);
-    if (elementCss.position === "fixed") {
-      return null;
-    }
-  }
-  var currentNode = getParentNode(element);
-  if (isShadowRoot(currentNode)) {
-    currentNode = currentNode.host;
-  }
-  while (isHTMLElement(currentNode) && ["html", "body"].indexOf(getNodeName(currentNode)) < 0) {
-    var css = getComputedStyle2(currentNode);
-    if (css.transform !== "none" || css.perspective !== "none" || css.contain === "paint" || ["transform", "perspective"].indexOf(css.willChange) !== -1 || isFirefox && css.willChange === "filter" || isFirefox && css.filter && css.filter !== "none") {
-      return currentNode;
-    } else {
-      currentNode = currentNode.parentNode;
-    }
-  }
-  return null;
-}
-function getOffsetParent(element) {
-  var window2 = getWindow(element);
-  var offsetParent = getTrueOffsetParent(element);
-  while (offsetParent && isTableElement(offsetParent) && getComputedStyle2(offsetParent).position === "static") {
-    offsetParent = getTrueOffsetParent(offsetParent);
-  }
-  if (offsetParent && (getNodeName(offsetParent) === "html" || getNodeName(offsetParent) === "body" && getComputedStyle2(offsetParent).position === "static")) {
-    return window2;
-  }
-  return offsetParent || getContainingBlock(element) || window2;
-}
-
-// node_modules/@popperjs/core/lib/utils/getMainAxisFromPlacement.js
-function getMainAxisFromPlacement(placement) {
-  return ["top", "bottom"].indexOf(placement) >= 0 ? "x" : "y";
-}
-
-// node_modules/@popperjs/core/lib/utils/within.js
-function within(min3, value2, max4) {
-  return max(min3, min(value2, max4));
-}
-function withinMaxClamp(min3, value2, max4) {
-  var v2 = within(min3, value2, max4);
-  return v2 > max4 ? max4 : v2;
-}
-
-// node_modules/@popperjs/core/lib/utils/getFreshSideObject.js
-function getFreshSideObject() {
-  return {
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0
-  };
-}
-
-// node_modules/@popperjs/core/lib/utils/mergePaddingObject.js
-function mergePaddingObject(paddingObject) {
-  return Object.assign({}, getFreshSideObject(), paddingObject);
-}
-
-// node_modules/@popperjs/core/lib/utils/expandToHashMap.js
-function expandToHashMap(value2, keys2) {
-  return keys2.reduce(function(hashMap, key) {
-    hashMap[key] = value2;
-    return hashMap;
-  }, {});
-}
-
-// node_modules/@popperjs/core/lib/modifiers/arrow.js
-var toPaddingObject = function toPaddingObject2(padding, state) {
-  padding = typeof padding === "function" ? padding(Object.assign({}, state.rects, {
-    placement: state.placement
-  })) : padding;
-  return mergePaddingObject(typeof padding !== "number" ? padding : expandToHashMap(padding, basePlacements));
-};
-function arrow(_ref) {
-  var _state$modifiersData$;
-  var state = _ref.state, name = _ref.name, options = _ref.options;
-  var arrowElement = state.elements.arrow;
-  var popperOffsets2 = state.modifiersData.popperOffsets;
-  var basePlacement = getBasePlacement(state.placement);
-  var axis = getMainAxisFromPlacement(basePlacement);
-  var isVertical = [left, right].indexOf(basePlacement) >= 0;
-  var len = isVertical ? "height" : "width";
-  if (!arrowElement || !popperOffsets2) {
-    return;
-  }
-  var paddingObject = toPaddingObject(options.padding, state);
-  var arrowRect = getLayoutRect(arrowElement);
-  var minProp = axis === "y" ? top : left;
-  var maxProp = axis === "y" ? bottom : right;
-  var endDiff = state.rects.reference[len] + state.rects.reference[axis] - popperOffsets2[axis] - state.rects.popper[len];
-  var startDiff = popperOffsets2[axis] - state.rects.reference[axis];
-  var arrowOffsetParent = getOffsetParent(arrowElement);
-  var clientSize = arrowOffsetParent ? axis === "y" ? arrowOffsetParent.clientHeight || 0 : arrowOffsetParent.clientWidth || 0 : 0;
-  var centerToReference = endDiff / 2 - startDiff / 2;
-  var min3 = paddingObject[minProp];
-  var max4 = clientSize - arrowRect[len] - paddingObject[maxProp];
-  var center = clientSize / 2 - arrowRect[len] / 2 + centerToReference;
-  var offset3 = within(min3, center, max4);
-  var axisProp = axis;
-  state.modifiersData[name] = (_state$modifiersData$ = {}, _state$modifiersData$[axisProp] = offset3, _state$modifiersData$.centerOffset = offset3 - center, _state$modifiersData$);
-}
-function effect2(_ref2) {
-  var state = _ref2.state, options = _ref2.options;
-  var _options$element = options.element, arrowElement = _options$element === void 0 ? "[data-popper-arrow]" : _options$element;
-  if (arrowElement == null) {
-    return;
-  }
-  if (typeof arrowElement === "string") {
-    arrowElement = state.elements.popper.querySelector(arrowElement);
-    if (!arrowElement) {
-      return;
-    }
-  }
-  if (!contains(state.elements.popper, arrowElement)) {
-    return;
-  }
-  state.elements.arrow = arrowElement;
-}
-var arrow_default = {
-  name: "arrow",
-  enabled: true,
-  phase: "main",
-  fn: arrow,
-  effect: effect2,
-  requires: ["popperOffsets"],
-  requiresIfExists: ["preventOverflow"]
-};
-
-// node_modules/@popperjs/core/lib/utils/getVariation.js
-function getVariation(placement) {
-  return placement.split("-")[1];
-}
-
-// node_modules/@popperjs/core/lib/modifiers/computeStyles.js
-var unsetSides = {
-  top: "auto",
-  right: "auto",
-  bottom: "auto",
-  left: "auto"
-};
-function roundOffsetsByDPR(_ref, win) {
-  var x2 = _ref.x, y2 = _ref.y;
-  var dpr = win.devicePixelRatio || 1;
-  return {
-    x: round(x2 * dpr) / dpr || 0,
-    y: round(y2 * dpr) / dpr || 0
-  };
-}
-function mapToStyles(_ref2) {
-  var _Object$assign2;
-  var popper2 = _ref2.popper, popperRect = _ref2.popperRect, placement = _ref2.placement, variation = _ref2.variation, offsets = _ref2.offsets, position = _ref2.position, gpuAcceleration = _ref2.gpuAcceleration, adaptive = _ref2.adaptive, roundOffsets = _ref2.roundOffsets, isFixed = _ref2.isFixed;
-  var _offsets$x = offsets.x, x2 = _offsets$x === void 0 ? 0 : _offsets$x, _offsets$y = offsets.y, y2 = _offsets$y === void 0 ? 0 : _offsets$y;
-  var _ref3 = typeof roundOffsets === "function" ? roundOffsets({
-    x: x2,
-    y: y2
-  }) : {
-    x: x2,
-    y: y2
-  };
-  x2 = _ref3.x;
-  y2 = _ref3.y;
-  var hasX = offsets.hasOwnProperty("x");
-  var hasY = offsets.hasOwnProperty("y");
-  var sideX = left;
-  var sideY = top;
-  var win = window;
-  if (adaptive) {
-    var offsetParent = getOffsetParent(popper2);
-    var heightProp = "clientHeight";
-    var widthProp = "clientWidth";
-    if (offsetParent === getWindow(popper2)) {
-      offsetParent = getDocumentElement(popper2);
-      if (getComputedStyle2(offsetParent).position !== "static" && position === "absolute") {
-        heightProp = "scrollHeight";
-        widthProp = "scrollWidth";
-      }
-    }
-    offsetParent = offsetParent;
-    if (placement === top || (placement === left || placement === right) && variation === end) {
-      sideY = bottom;
-      var offsetY = isFixed && offsetParent === win && win.visualViewport ? win.visualViewport.height : (
-        // $FlowFixMe[prop-missing]
-        offsetParent[heightProp]
-      );
-      y2 -= offsetY - popperRect.height;
-      y2 *= gpuAcceleration ? 1 : -1;
-    }
-    if (placement === left || (placement === top || placement === bottom) && variation === end) {
-      sideX = right;
-      var offsetX = isFixed && offsetParent === win && win.visualViewport ? win.visualViewport.width : (
-        // $FlowFixMe[prop-missing]
-        offsetParent[widthProp]
-      );
-      x2 -= offsetX - popperRect.width;
-      x2 *= gpuAcceleration ? 1 : -1;
-    }
-  }
-  var commonStyles = Object.assign({
-    position
-  }, adaptive && unsetSides);
-  var _ref4 = roundOffsets === true ? roundOffsetsByDPR({
-    x: x2,
-    y: y2
-  }, getWindow(popper2)) : {
-    x: x2,
-    y: y2
-  };
-  x2 = _ref4.x;
-  y2 = _ref4.y;
-  if (gpuAcceleration) {
-    var _Object$assign;
-    return Object.assign({}, commonStyles, (_Object$assign = {}, _Object$assign[sideY] = hasY ? "0" : "", _Object$assign[sideX] = hasX ? "0" : "", _Object$assign.transform = (win.devicePixelRatio || 1) <= 1 ? "translate(" + x2 + "px, " + y2 + "px)" : "translate3d(" + x2 + "px, " + y2 + "px, 0)", _Object$assign));
-  }
-  return Object.assign({}, commonStyles, (_Object$assign2 = {}, _Object$assign2[sideY] = hasY ? y2 + "px" : "", _Object$assign2[sideX] = hasX ? x2 + "px" : "", _Object$assign2.transform = "", _Object$assign2));
-}
-function computeStyles(_ref5) {
-  var state = _ref5.state, options = _ref5.options;
-  var _options$gpuAccelerat = options.gpuAcceleration, gpuAcceleration = _options$gpuAccelerat === void 0 ? true : _options$gpuAccelerat, _options$adaptive = options.adaptive, adaptive = _options$adaptive === void 0 ? true : _options$adaptive, _options$roundOffsets = options.roundOffsets, roundOffsets = _options$roundOffsets === void 0 ? true : _options$roundOffsets;
-  var commonStyles = {
-    placement: getBasePlacement(state.placement),
-    variation: getVariation(state.placement),
-    popper: state.elements.popper,
-    popperRect: state.rects.popper,
-    gpuAcceleration,
-    isFixed: state.options.strategy === "fixed"
-  };
-  if (state.modifiersData.popperOffsets != null) {
-    state.styles.popper = Object.assign({}, state.styles.popper, mapToStyles(Object.assign({}, commonStyles, {
-      offsets: state.modifiersData.popperOffsets,
-      position: state.options.strategy,
-      adaptive,
-      roundOffsets
-    })));
-  }
-  if (state.modifiersData.arrow != null) {
-    state.styles.arrow = Object.assign({}, state.styles.arrow, mapToStyles(Object.assign({}, commonStyles, {
-      offsets: state.modifiersData.arrow,
-      position: "absolute",
-      adaptive: false,
-      roundOffsets
-    })));
-  }
-  state.attributes.popper = Object.assign({}, state.attributes.popper, {
-    "data-popper-placement": state.placement
-  });
-}
-var computeStyles_default = {
-  name: "computeStyles",
-  enabled: true,
-  phase: "beforeWrite",
-  fn: computeStyles,
-  data: {}
-};
-
-// node_modules/@popperjs/core/lib/modifiers/eventListeners.js
-var passive = {
-  passive: true
-};
-function effect3(_ref) {
-  var state = _ref.state, instance = _ref.instance, options = _ref.options;
-  var _options$scroll = options.scroll, scroll = _options$scroll === void 0 ? true : _options$scroll, _options$resize = options.resize, resize = _options$resize === void 0 ? true : _options$resize;
-  var window2 = getWindow(state.elements.popper);
-  var scrollParents = [].concat(state.scrollParents.reference, state.scrollParents.popper);
-  if (scroll) {
-    scrollParents.forEach(function(scrollParent) {
-      scrollParent.addEventListener("scroll", instance.update, passive);
-    });
-  }
-  if (resize) {
-    window2.addEventListener("resize", instance.update, passive);
-  }
-  return function() {
-    if (scroll) {
-      scrollParents.forEach(function(scrollParent) {
-        scrollParent.removeEventListener("scroll", instance.update, passive);
-      });
-    }
-    if (resize) {
-      window2.removeEventListener("resize", instance.update, passive);
-    }
-  };
-}
-var eventListeners_default = {
-  name: "eventListeners",
-  enabled: true,
-  phase: "write",
-  fn: function fn() {
-  },
-  effect: effect3,
-  data: {}
-};
-
-// node_modules/@popperjs/core/lib/utils/getOppositePlacement.js
-var hash = {
-  left: "right",
-  right: "left",
-  bottom: "top",
-  top: "bottom"
-};
-function getOppositePlacement(placement) {
-  return placement.replace(/left|right|bottom|top/g, function(matched) {
-    return hash[matched];
-  });
-}
-
-// node_modules/@popperjs/core/lib/utils/getOppositeVariationPlacement.js
-var hash2 = {
-  start: "end",
-  end: "start"
-};
-function getOppositeVariationPlacement(placement) {
-  return placement.replace(/start|end/g, function(matched) {
-    return hash2[matched];
-  });
-}
-
-// node_modules/@popperjs/core/lib/dom-utils/getWindowScroll.js
-function getWindowScroll(node) {
-  var win = getWindow(node);
-  var scrollLeft = win.pageXOffset;
-  var scrollTop = win.pageYOffset;
-  return {
-    scrollLeft,
-    scrollTop
-  };
-}
-
-// node_modules/@popperjs/core/lib/dom-utils/getWindowScrollBarX.js
-function getWindowScrollBarX(element) {
-  return getBoundingClientRect(getDocumentElement(element)).left + getWindowScroll(element).scrollLeft;
-}
-
-// node_modules/@popperjs/core/lib/dom-utils/getViewportRect.js
-function getViewportRect(element, strategy) {
-  var win = getWindow(element);
-  var html = getDocumentElement(element);
-  var visualViewport = win.visualViewport;
-  var width = html.clientWidth;
-  var height = html.clientHeight;
-  var x2 = 0;
-  var y2 = 0;
-  if (visualViewport) {
-    width = visualViewport.width;
-    height = visualViewport.height;
-    var layoutViewport = isLayoutViewport();
-    if (layoutViewport || !layoutViewport && strategy === "fixed") {
-      x2 = visualViewport.offsetLeft;
-      y2 = visualViewport.offsetTop;
-    }
-  }
-  return {
-    width,
-    height,
-    x: x2 + getWindowScrollBarX(element),
-    y: y2
-  };
-}
-
-// node_modules/@popperjs/core/lib/dom-utils/getDocumentRect.js
-function getDocumentRect(element) {
-  var _element$ownerDocumen;
-  var html = getDocumentElement(element);
-  var winScroll = getWindowScroll(element);
-  var body = (_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body;
-  var width = max(html.scrollWidth, html.clientWidth, body ? body.scrollWidth : 0, body ? body.clientWidth : 0);
-  var height = max(html.scrollHeight, html.clientHeight, body ? body.scrollHeight : 0, body ? body.clientHeight : 0);
-  var x2 = -winScroll.scrollLeft + getWindowScrollBarX(element);
-  var y2 = -winScroll.scrollTop;
-  if (getComputedStyle2(body || html).direction === "rtl") {
-    x2 += max(html.clientWidth, body ? body.clientWidth : 0) - width;
-  }
-  return {
-    width,
-    height,
-    x: x2,
-    y: y2
-  };
-}
-
-// node_modules/@popperjs/core/lib/dom-utils/isScrollParent.js
-function isScrollParent(element) {
-  var _getComputedStyle = getComputedStyle2(element), overflow = _getComputedStyle.overflow, overflowX = _getComputedStyle.overflowX, overflowY = _getComputedStyle.overflowY;
-  return /auto|scroll|overlay|hidden/.test(overflow + overflowY + overflowX);
-}
-
-// node_modules/@popperjs/core/lib/dom-utils/getScrollParent.js
-function getScrollParent(node) {
-  if (["html", "body", "#document"].indexOf(getNodeName(node)) >= 0) {
-    return node.ownerDocument.body;
-  }
-  if (isHTMLElement(node) && isScrollParent(node)) {
-    return node;
-  }
-  return getScrollParent(getParentNode(node));
-}
-
-// node_modules/@popperjs/core/lib/dom-utils/listScrollParents.js
-function listScrollParents(element, list) {
-  var _element$ownerDocumen;
-  if (list === void 0) {
-    list = [];
-  }
-  var scrollParent = getScrollParent(element);
-  var isBody = scrollParent === ((_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body);
-  var win = getWindow(scrollParent);
-  var target = isBody ? [win].concat(win.visualViewport || [], isScrollParent(scrollParent) ? scrollParent : []) : scrollParent;
-  var updatedList = list.concat(target);
-  return isBody ? updatedList : (
-    // $FlowFixMe[incompatible-call]: isBody tells us target will be an HTMLElement here
-    updatedList.concat(listScrollParents(getParentNode(target)))
-  );
-}
-
-// node_modules/@popperjs/core/lib/utils/rectToClientRect.js
-function rectToClientRect(rect) {
-  return Object.assign({}, rect, {
-    left: rect.x,
-    top: rect.y,
-    right: rect.x + rect.width,
-    bottom: rect.y + rect.height
-  });
-}
-
-// node_modules/@popperjs/core/lib/dom-utils/getClippingRect.js
-function getInnerBoundingClientRect(element, strategy) {
-  var rect = getBoundingClientRect(element, false, strategy === "fixed");
-  rect.top = rect.top + element.clientTop;
-  rect.left = rect.left + element.clientLeft;
-  rect.bottom = rect.top + element.clientHeight;
-  rect.right = rect.left + element.clientWidth;
-  rect.width = element.clientWidth;
-  rect.height = element.clientHeight;
-  rect.x = rect.left;
-  rect.y = rect.top;
-  return rect;
-}
-function getClientRectFromMixedType(element, clippingParent, strategy) {
-  return clippingParent === viewport ? rectToClientRect(getViewportRect(element, strategy)) : isElement(clippingParent) ? getInnerBoundingClientRect(clippingParent, strategy) : rectToClientRect(getDocumentRect(getDocumentElement(element)));
-}
-function getClippingParents(element) {
-  var clippingParents2 = listScrollParents(getParentNode(element));
-  var canEscapeClipping = ["absolute", "fixed"].indexOf(getComputedStyle2(element).position) >= 0;
-  var clipperElement = canEscapeClipping && isHTMLElement(element) ? getOffsetParent(element) : element;
-  if (!isElement(clipperElement)) {
-    return [];
-  }
-  return clippingParents2.filter(function(clippingParent) {
-    return isElement(clippingParent) && contains(clippingParent, clipperElement) && getNodeName(clippingParent) !== "body";
-  });
-}
-function getClippingRect(element, boundary, rootBoundary, strategy) {
-  var mainClippingParents = boundary === "clippingParents" ? getClippingParents(element) : [].concat(boundary);
-  var clippingParents2 = [].concat(mainClippingParents, [rootBoundary]);
-  var firstClippingParent = clippingParents2[0];
-  var clippingRect = clippingParents2.reduce(function(accRect, clippingParent) {
-    var rect = getClientRectFromMixedType(element, clippingParent, strategy);
-    accRect.top = max(rect.top, accRect.top);
-    accRect.right = min(rect.right, accRect.right);
-    accRect.bottom = min(rect.bottom, accRect.bottom);
-    accRect.left = max(rect.left, accRect.left);
-    return accRect;
-  }, getClientRectFromMixedType(element, firstClippingParent, strategy));
-  clippingRect.width = clippingRect.right - clippingRect.left;
-  clippingRect.height = clippingRect.bottom - clippingRect.top;
-  clippingRect.x = clippingRect.left;
-  clippingRect.y = clippingRect.top;
-  return clippingRect;
-}
-
-// node_modules/@popperjs/core/lib/utils/computeOffsets.js
-function computeOffsets(_ref) {
-  var reference2 = _ref.reference, element = _ref.element, placement = _ref.placement;
-  var basePlacement = placement ? getBasePlacement(placement) : null;
-  var variation = placement ? getVariation(placement) : null;
-  var commonX = reference2.x + reference2.width / 2 - element.width / 2;
-  var commonY = reference2.y + reference2.height / 2 - element.height / 2;
-  var offsets;
-  switch (basePlacement) {
-    case top:
-      offsets = {
-        x: commonX,
-        y: reference2.y - element.height
-      };
-      break;
-    case bottom:
-      offsets = {
-        x: commonX,
-        y: reference2.y + reference2.height
-      };
-      break;
-    case right:
-      offsets = {
-        x: reference2.x + reference2.width,
-        y: commonY
-      };
-      break;
-    case left:
-      offsets = {
-        x: reference2.x - element.width,
-        y: commonY
-      };
-      break;
-    default:
-      offsets = {
-        x: reference2.x,
-        y: reference2.y
-      };
-  }
-  var mainAxis = basePlacement ? getMainAxisFromPlacement(basePlacement) : null;
-  if (mainAxis != null) {
-    var len = mainAxis === "y" ? "height" : "width";
-    switch (variation) {
-      case start:
-        offsets[mainAxis] = offsets[mainAxis] - (reference2[len] / 2 - element[len] / 2);
-        break;
-      case end:
-        offsets[mainAxis] = offsets[mainAxis] + (reference2[len] / 2 - element[len] / 2);
-        break;
-      default:
-    }
-  }
-  return offsets;
-}
-
-// node_modules/@popperjs/core/lib/utils/detectOverflow.js
-function detectOverflow(state, options) {
-  if (options === void 0) {
-    options = {};
-  }
-  var _options = options, _options$placement = _options.placement, placement = _options$placement === void 0 ? state.placement : _options$placement, _options$strategy = _options.strategy, strategy = _options$strategy === void 0 ? state.strategy : _options$strategy, _options$boundary = _options.boundary, boundary = _options$boundary === void 0 ? clippingParents : _options$boundary, _options$rootBoundary = _options.rootBoundary, rootBoundary = _options$rootBoundary === void 0 ? viewport : _options$rootBoundary, _options$elementConte = _options.elementContext, elementContext = _options$elementConte === void 0 ? popper : _options$elementConte, _options$altBoundary = _options.altBoundary, altBoundary = _options$altBoundary === void 0 ? false : _options$altBoundary, _options$padding = _options.padding, padding = _options$padding === void 0 ? 0 : _options$padding;
-  var paddingObject = mergePaddingObject(typeof padding !== "number" ? padding : expandToHashMap(padding, basePlacements));
-  var altContext = elementContext === popper ? reference : popper;
-  var popperRect = state.rects.popper;
-  var element = state.elements[altBoundary ? altContext : elementContext];
-  var clippingClientRect = getClippingRect(isElement(element) ? element : element.contextElement || getDocumentElement(state.elements.popper), boundary, rootBoundary, strategy);
-  var referenceClientRect = getBoundingClientRect(state.elements.reference);
-  var popperOffsets2 = computeOffsets({
-    reference: referenceClientRect,
-    element: popperRect,
-    strategy: "absolute",
-    placement
-  });
-  var popperClientRect = rectToClientRect(Object.assign({}, popperRect, popperOffsets2));
-  var elementClientRect = elementContext === popper ? popperClientRect : referenceClientRect;
-  var overflowOffsets = {
-    top: clippingClientRect.top - elementClientRect.top + paddingObject.top,
-    bottom: elementClientRect.bottom - clippingClientRect.bottom + paddingObject.bottom,
-    left: clippingClientRect.left - elementClientRect.left + paddingObject.left,
-    right: elementClientRect.right - clippingClientRect.right + paddingObject.right
-  };
-  var offsetData = state.modifiersData.offset;
-  if (elementContext === popper && offsetData) {
-    var offset3 = offsetData[placement];
-    Object.keys(overflowOffsets).forEach(function(key) {
-      var multiply = [right, bottom].indexOf(key) >= 0 ? 1 : -1;
-      var axis = [top, bottom].indexOf(key) >= 0 ? "y" : "x";
-      overflowOffsets[key] += offset3[axis] * multiply;
-    });
-  }
-  return overflowOffsets;
-}
-
-// node_modules/@popperjs/core/lib/utils/computeAutoPlacement.js
-function computeAutoPlacement(state, options) {
-  if (options === void 0) {
-    options = {};
-  }
-  var _options = options, placement = _options.placement, boundary = _options.boundary, rootBoundary = _options.rootBoundary, padding = _options.padding, flipVariations = _options.flipVariations, _options$allowedAutoP = _options.allowedAutoPlacements, allowedAutoPlacements = _options$allowedAutoP === void 0 ? placements : _options$allowedAutoP;
-  var variation = getVariation(placement);
-  var placements2 = variation ? flipVariations ? variationPlacements : variationPlacements.filter(function(placement2) {
-    return getVariation(placement2) === variation;
-  }) : basePlacements;
-  var allowedPlacements = placements2.filter(function(placement2) {
-    return allowedAutoPlacements.indexOf(placement2) >= 0;
-  });
-  if (allowedPlacements.length === 0) {
-    allowedPlacements = placements2;
-  }
-  var overflows = allowedPlacements.reduce(function(acc, placement2) {
-    acc[placement2] = detectOverflow(state, {
-      placement: placement2,
-      boundary,
-      rootBoundary,
-      padding
-    })[getBasePlacement(placement2)];
-    return acc;
-  }, {});
-  return Object.keys(overflows).sort(function(a2, b2) {
-    return overflows[a2] - overflows[b2];
-  });
-}
-
-// node_modules/@popperjs/core/lib/modifiers/flip.js
-function getExpandedFallbackPlacements(placement) {
-  if (getBasePlacement(placement) === auto) {
-    return [];
-  }
-  var oppositePlacement = getOppositePlacement(placement);
-  return [getOppositeVariationPlacement(placement), oppositePlacement, getOppositeVariationPlacement(oppositePlacement)];
-}
-function flip(_ref) {
-  var state = _ref.state, options = _ref.options, name = _ref.name;
-  if (state.modifiersData[name]._skip) {
-    return;
-  }
-  var _options$mainAxis = options.mainAxis, checkMainAxis = _options$mainAxis === void 0 ? true : _options$mainAxis, _options$altAxis = options.altAxis, checkAltAxis = _options$altAxis === void 0 ? true : _options$altAxis, specifiedFallbackPlacements = options.fallbackPlacements, padding = options.padding, boundary = options.boundary, rootBoundary = options.rootBoundary, altBoundary = options.altBoundary, _options$flipVariatio = options.flipVariations, flipVariations = _options$flipVariatio === void 0 ? true : _options$flipVariatio, allowedAutoPlacements = options.allowedAutoPlacements;
-  var preferredPlacement = state.options.placement;
-  var basePlacement = getBasePlacement(preferredPlacement);
-  var isBasePlacement = basePlacement === preferredPlacement;
-  var fallbackPlacements = specifiedFallbackPlacements || (isBasePlacement || !flipVariations ? [getOppositePlacement(preferredPlacement)] : getExpandedFallbackPlacements(preferredPlacement));
-  var placements2 = [preferredPlacement].concat(fallbackPlacements).reduce(function(acc, placement2) {
-    return acc.concat(getBasePlacement(placement2) === auto ? computeAutoPlacement(state, {
-      placement: placement2,
-      boundary,
-      rootBoundary,
-      padding,
-      flipVariations,
-      allowedAutoPlacements
-    }) : placement2);
-  }, []);
-  var referenceRect = state.rects.reference;
-  var popperRect = state.rects.popper;
-  var checksMap = /* @__PURE__ */ new Map();
-  var makeFallbackChecks = true;
-  var firstFittingPlacement = placements2[0];
-  for (var i2 = 0; i2 < placements2.length; i2++) {
-    var placement = placements2[i2];
-    var _basePlacement = getBasePlacement(placement);
-    var isStartVariation = getVariation(placement) === start;
-    var isVertical = [top, bottom].indexOf(_basePlacement) >= 0;
-    var len = isVertical ? "width" : "height";
-    var overflow = detectOverflow(state, {
-      placement,
-      boundary,
-      rootBoundary,
-      altBoundary,
-      padding
-    });
-    var mainVariationSide = isVertical ? isStartVariation ? right : left : isStartVariation ? bottom : top;
-    if (referenceRect[len] > popperRect[len]) {
-      mainVariationSide = getOppositePlacement(mainVariationSide);
-    }
-    var altVariationSide = getOppositePlacement(mainVariationSide);
-    var checks = [];
-    if (checkMainAxis) {
-      checks.push(overflow[_basePlacement] <= 0);
-    }
-    if (checkAltAxis) {
-      checks.push(overflow[mainVariationSide] <= 0, overflow[altVariationSide] <= 0);
-    }
-    if (checks.every(function(check) {
-      return check;
-    })) {
-      firstFittingPlacement = placement;
-      makeFallbackChecks = false;
-      break;
-    }
-    checksMap.set(placement, checks);
-  }
-  if (makeFallbackChecks) {
-    var numberOfChecks = flipVariations ? 3 : 1;
-    var _loop = function _loop2(_i2) {
-      var fittingPlacement = placements2.find(function(placement2) {
-        var checks2 = checksMap.get(placement2);
-        if (checks2) {
-          return checks2.slice(0, _i2).every(function(check) {
-            return check;
-          });
-        }
-      });
-      if (fittingPlacement) {
-        firstFittingPlacement = fittingPlacement;
-        return "break";
-      }
-    };
-    for (var _i = numberOfChecks; _i > 0; _i--) {
-      var _ret = _loop(_i);
-      if (_ret === "break")
-        break;
-    }
-  }
-  if (state.placement !== firstFittingPlacement) {
-    state.modifiersData[name]._skip = true;
-    state.placement = firstFittingPlacement;
-    state.reset = true;
-  }
-}
-var flip_default = {
-  name: "flip",
-  enabled: true,
-  phase: "main",
-  fn: flip,
-  requiresIfExists: ["offset"],
-  data: {
-    _skip: false
-  }
-};
-
-// node_modules/@popperjs/core/lib/modifiers/hide.js
-function getSideOffsets(overflow, rect, preventedOffsets) {
-  if (preventedOffsets === void 0) {
-    preventedOffsets = {
-      x: 0,
-      y: 0
-    };
-  }
-  return {
-    top: overflow.top - rect.height - preventedOffsets.y,
-    right: overflow.right - rect.width + preventedOffsets.x,
-    bottom: overflow.bottom - rect.height + preventedOffsets.y,
-    left: overflow.left - rect.width - preventedOffsets.x
-  };
-}
-function isAnySideFullyClipped(overflow) {
-  return [top, right, bottom, left].some(function(side) {
-    return overflow[side] >= 0;
-  });
-}
-function hide(_ref) {
-  var state = _ref.state, name = _ref.name;
-  var referenceRect = state.rects.reference;
-  var popperRect = state.rects.popper;
-  var preventedOffsets = state.modifiersData.preventOverflow;
-  var referenceOverflow = detectOverflow(state, {
-    elementContext: "reference"
-  });
-  var popperAltOverflow = detectOverflow(state, {
-    altBoundary: true
-  });
-  var referenceClippingOffsets = getSideOffsets(referenceOverflow, referenceRect);
-  var popperEscapeOffsets = getSideOffsets(popperAltOverflow, popperRect, preventedOffsets);
-  var isReferenceHidden = isAnySideFullyClipped(referenceClippingOffsets);
-  var hasPopperEscaped = isAnySideFullyClipped(popperEscapeOffsets);
-  state.modifiersData[name] = {
-    referenceClippingOffsets,
-    popperEscapeOffsets,
-    isReferenceHidden,
-    hasPopperEscaped
-  };
-  state.attributes.popper = Object.assign({}, state.attributes.popper, {
-    "data-popper-reference-hidden": isReferenceHidden,
-    "data-popper-escaped": hasPopperEscaped
-  });
-}
-var hide_default = {
-  name: "hide",
-  enabled: true,
-  phase: "main",
-  requiresIfExists: ["preventOverflow"],
-  fn: hide
-};
-
-// node_modules/@popperjs/core/lib/modifiers/offset.js
-function distanceAndSkiddingToXY(placement, rects, offset3) {
-  var basePlacement = getBasePlacement(placement);
-  var invertDistance = [left, top].indexOf(basePlacement) >= 0 ? -1 : 1;
-  var _ref = typeof offset3 === "function" ? offset3(Object.assign({}, rects, {
-    placement
-  })) : offset3, skidding = _ref[0], distance = _ref[1];
-  skidding = skidding || 0;
-  distance = (distance || 0) * invertDistance;
-  return [left, right].indexOf(basePlacement) >= 0 ? {
-    x: distance,
-    y: skidding
-  } : {
-    x: skidding,
-    y: distance
-  };
-}
-function offset(_ref2) {
-  var state = _ref2.state, options = _ref2.options, name = _ref2.name;
-  var _options$offset = options.offset, offset3 = _options$offset === void 0 ? [0, 0] : _options$offset;
-  var data = placements.reduce(function(acc, placement) {
-    acc[placement] = distanceAndSkiddingToXY(placement, state.rects, offset3);
-    return acc;
-  }, {});
-  var _data$state$placement = data[state.placement], x2 = _data$state$placement.x, y2 = _data$state$placement.y;
-  if (state.modifiersData.popperOffsets != null) {
-    state.modifiersData.popperOffsets.x += x2;
-    state.modifiersData.popperOffsets.y += y2;
-  }
-  state.modifiersData[name] = data;
-}
-var offset_default = {
-  name: "offset",
-  enabled: true,
-  phase: "main",
-  requires: ["popperOffsets"],
-  fn: offset
-};
-
-// node_modules/@popperjs/core/lib/modifiers/popperOffsets.js
-function popperOffsets(_ref) {
-  var state = _ref.state, name = _ref.name;
-  state.modifiersData[name] = computeOffsets({
-    reference: state.rects.reference,
-    element: state.rects.popper,
-    strategy: "absolute",
-    placement: state.placement
-  });
-}
-var popperOffsets_default = {
-  name: "popperOffsets",
-  enabled: true,
-  phase: "read",
-  fn: popperOffsets,
-  data: {}
-};
-
-// node_modules/@popperjs/core/lib/utils/getAltAxis.js
-function getAltAxis(axis) {
-  return axis === "x" ? "y" : "x";
-}
-
-// node_modules/@popperjs/core/lib/modifiers/preventOverflow.js
-function preventOverflow(_ref) {
-  var state = _ref.state, options = _ref.options, name = _ref.name;
-  var _options$mainAxis = options.mainAxis, checkMainAxis = _options$mainAxis === void 0 ? true : _options$mainAxis, _options$altAxis = options.altAxis, checkAltAxis = _options$altAxis === void 0 ? false : _options$altAxis, boundary = options.boundary, rootBoundary = options.rootBoundary, altBoundary = options.altBoundary, padding = options.padding, _options$tether = options.tether, tether = _options$tether === void 0 ? true : _options$tether, _options$tetherOffset = options.tetherOffset, tetherOffset = _options$tetherOffset === void 0 ? 0 : _options$tetherOffset;
-  var overflow = detectOverflow(state, {
-    boundary,
-    rootBoundary,
-    padding,
-    altBoundary
-  });
-  var basePlacement = getBasePlacement(state.placement);
-  var variation = getVariation(state.placement);
-  var isBasePlacement = !variation;
-  var mainAxis = getMainAxisFromPlacement(basePlacement);
-  var altAxis = getAltAxis(mainAxis);
-  var popperOffsets2 = state.modifiersData.popperOffsets;
-  var referenceRect = state.rects.reference;
-  var popperRect = state.rects.popper;
-  var tetherOffsetValue = typeof tetherOffset === "function" ? tetherOffset(Object.assign({}, state.rects, {
-    placement: state.placement
-  })) : tetherOffset;
-  var normalizedTetherOffsetValue = typeof tetherOffsetValue === "number" ? {
-    mainAxis: tetherOffsetValue,
-    altAxis: tetherOffsetValue
-  } : Object.assign({
-    mainAxis: 0,
-    altAxis: 0
-  }, tetherOffsetValue);
-  var offsetModifierState = state.modifiersData.offset ? state.modifiersData.offset[state.placement] : null;
-  var data = {
-    x: 0,
-    y: 0
-  };
-  if (!popperOffsets2) {
-    return;
-  }
-  if (checkMainAxis) {
-    var _offsetModifierState$;
-    var mainSide = mainAxis === "y" ? top : left;
-    var altSide = mainAxis === "y" ? bottom : right;
-    var len = mainAxis === "y" ? "height" : "width";
-    var offset3 = popperOffsets2[mainAxis];
-    var min3 = offset3 + overflow[mainSide];
-    var max4 = offset3 - overflow[altSide];
-    var additive = tether ? -popperRect[len] / 2 : 0;
-    var minLen = variation === start ? referenceRect[len] : popperRect[len];
-    var maxLen = variation === start ? -popperRect[len] : -referenceRect[len];
-    var arrowElement = state.elements.arrow;
-    var arrowRect = tether && arrowElement ? getLayoutRect(arrowElement) : {
-      width: 0,
-      height: 0
-    };
-    var arrowPaddingObject = state.modifiersData["arrow#persistent"] ? state.modifiersData["arrow#persistent"].padding : getFreshSideObject();
-    var arrowPaddingMin = arrowPaddingObject[mainSide];
-    var arrowPaddingMax = arrowPaddingObject[altSide];
-    var arrowLen = within(0, referenceRect[len], arrowRect[len]);
-    var minOffset = isBasePlacement ? referenceRect[len] / 2 - additive - arrowLen - arrowPaddingMin - normalizedTetherOffsetValue.mainAxis : minLen - arrowLen - arrowPaddingMin - normalizedTetherOffsetValue.mainAxis;
-    var maxOffset = isBasePlacement ? -referenceRect[len] / 2 + additive + arrowLen + arrowPaddingMax + normalizedTetherOffsetValue.mainAxis : maxLen + arrowLen + arrowPaddingMax + normalizedTetherOffsetValue.mainAxis;
-    var arrowOffsetParent = state.elements.arrow && getOffsetParent(state.elements.arrow);
-    var clientOffset = arrowOffsetParent ? mainAxis === "y" ? arrowOffsetParent.clientTop || 0 : arrowOffsetParent.clientLeft || 0 : 0;
-    var offsetModifierValue = (_offsetModifierState$ = offsetModifierState == null ? void 0 : offsetModifierState[mainAxis]) != null ? _offsetModifierState$ : 0;
-    var tetherMin = offset3 + minOffset - offsetModifierValue - clientOffset;
-    var tetherMax = offset3 + maxOffset - offsetModifierValue;
-    var preventedOffset = within(tether ? min(min3, tetherMin) : min3, offset3, tether ? max(max4, tetherMax) : max4);
-    popperOffsets2[mainAxis] = preventedOffset;
-    data[mainAxis] = preventedOffset - offset3;
-  }
-  if (checkAltAxis) {
-    var _offsetModifierState$2;
-    var _mainSide = mainAxis === "x" ? top : left;
-    var _altSide = mainAxis === "x" ? bottom : right;
-    var _offset = popperOffsets2[altAxis];
-    var _len = altAxis === "y" ? "height" : "width";
-    var _min = _offset + overflow[_mainSide];
-    var _max = _offset - overflow[_altSide];
-    var isOriginSide = [top, left].indexOf(basePlacement) !== -1;
-    var _offsetModifierValue = (_offsetModifierState$2 = offsetModifierState == null ? void 0 : offsetModifierState[altAxis]) != null ? _offsetModifierState$2 : 0;
-    var _tetherMin = isOriginSide ? _min : _offset - referenceRect[_len] - popperRect[_len] - _offsetModifierValue + normalizedTetherOffsetValue.altAxis;
-    var _tetherMax = isOriginSide ? _offset + referenceRect[_len] + popperRect[_len] - _offsetModifierValue - normalizedTetherOffsetValue.altAxis : _max;
-    var _preventedOffset = tether && isOriginSide ? withinMaxClamp(_tetherMin, _offset, _tetherMax) : within(tether ? _tetherMin : _min, _offset, tether ? _tetherMax : _max);
-    popperOffsets2[altAxis] = _preventedOffset;
-    data[altAxis] = _preventedOffset - _offset;
-  }
-  state.modifiersData[name] = data;
-}
-var preventOverflow_default = {
-  name: "preventOverflow",
-  enabled: true,
-  phase: "main",
-  fn: preventOverflow,
-  requiresIfExists: ["offset"]
-};
-
-// node_modules/@popperjs/core/lib/dom-utils/getHTMLElementScroll.js
-function getHTMLElementScroll(element) {
-  return {
-    scrollLeft: element.scrollLeft,
-    scrollTop: element.scrollTop
-  };
-}
-
-// node_modules/@popperjs/core/lib/dom-utils/getNodeScroll.js
-function getNodeScroll(node) {
-  if (node === getWindow(node) || !isHTMLElement(node)) {
-    return getWindowScroll(node);
-  } else {
-    return getHTMLElementScroll(node);
-  }
-}
-
-// node_modules/@popperjs/core/lib/dom-utils/getCompositeRect.js
-function isElementScaled(element) {
-  var rect = element.getBoundingClientRect();
-  var scaleX = round(rect.width) / element.offsetWidth || 1;
-  var scaleY = round(rect.height) / element.offsetHeight || 1;
-  return scaleX !== 1 || scaleY !== 1;
-}
-function getCompositeRect(elementOrVirtualElement, offsetParent, isFixed) {
-  if (isFixed === void 0) {
-    isFixed = false;
-  }
-  var isOffsetParentAnElement = isHTMLElement(offsetParent);
-  var offsetParentIsScaled = isHTMLElement(offsetParent) && isElementScaled(offsetParent);
-  var documentElement = getDocumentElement(offsetParent);
-  var rect = getBoundingClientRect(elementOrVirtualElement, offsetParentIsScaled, isFixed);
-  var scroll = {
-    scrollLeft: 0,
-    scrollTop: 0
-  };
-  var offsets = {
-    x: 0,
-    y: 0
-  };
-  if (isOffsetParentAnElement || !isOffsetParentAnElement && !isFixed) {
-    if (getNodeName(offsetParent) !== "body" || // https://github.com/popperjs/popper-core/issues/1078
-    isScrollParent(documentElement)) {
-      scroll = getNodeScroll(offsetParent);
-    }
-    if (isHTMLElement(offsetParent)) {
-      offsets = getBoundingClientRect(offsetParent, true);
-      offsets.x += offsetParent.clientLeft;
-      offsets.y += offsetParent.clientTop;
-    } else if (documentElement) {
-      offsets.x = getWindowScrollBarX(documentElement);
-    }
-  }
-  return {
-    x: rect.left + scroll.scrollLeft - offsets.x,
-    y: rect.top + scroll.scrollTop - offsets.y,
-    width: rect.width,
-    height: rect.height
-  };
-}
-
-// node_modules/@popperjs/core/lib/utils/orderModifiers.js
-function order(modifiers) {
-  var map2 = /* @__PURE__ */ new Map();
-  var visited = /* @__PURE__ */ new Set();
-  var result = [];
-  modifiers.forEach(function(modifier) {
-    map2.set(modifier.name, modifier);
-  });
-  function sort(modifier) {
-    visited.add(modifier.name);
-    var requires = [].concat(modifier.requires || [], modifier.requiresIfExists || []);
-    requires.forEach(function(dep) {
-      if (!visited.has(dep)) {
-        var depModifier = map2.get(dep);
-        if (depModifier) {
-          sort(depModifier);
-        }
-      }
-    });
-    result.push(modifier);
-  }
-  modifiers.forEach(function(modifier) {
-    if (!visited.has(modifier.name)) {
-      sort(modifier);
-    }
-  });
-  return result;
-}
-function orderModifiers(modifiers) {
-  var orderedModifiers = order(modifiers);
-  return modifierPhases.reduce(function(acc, phase) {
-    return acc.concat(orderedModifiers.filter(function(modifier) {
-      return modifier.phase === phase;
-    }));
-  }, []);
-}
-
-// node_modules/@popperjs/core/lib/utils/debounce.js
-function debounce(fn2) {
-  var pending;
-  return function() {
-    if (!pending) {
-      pending = new Promise(function(resolve) {
-        Promise.resolve().then(function() {
-          pending = void 0;
-          resolve(fn2());
-        });
-      });
-    }
-    return pending;
-  };
-}
-
-// node_modules/@popperjs/core/lib/utils/mergeByName.js
-function mergeByName(modifiers) {
-  var merged = modifiers.reduce(function(merged2, current) {
-    var existing = merged2[current.name];
-    merged2[current.name] = existing ? Object.assign({}, existing, current, {
-      options: Object.assign({}, existing.options, current.options),
-      data: Object.assign({}, existing.data, current.data)
-    }) : current;
-    return merged2;
-  }, {});
-  return Object.keys(merged).map(function(key) {
-    return merged[key];
-  });
-}
-
-// node_modules/@popperjs/core/lib/createPopper.js
-var DEFAULT_OPTIONS = {
-  placement: "bottom",
-  modifiers: [],
-  strategy: "absolute"
-};
-function areValidElements() {
-  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-    args[_key] = arguments[_key];
-  }
-  return !args.some(function(element) {
-    return !(element && typeof element.getBoundingClientRect === "function");
-  });
-}
-function popperGenerator(generatorOptions) {
-  if (generatorOptions === void 0) {
-    generatorOptions = {};
-  }
-  var _generatorOptions = generatorOptions, _generatorOptions$def = _generatorOptions.defaultModifiers, defaultModifiers3 = _generatorOptions$def === void 0 ? [] : _generatorOptions$def, _generatorOptions$def2 = _generatorOptions.defaultOptions, defaultOptions = _generatorOptions$def2 === void 0 ? DEFAULT_OPTIONS : _generatorOptions$def2;
-  return function createPopper4(reference2, popper2, options) {
-    if (options === void 0) {
-      options = defaultOptions;
-    }
-    var state = {
-      placement: "bottom",
-      orderedModifiers: [],
-      options: Object.assign({}, DEFAULT_OPTIONS, defaultOptions),
-      modifiersData: {},
-      elements: {
-        reference: reference2,
-        popper: popper2
-      },
-      attributes: {},
-      styles: {}
-    };
-    var effectCleanupFns = [];
-    var isDestroyed = false;
-    var instance = {
-      state,
-      setOptions: function setOptions(setOptionsAction) {
-        var options2 = typeof setOptionsAction === "function" ? setOptionsAction(state.options) : setOptionsAction;
-        cleanupModifierEffects();
-        state.options = Object.assign({}, defaultOptions, state.options, options2);
-        state.scrollParents = {
-          reference: isElement(reference2) ? listScrollParents(reference2) : reference2.contextElement ? listScrollParents(reference2.contextElement) : [],
-          popper: listScrollParents(popper2)
-        };
-        var orderedModifiers = orderModifiers(mergeByName([].concat(defaultModifiers3, state.options.modifiers)));
-        state.orderedModifiers = orderedModifiers.filter(function(m2) {
-          return m2.enabled;
-        });
-        runModifierEffects();
-        return instance.update();
-      },
-      // Sync update – it will always be executed, even if not necessary. This
-      // is useful for low frequency updates where sync behavior simplifies the
-      // logic.
-      // For high frequency updates (e.g. `resize` and `scroll` events), always
-      // prefer the async Popper#update method
-      forceUpdate: function forceUpdate() {
-        if (isDestroyed) {
-          return;
-        }
-        var _state$elements = state.elements, reference3 = _state$elements.reference, popper3 = _state$elements.popper;
-        if (!areValidElements(reference3, popper3)) {
-          return;
-        }
-        state.rects = {
-          reference: getCompositeRect(reference3, getOffsetParent(popper3), state.options.strategy === "fixed"),
-          popper: getLayoutRect(popper3)
-        };
-        state.reset = false;
-        state.placement = state.options.placement;
-        state.orderedModifiers.forEach(function(modifier) {
-          return state.modifiersData[modifier.name] = Object.assign({}, modifier.data);
-        });
-        for (var index = 0; index < state.orderedModifiers.length; index++) {
-          if (state.reset === true) {
-            state.reset = false;
-            index = -1;
-            continue;
-          }
-          var _state$orderedModifie = state.orderedModifiers[index], fn2 = _state$orderedModifie.fn, _state$orderedModifie2 = _state$orderedModifie.options, _options = _state$orderedModifie2 === void 0 ? {} : _state$orderedModifie2, name = _state$orderedModifie.name;
-          if (typeof fn2 === "function") {
-            state = fn2({
-              state,
-              options: _options,
-              name,
-              instance
-            }) || state;
-          }
-        }
-      },
-      // Async and optimistically optimized update – it will not be executed if
-      // not necessary (debounced to run at most once-per-tick)
-      update: debounce(function() {
-        return new Promise(function(resolve) {
-          instance.forceUpdate();
-          resolve(state);
-        });
-      }),
-      destroy: function destroy() {
-        cleanupModifierEffects();
-        isDestroyed = true;
-      }
-    };
-    if (!areValidElements(reference2, popper2)) {
-      return instance;
-    }
-    instance.setOptions(options).then(function(state2) {
-      if (!isDestroyed && options.onFirstUpdate) {
-        options.onFirstUpdate(state2);
-      }
-    });
-    function runModifierEffects() {
-      state.orderedModifiers.forEach(function(_ref) {
-        var name = _ref.name, _ref$options = _ref.options, options2 = _ref$options === void 0 ? {} : _ref$options, effect4 = _ref.effect;
-        if (typeof effect4 === "function") {
-          var cleanupFn = effect4({
-            state,
-            name,
-            instance,
-            options: options2
-          });
-          var noopFn = function noopFn2() {
-          };
-          effectCleanupFns.push(cleanupFn || noopFn);
-        }
-      });
-    }
-    function cleanupModifierEffects() {
-      effectCleanupFns.forEach(function(fn2) {
-        return fn2();
-      });
-      effectCleanupFns = [];
-    }
-    return instance;
-  };
-}
-var createPopper = popperGenerator();
-
-// node_modules/@popperjs/core/lib/popper-lite.js
-var defaultModifiers = [eventListeners_default, popperOffsets_default, computeStyles_default, applyStyles_default];
-var createPopper2 = popperGenerator({
-  defaultModifiers
-});
-
-// node_modules/@popperjs/core/lib/popper.js
-var defaultModifiers2 = [eventListeners_default, popperOffsets_default, computeStyles_default, applyStyles_default, offset_default, flip_default, preventOverflow_default, arrow_default, hide_default];
-var createPopper3 = popperGenerator({
-  defaultModifiers: defaultModifiers2
-});
-
 // node_modules/bootstrap/dist/js/bootstrap.esm.js
+init_lib();
 var elementMap = /* @__PURE__ */ new Map();
 var Data = {
   set(element, key, instance) {
@@ -29959,7 +28457,7 @@ var getTransitionDurationFromElement = (element) => {
 var triggerTransitionEnd = (element) => {
   element.dispatchEvent(new Event(TRANSITION_END));
 };
-var isElement2 = (object) => {
+var isElement = (object) => {
   if (!object || typeof object !== "object") {
     return false;
   }
@@ -29969,7 +28467,7 @@ var isElement2 = (object) => {
   return typeof object.nodeType !== "undefined";
 };
 var getElement = (object) => {
-  if (isElement2(object)) {
+  if (isElement(object)) {
     return object.jquery ? object[0] : object;
   }
   if (typeof object === "string" && object.length > 0) {
@@ -29978,7 +28476,7 @@ var getElement = (object) => {
   return null;
 };
 var isVisible = (element) => {
-  if (!isElement2(element) || element.getClientRects().length === 0) {
+  if (!isElement(element) || element.getClientRects().length === 0) {
     return false;
   }
   const elementIsVisible = getComputedStyle(element).getPropertyValue("visibility") === "visible";
@@ -30126,18 +28624,18 @@ function getElementEvents(element) {
   eventRegistry[uid] = eventRegistry[uid] || {};
   return eventRegistry[uid];
 }
-function bootstrapHandler(element, fn2) {
+function bootstrapHandler(element, fn) {
   return function handler(event) {
     hydrateObj(event, {
       delegateTarget: element
     });
     if (handler.oneOff) {
-      EventHandler.off(element, event.type, fn2);
+      EventHandler.off(element, event.type, fn);
     }
-    return fn2.apply(element, [event]);
+    return fn.apply(element, [event]);
   };
 }
-function bootstrapDelegationHandler(element, selector, fn2) {
+function bootstrapDelegationHandler(element, selector, fn) {
   return function handler(event) {
     const domElements = element.querySelectorAll(selector);
     for (let {
@@ -30151,9 +28649,9 @@ function bootstrapDelegationHandler(element, selector, fn2) {
           delegateTarget: target
         });
         if (handler.oneOff) {
-          EventHandler.off(element, event.type, selector, fn2);
+          EventHandler.off(element, event.type, selector, fn);
         }
-        return fn2.apply(target, [event]);
+        return fn.apply(target, [event]);
       }
     }
   };
@@ -30176,10 +28674,10 @@ function addHandler(element, originalTypeEvent, handler, delegationFunction, one
   }
   let [isDelegated, callable, typeEvent] = normalizeParameters(originalTypeEvent, handler, delegationFunction);
   if (originalTypeEvent in customEvents) {
-    const wrapFunction = (fn3) => {
+    const wrapFunction = (fn2) => {
       return function(event) {
         if (!event.relatedTarget || event.relatedTarget !== event.delegateTarget && !event.delegateTarget.contains(event.relatedTarget)) {
-          return fn3.call(this, event);
+          return fn2.call(this, event);
         }
       };
     };
@@ -30193,21 +28691,21 @@ function addHandler(element, originalTypeEvent, handler, delegationFunction, one
     return;
   }
   const uid = makeEventUid(callable, originalTypeEvent.replace(namespaceRegex, ""));
-  const fn2 = isDelegated ? bootstrapDelegationHandler(element, handler, callable) : bootstrapHandler(element, callable);
-  fn2.delegationSelector = isDelegated ? handler : null;
-  fn2.callable = callable;
-  fn2.oneOff = oneOff;
-  fn2.uidEvent = uid;
-  handlers[uid] = fn2;
-  element.addEventListener(typeEvent, fn2, isDelegated);
+  const fn = isDelegated ? bootstrapDelegationHandler(element, handler, callable) : bootstrapHandler(element, callable);
+  fn.delegationSelector = isDelegated ? handler : null;
+  fn.callable = callable;
+  fn.oneOff = oneOff;
+  fn.uidEvent = uid;
+  handlers[uid] = fn;
+  element.addEventListener(typeEvent, fn, isDelegated);
 }
 function removeHandler(element, events, typeEvent, handler, delegationSelector) {
-  const fn2 = findHandler(events[typeEvent], handler, delegationSelector);
-  if (!fn2) {
+  const fn = findHandler(events[typeEvent], handler, delegationSelector);
+  if (!fn) {
     return;
   }
-  element.removeEventListener(typeEvent, fn2, Boolean(delegationSelector));
-  delete events[typeEvent][fn2.uidEvent];
+  element.removeEventListener(typeEvent, fn, Boolean(delegationSelector));
+  delete events[typeEvent][fn.uidEvent];
 }
 function removeNamespacedHandlers(element, events, typeEvent, namespace) {
   const storeElementEvent = events[typeEvent] || {};
@@ -30375,18 +28873,18 @@ var Config = class {
     return config;
   }
   _mergeConfigObj(config, element) {
-    const jsonConfig = isElement2(element) ? Manipulator.getDataAttribute(element, "config") : {};
+    const jsonConfig = isElement(element) ? Manipulator.getDataAttribute(element, "config") : {};
     return {
       ...this.constructor.Default,
       ...typeof jsonConfig === "object" ? jsonConfig : {},
-      ...isElement2(element) ? Manipulator.getDataAttributes(element) : {},
+      ...isElement(element) ? Manipulator.getDataAttributes(element) : {},
       ...typeof config === "object" ? config : {}
     };
   }
   _typeCheckConfig(config, configTypes = this.constructor.DefaultType) {
     for (const [property, expectedTypes] of Object.entries(configTypes)) {
       const value2 = config[property];
-      const valueType = isElement2(value2) ? "element" : toType(value2);
+      const valueType = isElement(value2) ? "element" : toType(value2);
       if (!new RegExp(expectedTypes).test(valueType)) {
         throw new TypeError(`${this.constructor.NAME.toUpperCase()}: Option "${property}" provided type "${valueType}" but expected type "${expectedTypes}".`);
       }
@@ -30830,8 +29328,8 @@ var Carousel = class _Carousel extends BaseComponent {
     if (activeIndex === index) {
       return;
     }
-    const order2 = index > activeIndex ? ORDER_NEXT : ORDER_PREV;
-    this._slide(order2, items[index]);
+    const order = index > activeIndex ? ORDER_NEXT : ORDER_PREV;
+    this._slide(order, items[index]);
   }
   dispose() {
     if (this._swipeHelper) {
@@ -30911,12 +29409,12 @@ var Carousel = class _Carousel extends BaseComponent {
     const elementInterval = Number.parseInt(element.getAttribute("data-bs-interval"), 10);
     this._config.interval = elementInterval || this._config.defaultInterval;
   }
-  _slide(order2, element = null) {
+  _slide(order, element = null) {
     if (this._isSliding) {
       return;
     }
     const activeElement = this._getActive();
-    const isNext = order2 === ORDER_NEXT;
+    const isNext = order === ORDER_NEXT;
     const nextElement = element || getNextActiveElement(this._getItems(), activeElement, isNext, this._config.wrap);
     if (nextElement === activeElement) {
       return;
@@ -30925,7 +29423,7 @@ var Carousel = class _Carousel extends BaseComponent {
     const triggerEvent = (eventName) => {
       return EventHandler.trigger(this._element, eventName, {
         relatedTarget: nextElement,
-        direction: this._orderToDirection(order2),
+        direction: this._orderToDirection(order),
         from: this._getItemIndex(activeElement),
         to: nextElementIndex
       });
@@ -30981,11 +29479,11 @@ var Carousel = class _Carousel extends BaseComponent {
     }
     return direction === DIRECTION_LEFT ? ORDER_NEXT : ORDER_PREV;
   }
-  _orderToDirection(order2) {
+  _orderToDirection(order) {
     if (isRTL()) {
-      return order2 === ORDER_PREV ? DIRECTION_LEFT : DIRECTION_RIGHT;
+      return order === ORDER_PREV ? DIRECTION_LEFT : DIRECTION_RIGHT;
     }
-    return order2 === ORDER_PREV ? DIRECTION_RIGHT : DIRECTION_LEFT;
+    return order === ORDER_PREV ? DIRECTION_RIGHT : DIRECTION_LEFT;
   }
   // Static
   static jQueryInterface(config) {
@@ -31370,7 +29868,7 @@ var Dropdown = class _Dropdown extends BaseComponent {
   }
   _getConfig(config) {
     config = super._getConfig(config);
-    if (typeof config.reference === "object" && !isElement2(config.reference) && typeof config.reference.getBoundingClientRect !== "function") {
+    if (typeof config.reference === "object" && !isElement(config.reference) && typeof config.reference.getBoundingClientRect !== "function") {
       throw new TypeError(`${NAME$a.toUpperCase()}: Option "reference" provided type "object" without a required "getBoundingClientRect" method.`);
     }
     return config;
@@ -31382,13 +29880,13 @@ var Dropdown = class _Dropdown extends BaseComponent {
     let referenceElement = this._element;
     if (this._config.reference === "parent") {
       referenceElement = this._parent;
-    } else if (isElement2(this._config.reference)) {
+    } else if (isElement(this._config.reference)) {
       referenceElement = getElement(this._config.reference);
     } else if (typeof this._config.reference === "object") {
       referenceElement = this._config.reference;
     }
     const popperConfig = this._getPopperConfig();
-    this._popper = createPopper3(referenceElement, this._menu, popperConfig);
+    this._popper = createPopper(referenceElement, this._menu, popperConfig);
   }
   _isShown() {
     return this._menu.classList.contains(CLASS_NAME_SHOW$6);
@@ -31418,15 +29916,15 @@ var Dropdown = class _Dropdown extends BaseComponent {
   }
   _getOffset() {
     const {
-      offset: offset3
+      offset: offset2
     } = this._config;
-    if (typeof offset3 === "string") {
-      return offset3.split(",").map((value2) => Number.parseInt(value2, 10));
+    if (typeof offset2 === "string") {
+      return offset2.split(",").map((value2) => Number.parseInt(value2, 10));
     }
-    if (typeof offset3 === "function") {
-      return (popperData) => offset3(popperData, this._element);
+    if (typeof offset2 === "function") {
+      return (popperData) => offset2(popperData, this._element);
     }
-    return offset3;
+    return offset2;
   }
   _getPopperConfig() {
     const defaultBsPopperConfig = {
@@ -31786,7 +30284,7 @@ var ScrollBarHelper = class {
     this._applyManipulationCallback(selector, manipulationCallBack);
   }
   _applyManipulationCallback(selector, callBack) {
-    if (isElement2(selector)) {
+    if (isElement(selector)) {
       callBack(selector);
       return;
     }
@@ -32416,7 +30914,7 @@ var TemplateFactory = class extends Config {
       templateElement.remove();
       return;
     }
-    if (isElement2(content)) {
+    if (isElement(content)) {
       this._putElementInTemplate(getElement(content), templateElement);
       return;
     }
@@ -32708,19 +31206,19 @@ var Tooltip = class _Tooltip extends BaseComponent {
   _createPopper(tip) {
     const placement = execute(this._config.placement, [this, tip, this._element]);
     const attachment = AttachmentMap[placement.toUpperCase()];
-    return createPopper3(this._element, tip, this._getPopperConfig(attachment));
+    return createPopper(this._element, tip, this._getPopperConfig(attachment));
   }
   _getOffset() {
     const {
-      offset: offset3
+      offset: offset2
     } = this._config;
-    if (typeof offset3 === "string") {
-      return offset3.split(",").map((value2) => Number.parseInt(value2, 10));
+    if (typeof offset2 === "string") {
+      return offset2.split(",").map((value2) => Number.parseInt(value2, 10));
     }
-    if (typeof offset3 === "function") {
-      return (popperData) => offset3(popperData, this._element);
+    if (typeof offset2 === "function") {
+      return (popperData) => offset2(popperData, this._element);
     }
-    return offset3;
+    return offset2;
   }
   _resolvePossibleFunction(arg) {
     return execute(arg, [this._element]);
@@ -33566,10 +32064,10 @@ function isNumber(input) {
 function isDate(input) {
   return input instanceof Date || Object.prototype.toString.call(input) === "[object Date]";
 }
-function map(arr, fn2) {
+function map(arr, fn) {
   var res = [], i2, arrLen = arr.length;
   for (i2 = 0; i2 < arrLen; ++i2) {
-    res.push(fn2(arr[i2], i2));
+    res.push(fn(arr[i2], i2));
   }
   return res;
 }
@@ -33720,7 +32218,7 @@ function warn(msg) {
     console.warn("Deprecation warning: " + msg);
   }
 }
-function deprecate(msg, fn2) {
+function deprecate(msg, fn) {
   var firstTime = true;
   return extend(function() {
     if (hooks.deprecationHandler != null) {
@@ -33748,8 +32246,8 @@ function deprecate(msg, fn2) {
       );
       firstTime = false;
     }
-    return fn2.apply(this, arguments);
-  }, fn2);
+    return fn.apply(this, arguments);
+  }, fn);
 }
 var deprecations = {};
 function deprecateSimple(name, msg) {
@@ -35684,7 +34182,7 @@ var prototypeMax = deprecate(
     }
   }
 );
-function pickBy(fn2, moments) {
+function pickBy(fn, moments) {
   var res, i2;
   if (moments.length === 1 && isArray(moments[0])) {
     moments = moments[0];
@@ -35694,17 +34192,17 @@ function pickBy(fn2, moments) {
   }
   res = moments[0];
   for (i2 = 1; i2 < moments.length; ++i2) {
-    if (!moments[i2].isValid() || moments[i2][fn2](res)) {
+    if (!moments[i2].isValid() || moments[i2][fn](res)) {
       res = moments[i2];
     }
   }
   return res;
 }
-function min2() {
+function min() {
   var args = [].slice.call(arguments, 0);
   return pickBy("isBefore", args);
 }
-function max2() {
+function max() {
   var args = [].slice.call(arguments, 0);
   return pickBy("isAfter", args);
 }
@@ -35778,18 +34276,18 @@ function compareArrays(array1, array2, dontConvert) {
   }
   return diffs + lengthDiff;
 }
-function offset2(token2, separator) {
+function offset(token2, separator) {
   addFormatToken(token2, 0, 0, function() {
-    var offset3 = this.utcOffset(), sign2 = "+";
-    if (offset3 < 0) {
-      offset3 = -offset3;
+    var offset2 = this.utcOffset(), sign2 = "+";
+    if (offset2 < 0) {
+      offset2 = -offset2;
       sign2 = "-";
     }
-    return sign2 + zeroFill(~~(offset3 / 60), 2) + separator + zeroFill(~~offset3 % 60, 2);
+    return sign2 + zeroFill(~~(offset2 / 60), 2) + separator + zeroFill(~~offset2 % 60, 2);
   });
 }
-offset2("Z", ":");
-offset2("ZZ", "");
+offset("Z", ":");
+offset("ZZ", "");
 addRegexToken("Z", matchShortOffset);
 addRegexToken("ZZ", matchShortOffset);
 addParseToken(["Z", "ZZ"], function(input, array, config) {
@@ -35825,7 +34323,7 @@ function getDateOffset(m2) {
 hooks.updateOffset = function() {
 };
 function getSetOffset(input, keepLocalTime, keepMinutes) {
-  var offset3 = this._offset || 0, localAdjust;
+  var offset2 = this._offset || 0, localAdjust;
   if (!this.isValid()) {
     return input != null ? this : NaN;
   }
@@ -35846,11 +34344,11 @@ function getSetOffset(input, keepLocalTime, keepMinutes) {
     if (localAdjust != null) {
       this.add(localAdjust, "m");
     }
-    if (offset3 !== input) {
+    if (offset2 !== input) {
       if (!keepLocalTime || this._changeInProgress) {
         addSubtract(
           this,
-          createDuration(input - offset3, "m"),
+          createDuration(input - offset2, "m"),
           1,
           false
         );
@@ -35862,7 +34360,7 @@ function getSetOffset(input, keepLocalTime, keepMinutes) {
     }
     return this;
   } else {
-    return this._isUTC ? offset3 : getDateOffset(this);
+    return this._isUTC ? offset2 : getDateOffset(this);
   }
 }
 function getSetZone(input, keepLocalTime) {
@@ -37315,7 +35813,7 @@ var years = makeGetter("years");
 function weeks() {
   return absFloor(this.days() / 7);
 }
-var round2 = Math.round;
+var round = Math.round;
 var thresholds = {
   ss: 44,
   // a few seconds to seconds
@@ -37336,7 +35834,7 @@ function substituteTimeAgo(string, number, withoutSuffix, isFuture, locale2) {
   return locale2.relativeTime(number || 1, !!withoutSuffix, string, isFuture);
 }
 function relativeTime$1(posNegDuration, withoutSuffix, thresholds2, locale2) {
-  var duration = createDuration(posNegDuration).abs(), seconds2 = round2(duration.as("s")), minutes2 = round2(duration.as("m")), hours2 = round2(duration.as("h")), days2 = round2(duration.as("d")), months2 = round2(duration.as("M")), weeks2 = round2(duration.as("w")), years2 = round2(duration.as("y")), a2 = seconds2 <= thresholds2.ss && ["s", seconds2] || seconds2 < thresholds2.s && ["ss", seconds2] || minutes2 <= 1 && ["m"] || minutes2 < thresholds2.m && ["mm", minutes2] || hours2 <= 1 && ["h"] || hours2 < thresholds2.h && ["hh", hours2] || days2 <= 1 && ["d"] || days2 < thresholds2.d && ["dd", days2];
+  var duration = createDuration(posNegDuration).abs(), seconds2 = round(duration.as("s")), minutes2 = round(duration.as("m")), hours2 = round(duration.as("h")), days2 = round(duration.as("d")), months2 = round(duration.as("M")), weeks2 = round(duration.as("w")), years2 = round(duration.as("y")), a2 = seconds2 <= thresholds2.ss && ["s", seconds2] || seconds2 < thresholds2.s && ["ss", seconds2] || minutes2 <= 1 && ["m"] || minutes2 < thresholds2.m && ["mm", minutes2] || hours2 <= 1 && ["h"] || hours2 < thresholds2.h && ["hh", hours2] || days2 <= 1 && ["d"] || days2 < thresholds2.d && ["dd", days2];
   if (thresholds2.w != null) {
     a2 = a2 || weeks2 <= 1 && ["w"] || weeks2 < thresholds2.w && ["ww", weeks2];
   }
@@ -37348,10 +35846,10 @@ function relativeTime$1(posNegDuration, withoutSuffix, thresholds2, locale2) {
 }
 function getSetRelativeTimeRounding(roundingFunction) {
   if (roundingFunction === void 0) {
-    return round2;
+    return round;
   }
   if (typeof roundingFunction === "function") {
-    round2 = roundingFunction;
+    round = roundingFunction;
     return true;
   }
   return false;
@@ -37470,8 +35968,8 @@ addParseToken("x", function(input, array, config) {
 hooks.version = "2.29.4";
 setHookCallback(createLocal);
 hooks.fn = proto;
-hooks.min = min2;
-hooks.max = max2;
+hooks.min = min;
+hooks.max = max;
 hooks.now = now;
 hooks.utc = createUTC;
 hooks.unix = createUnix;
@@ -39188,31 +37686,31 @@ var rendererUtils = (data, fieldName) => {
       }
       let timingBounds = "";
       if (_value.repeat) {
-        let start2 = "";
-        let end2 = "";
+        let start = "";
+        let end = "";
         if (_value.repeat.boundsPeriod) {
           const period = _value.repeat.boundsPeriod;
-          start2 = period.start;
-          end2 = period.end;
+          start = period.start;
+          end = period.end;
         } else if (_value.repeat.boundsRange) {
           const range = _value.repeat.boundsRange;
           if (range.low) {
-            start2 = range.low.value;
-            if (dataExists(start2) && dataExists(range.low.unit))
-              start2 += " " + range.low.unit;
+            start = range.low.value;
+            if (dataExists(start) && dataExists(range.low.unit))
+              start += " " + range.low.unit;
           }
           if (range.high) {
-            end2 = range.high.value;
-            if (dataExists(end2) && dataExists(range.high.unit))
-              end2 += " " + range.high.unit;
+            end = range.high.value;
+            if (dataExists(end) && dataExists(range.high.unit))
+              end += " " + range.high.unit;
           }
         }
-        if (dataExists(start2) && dataExists(end2))
-          timingBounds = start2 + " to " + end2;
-        else if (dataExists(start2))
-          timingBounds = "Start: " + start2;
-        else if (dataExists(end2))
-          timingBounds = "End: " + end2;
+        if (dataExists(start) && dataExists(end))
+          timingBounds = start + " to " + end;
+        else if (dataExists(start))
+          timingBounds = "Start: " + start;
+        else if (dataExists(end))
+          timingBounds = "End: " + end;
         if (!dataExists(timingBounds) && _value.repeat.boundsDuration) {
           const duration = _value.repeat.boundsDuration;
           timingBounds = "Duration: " + duration.value;
@@ -43903,7 +42401,7 @@ var script$t = {
         });
       }
       if (!!this.sort) {
-        const order2 = this.sort[0];
+        const order = this.sort[0];
         const item = this.sort.slice(1);
         const customSort = (_c = (_b2 = this.fields) == null ? void 0 : _b2.find((field) => {
           return field.title === item;
@@ -43911,7 +42409,7 @@ var script$t = {
         tmp = tmp.sort((a2, b2) => {
           const aField = a2.find((x2) => x2.title === item);
           const bField = b2.find((x2) => x2.title === item);
-          if (order2 === "+") {
+          if (order === "+") {
             if (customSort)
               return customSort(aField == null ? void 0 : aField.value, bField == null ? void 0 : bField.value);
             if (aField.value < bField.value)
@@ -44076,10 +42574,10 @@ var script$t = {
         this.sort = `+${value2}`;
         return;
       }
-      const order2 = this.sort[0];
+      const order = this.sort[0];
       const item = this.sort.slice(1);
       if (value2 === item) {
-        this.sort = `${order2 === "+" ? "-" : "+"}${value2}`;
+        this.sort = `${order === "+" ? "-" : "+"}${value2}`;
       } else {
         this.sort = `+${value2}`;
       }

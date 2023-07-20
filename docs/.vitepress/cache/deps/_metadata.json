@@ -1,27 +1,36 @@
 {
   "hash": "7ed675a8",
-  "browserHash": "0eb9f342",
+  "browserHash": "ba393089",
   "optimized": {
     "vue": {
       "src": "../../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "c46e143a",
+      "fileHash": "35ce414c",
       "needsInterop": false
     },
     "vitepress > @vue/devtools-api": {
       "src": "../../../../node_modules/@vue/devtools-api/lib/esm/index.js",
       "file": "vitepress___@vue_devtools-api.js",
-      "fileHash": "1919861b",
+      "fileHash": "8abee9f5",
       "needsInterop": false
     },
     "fire-starters": {
       "src": "../../../../node_modules/fire-starters/dist/library.mjs",
       "file": "fire-starters.js",
-      "fileHash": "5e0f46b4",
+      "fileHash": "90243ebb",
       "needsInterop": false
+    },
+    "bootstrap/dist/js/bootstrap.js": {
+      "src": "../../../../node_modules/bootstrap/dist/js/bootstrap.js",
+      "file": "bootstrap_dist_js_bootstrap__js.js",
+      "fileHash": "f75f5063",
+      "needsInterop": true
     }
   },
   "chunks": {
+    "chunk-H6UF333E": {
+      "file": "chunk-H6UF333E.js"
+    },
     "chunk-V634PGSD": {
       "file": "chunk-V634PGSD.js"
     },
