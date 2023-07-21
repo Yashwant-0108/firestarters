@@ -17,6 +17,8 @@ COPY . .
 # ENV NODE_OPTIONS="--max-old-space-size=4096"  # Adjust the value as needed
 # RUN npm run docs:build
 
+# Fix npm cache ownership issue
+RUN chown -R node:node /home/node/.npm
 
 # Stage 2: Use the same base image for the final container
 FROM node:16 AS final
