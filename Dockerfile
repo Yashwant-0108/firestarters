@@ -14,8 +14,8 @@ RUN npm install
 COPY . .
 
 # Build the Vitepress project with increased memory allocation
-ENV NODE_OPTIONS="--max-old-space-size=4096"  # Adjust the value as needed
-RUN npm run docs:build
+# ENV NODE_OPTIONS="--max-old-space-size=4096"  # Adjust the value as needed
+# RUN npm run docs:build
 
 
 # Stage 2: Use the same base image for the final container
@@ -25,7 +25,7 @@ FROM node:16 AS final
 WORKDIR /app
 
 # Copy the built files from the previous stage
-COPY --from=build /app/docs/.vitepress/dist ./docs/.vitepress/dist
+# COPY --from=build /app/docs/.vitepress/dist ./docs/.vitepress/dist
 
 # Expose the port that Vitepress runs on (default is 3000)
 EXPOSE 5173
