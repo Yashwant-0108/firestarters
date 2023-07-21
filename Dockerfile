@@ -1,16 +1,12 @@
-# Use the official Node.js image as the base image
-FROM registry.access.redhat.com/ubi8/nodejs-16:1
+# Stage 1: Build the Vitepress project
+FROM registry.access.redhat.com/ubi8/nodejs-16:1 AS build
 
 # Set the working directory inside the container
 WORKDIR /app
 
-# Change ownership of the npm cache folder
-RUN chown -R node:node /root/.npm
-
-
 # Copy the package.json and package-lock.json files
 COPY package*.json ./
-COPY --chown=1001:0 package*.json ./
+
 # Install dependencies
 RUN npm install
 
@@ -21,7 +17,7 @@ COPY . .
 RUN npm run docs:build
 
 
-# Use a lightweight Node.js image for the final container
+# Stage 2: Use a lightweight Node.js image for the final container
 FROM registry.access.redhat.com/ubi8/nodejs-16:1
 
 # Set the working directory inside the container
