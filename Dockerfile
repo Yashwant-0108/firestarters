@@ -4,6 +4,9 @@ FROM node:16 AS build
 # Set the working directory inside the container
 WORKDIR /app
 
+# Change ownership of the npm cache folder
+RUN chown -R node:node /root/.npm
+
 # Copy the package.json and package-lock.json files
 COPY package*.json ./
 
