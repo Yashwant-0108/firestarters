@@ -1,5 +1,5 @@
 # Stage 1: Build the Vitepress project
-FROM registry.access.redhat.com/ubi8/nodejs-16:1 AS build
+FROM node:16 AS build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -19,7 +19,7 @@ RUN npm run docs:build
 
 
 # Stage 2: Use a lightweight Node.js image for the final container
-FROM registry.access.redhat.com/ubi8/nodejs-16:1
+FROM node:16 AS build
 
 # Set the working directory inside the container
 WORKDIR /app
