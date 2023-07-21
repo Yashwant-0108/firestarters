@@ -17,7 +17,7 @@ RUN npm install
 COPY . .
 
 # Build the Vitepress project
-RUN npm run docs:build --loglevel=verbose
+RUN npm run docs:build
 
 
 # Use a lightweight Node.js image for the final container
