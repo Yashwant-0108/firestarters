@@ -17,9 +17,8 @@ COPY . .
 # ENV NODE_OPTIONS="--max-old-space-size=2048"
 RUN npm run docs:build
 
-
 # Stage 2: Use a lightweight Node.js image for the final container
-FROM node:16 AS build
+FROM node:16 AS final
 
 # Set the working directory inside the container
 WORKDIR /app
