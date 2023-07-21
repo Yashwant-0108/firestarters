@@ -13,7 +13,8 @@ RUN npm install
 # Copy the rest of the application code
 COPY . .
 
-# Build the Vitepress project
+# Build the Vitepress project with increased memory allocation
+ENV NODE_OPTIONS="--max-old-space-size=2048"
 RUN npm run docs:build
 
 
