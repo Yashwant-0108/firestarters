@@ -7,7 +7,6 @@ module.exports = ({
 
   title: "Fire Starters",
   description: "Fire Starters",
-  base: 'https://fire-starters-git-123-shruti18-dev.apps.sandbox-m4.g2pi.p1.openshiftapps.com/',
   port: 5173,
   
   themeConfig: {
