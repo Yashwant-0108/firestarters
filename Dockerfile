@@ -1,5 +1,5 @@
 # Use the official Node.js image as the base image
-FROM node:16 AS build
+FROM registry.access.redhat.com/ubi8/nodejs-16:1
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -7,9 +7,10 @@ WORKDIR /app
 # Change ownership of the npm cache folder
 RUN chown -R node:node /root/.npm
 
+
 # Copy the package.json and package-lock.json files
 COPY package*.json ./
-
+COPY --chown=1001:0 package*.json ./
 # Install dependencies
 RUN npm install
 
@@ -21,7 +22,7 @@ RUN npm run docs:build
 
 
 # Use a lightweight Node.js image for the final container
-FROM node:16-alpine
+FROM registry.access.redhat.com/ubi8/nodejs-16:1
 
 # Set the working directory inside the container
 WORKDIR /app
